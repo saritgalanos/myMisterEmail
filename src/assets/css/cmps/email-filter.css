@@ -1,0 +1,25 @@
+.email-filter {
+    display: flex;
+}
+
+
+.email-filter select {
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    background-color: #fff;
+    cursor: pointer;
+    margin-right: 15px;
+    padding: 1px;
+}
+
+.search {
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    background-color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 1px;
+    margin-left:5px
+}

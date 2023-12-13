@@ -1,0 +1,16 @@
+.email-details {
+    display:flex;
+    font-size: 1em;
+}
+
+.email-details .email-subject {
+    font-size:2em;    
+}
+
+.main-content {
+    flex-grow: 1;
+}
+
+.email-date {
+    font-style:italic;
+}

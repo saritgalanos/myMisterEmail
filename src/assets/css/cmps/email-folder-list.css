@@ -1,0 +1,28 @@
+.email-folder-list {
+    margin:10px;
+    background: #faf8f9;
+    min-width: 100px;
+    align-items: center;
+}
+
+.image-with-text {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    margin:10px;
+  }
+
+  .compose-button {
+    background-color: rgb(157, 201, 253);
+    border-radius: 10%;
+    padding:10px;
+    border: 0px ;
+    font-size: 18px;
+    margin:10px
+  }
+
+  .email-folder-icon{
+      height: 20px;
+      width: 20px;
+      margin: 10px;
+  }
+  

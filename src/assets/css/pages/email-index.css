@@ -1,0 +1,12 @@
+.email-index {
+    display: flex;
+    flex-direction: column;
+}
+.main-filter {
+    margin:10px;
+}
+
+.main-content {
+    /* flex:1; */
+    padding: 20px;
+}
