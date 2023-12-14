@@ -12,15 +12,15 @@
     
 }
 
+
+
 .email-line {
     display: flex;
     flex:1;
     flex-grow: 1;
     align-items: flex-start;
     /* Align items to the start */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  
     flex-shrink: 1;
 }
 
@@ -48,6 +48,9 @@
     margin-right: 20px;
     max-width: 400px;
     padding-right: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .email-preview .sent-at {

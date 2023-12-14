@@ -1,13 +1,13 @@
 .app-header {
     background: #faf8f9;
     color: rgb(27, 26, 26);
-    padding:20px;
+    padding:10px;
 
 }
 
 .app-header section.container {
     display: flex;
-    align-items: center;
+    justify-content: left;
 
 }
 

@@ -1,18 +1,23 @@
-.outer-container {
-    /* max-width: 1100px; */
-    display: flex;
-    margin: 0 auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding: 20px;
+.main-app{
+    display:grid;
+    grid-template-columns:1fr 9fr;
+    grid-template-rows:1fr 30fr;
+    gap:10px;
+    height: 100vh;
+
+    grid-template-areas:
+    "header header"
+    "side main";
 }
 
-.routers-container {
-    flex:1
+.app-header{
+    grid-area: header;
 }
-/* GRIDS */
-.simple-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    grid-gap: 10px;
+
+.app-side {
+    grid-area: side;
 }
+.app-main{
+    grid-area: main;
+}
+

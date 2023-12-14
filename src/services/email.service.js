@@ -105,7 +105,7 @@ function _createEmails() {
 
         emails = [
             {
-                id: 'e101', subject: 'Plans for tomorrow', body: 'emailBodylong',
+                id: 'e101', subject: 'Plans for tomorrow', body: emailBodylong,
                 isRead: false, isStarred: false, sentAt: 1651133930594, removedAt: null,
                 from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
             },

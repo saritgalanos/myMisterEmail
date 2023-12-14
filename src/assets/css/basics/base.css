@@ -20,7 +20,7 @@ body {
 img {
     max-width: 100%;
 }
-
+/* 
 h1,
 h2,
 h3,
@@ -31,7 +31,7 @@ p {
     margin: 0;
     font-weight: normal;
     padding: 0;
-}
+} */
 
 a {
     text-decoration: none;
@@ -84,12 +84,12 @@ input {
     flex-direction: column;
 }
 
-
+/*
 .main-app main {
     flex-grow: 1;
     width: 100%;
 }
-
+*/
 .main-app > footer {
     background-color: #111;
     color: white;

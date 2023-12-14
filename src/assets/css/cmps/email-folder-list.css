@@ -1,13 +1,16 @@
 .email-folder-list {
-    margin:10px;
+    display: flex;
+    flex-direction: column;
+    align-items:start;
     background: #faf8f9;
-    min-width: 100px;
-    align-items: center;
+    height: 100%;
+    /* min-width: 100px; */
+    /* align-items: center; */
 }
 
 .image-with-text {
     display: flex;
-    align-items: center; /* Align items vertically in the center */
+    /* justify-content: center; Align items vertically in the center */
     margin:10px;
   }
 
