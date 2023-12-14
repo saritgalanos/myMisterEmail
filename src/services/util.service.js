@@ -33,10 +33,12 @@ function getImgUrl(url) {
 
 function getIconUrl(iconName, isSelected) {
     if (isSelected) {
-        return utilService.getImgUrl(`../../public/selected_${iconName}.png`)
+        // return utilService.getImgUrl(`../../public/imgs/selected_${iconName}.png`)
+        return `../../public/imgs/selected_${iconName}.png`
     }
     else {
-        return utilService.getImgUrl(`../../public/${iconName}.png`)
+       return `../../public/imgs/${iconName}.png`
+        // return utilService.getImgUrl(`../../public/imgs/${iconName}.png`)
     }
 }
 
