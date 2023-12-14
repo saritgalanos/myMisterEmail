@@ -27,18 +27,26 @@ function loadFromStorage(key, defaultValue = null) {
     return JSON.parse(value);
 }
 
-function getImgUrl(url) {
-    return new URL(url, import.meta.url).href
+// function getImgUrl(url) {
+//     return new URL(url, import.meta.url).href
+// }
+
+function getImgUrl(name) {
+    const path = `/src/assets/imgs/${name}`
+    const modules = import.meta.glob('/src/assets/imgs/*', { eager: true })
+    const mod = modules[path]
+    return mod.default
 }
 
 function getIconUrl(iconName, isSelected) {
     if (isSelected) {
-        // return utilService.getImgUrl(`../../public/imgs/selected_${iconName}.png`)
-        return `../../public/imgs/selected_${iconName}.png`
+         return utilService.getImgUrl(`selected_${iconName}.png`)
+         //return utilService.getImgUrl(`./assets/imgs/selected_${iconName}.png`)
     }
     else {
-       return `../../public/imgs/${iconName}.png`
-        // return utilService.getImgUrl(`../../public/imgs/${iconName}.png`)
+       
+         return utilService.getImgUrl(`${iconName}.png`)
+         //return utilService.getImgUrl(`./assets/imgs/${iconName}.png`)
     }
 }
 

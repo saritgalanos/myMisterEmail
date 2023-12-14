@@ -11,7 +11,7 @@ export function EmailPreview({ email, onStar, onRemoveEmail }) {
         setIsStar(!isStar)
         onStar(email.id)
     }
-    
+    debugger
     const emailReadClass = email.isRead ? '' : 'email-not-read'
    
       return (

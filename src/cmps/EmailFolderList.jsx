@@ -11,7 +11,7 @@ export function EmailFolderList() {
 
         <section className="email-folder-list">
             <button className="compose-button">Compose</button>
-            <div className="image-with-text"><img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('inbox',false)} /> <p>Inbox</p> </div>
+            <div className="image-with-text"><img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('inbox', false)} /> <p>Inbox</p> </div>
             <div className="image-with-text"><img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('star', false)} /> <p>Starred</p> </div>
             <div className="image-with-text"><img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('sent',false)} /> <p>Sent</p> </div>
             <div className="image-with-text"><img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('draft',false)} /> <p>Draft</p> </div>
