@@ -11,23 +11,22 @@ export function EmailPreview({ email, onStar, onRemoveEmail }) {
         setIsStar(!isStar)
         onStar(email.id)
     }
-    debugger
-    const emailReadClass = email.isRead ? '' : 'email-not-read'
+     const emailReadClass = email.isRead ? '' : 'email-not-read'
    
       return (
 
         <div className="email-preview">
             <label>
-                <input type="checkbox" value="selected" checked={false} onChange={() => { }} />
+                <input className="preview-checkbox" type="checkbox" value="selected" checked={false} onChange={() => { }} />
             </label>
-            <img className="icon" onClick={() => OnstarPreview()} src={utilService.getIconUrl('star',isStar)} />
+            <img className="icon preview-star" onClick={() => OnstarPreview()} src={utilService.getIconUrl('star',isStar)} />
             <Link className="email-line" to={`/email/${email.id}`}>
-                <div className={`from ${emailReadClass}`}>{email.from}</div>
-                <div className={`subject ${emailReadClass}`}> {email.subject} </div>
-                <div className="email-body"> {email.body} </div>
-                <div className={`sent-at ${emailReadClass}`}>{utilService.getDateToDisplay(new Date(email.sentAt))}</div>
+                <div className={`email-preview-from ${emailReadClass}`}>{email.from}</div>
+                <div className={`email-preview-subject ${emailReadClass}`}> {email.subject} </div>
+                <div className="email-preview-body"> {email.body} </div>
+                <div className={`email-preview-sent-at ${emailReadClass}`}>{utilService.getDateToDisplay(new Date(email.sentAt))}</div>
             </Link>
-            <img className="icon" onClick={()=> {onRemoveEmail(email.id)}} src={utilService.getIconUrl('trash', false)} />
+            <img className="icon preview-trash" onClick={()=> {onRemoveEmail(email.id)}} src={utilService.getIconUrl('trash', false)} />
 
         </div>
     )

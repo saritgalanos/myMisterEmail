@@ -1,71 +1,56 @@
-.email-preview {
-    display: flex;
-    /* flex:1; */
-    /* flex-grow: 1; */
-    font-size: 1em;
-    background: #faf8f9;
-    color: rgb(68, 67, 67);
-    border-bottom: 1px solid #ddd;
-    padding: 7px;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    
-}
+ .email-preview {
+     display: flex;
+     font-size: 1em;
+     background: #faf8f9;
+     color: rgb(68, 67, 67);
+     border-bottom: 1px solid #ddd;
+     padding: 7px;
+     cursor: pointer;
+     transition: background-color 0.3s, box-shadow 0.3s;
+ }
 
+ .email-line {
+     display: flex;
+     flex: 1;
+ }
 
+ .email-preview-subject,
+ .email-preview-from,
+ .email-preview-sent-at {
+     margin-right: 10px;
+ }
 
-.email-line {
-    display: flex;
-    flex:1;
-    flex-grow: 1;
-    align-items: flex-start;
-    /* Align items to the start */
-  
-    flex-shrink: 1;
-}
+ .email-not-read {
+     font-weight: bold;
+ }
 
-.email-preview .subject,
-.email-preview .from,
-.email-preview .sent-at {
-    margin-right: 10px;
-}
+ .email-preview-from {
+     min-width: 150px;
+ }
 
-.email-not-read {
-    font-weight: bold;
+ .email-preview-body {
+     flex: 1;
+     /* flex-shrink: 1;  */
+     margin-left: 15px;
+     max-width: 1000px;
+     padding-right: 20px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
 
-}
+ .email-preview-sent-at {
+     margin-left: auto;
+ }
 
-.email-preview .from {
-    min-width: 150px;
-    /* Set a minimum width for the "From" field */
-    max-width: 200px;
-    /* Set a maximum width for the "From" field */
-}
+ .email-preview:hover {
+     background-color: #ece6e6;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ }
 
-.email-preview .email-body {
-    flex:1;
-    flex-shrink: 1;
-    margin-right: 20px;
-    max-width: 400px;
-    padding-right: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.email-preview .sent-at {
-    margin-left: auto;
-    /* Move the sent-at to the right */
-}
-
-.email-preview:hover {
-    background-color: #ece6e6;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.icon {
-    height: 20px;
-    width: 20px;
-    margin: 2px;
-    cursor: pointer;
-}
+ .icon {
+     height: 20px;
+     width: 20px;
+     margin: 2px;
+     cursor: pointer;
+ }
