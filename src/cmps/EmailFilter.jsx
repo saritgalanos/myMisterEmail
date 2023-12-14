@@ -34,7 +34,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
             </select>
 
             <form>
-                <label htmlFor="txt">Filter</label>
+                <label htmlFor="txt">Search</label>
                 <input className="txt" list="options" onChange={handleChange} id="txt" value={txt || ''} name="txt" type="text" />
             </form>
 
