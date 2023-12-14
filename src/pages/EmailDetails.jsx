@@ -20,7 +20,7 @@ export function EmailDetails() {
     async function onRemoveEmail(emailId) {
         try {
             await emailService.remove(emailId)
-            navigate('/emails')
+            navigate('/')
         } catch (error) {
             console.log('error:', error)
         }

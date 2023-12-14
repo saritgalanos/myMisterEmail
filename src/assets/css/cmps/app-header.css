@@ -1,8 +1,39 @@
 .app-header {
-    background: #faf8f9;
+    background: #eef2f5;
     color: rgb(27, 26, 26);
-    padding:10px;
+    padding:5px;
 
+}
+.search-area{
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    border-radius: 10%;
+    background:#daeaf8;
+    /* padding:15px; */
+}
+.Search-box {
+    border:none;
+    background:#daeaf8;
+
+}
+/* 
+input:focus {
+    outline: none;
+  } */
+
+.search-icon {
+    padding:4px;
+    border-radius: 100%;
+    transition: background-color 0.3s, box-shadow 0.1s;
+    cursor: pointer;
+}
+
+
+.search-icon:hover {
+    background-color: #b0c9ea;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .app-header section.container {

@@ -2,11 +2,10 @@
     display:grid;
     grid-template-columns:1fr 9fr;
     grid-template-rows:1fr 30fr;
-    gap:10px;
     height: 100vh;
 
     grid-template-areas:
-    "header header"
+    "side header"
     "side main";
 }
 

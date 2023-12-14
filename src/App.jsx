@@ -18,10 +18,10 @@ export function App() {
                 <aside className="app-side"><EmailFolderList /></aside>
                 <main className="app-main-area">
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/about" element={<AboutUs />} />
-                        <Route path="/emails" element={<EmailIndex />} />
-                        <Route path="/email/:emailId" element={<EmailDetails />} />
+                        {/* <Route path="/" element={<HomePage />} /> */}
+                        {/* <Route path="/about" element={<AboutUs />} /> */}
+                        <Route path="/" element={<EmailIndex />} />
+                         <Route path="/:emailId" element={<EmailDetails />} />
 
                     </Routes>
                 </main>
