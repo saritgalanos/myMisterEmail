@@ -32,11 +32,25 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                 <option value="Unread">Unread</option>
             </select>
 
-            {/* <form>
+            <label htmlFor="dropdown"></label>
+            <select id="dropdown" value={isRead} onChange={handleChange} name='isRead'>
+                <option value="All">All</option>
+                <option value="Read">Read</option>
+                <option value="Unread">Unread</option>
+            </select>
+
+            <label htmlFor="dropdown"></label>
+            <select id="dropdown" value={isRead} onChange={handleChange} name='isRead'>
+                <option value="All">All</option>
+                <option value="Read">Read</option>
+                <option value="Unread">Unread</option>
+            </select>
+
+           {/* <form>   
                 <label htmlFor="txt">Search</label>
                 <input className="txt" list="options" onChange={handleChange} id="txt" value={txt || ''} name="txt" type="text" />
             </form> */}
-
+ 
         </section>
     )
 }

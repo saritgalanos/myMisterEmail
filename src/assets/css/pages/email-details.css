@@ -1,6 +1,10 @@
 .email-details {
     display:flex;
     font-size: 1em;
+    background-color: #fff;
+    padding:20px
+  
+
 }
 
 .email-details .email-subject {
@@ -9,6 +13,7 @@
 
 .main-content {
     flex-grow: 1;
+  
 }
 
 .email-date {

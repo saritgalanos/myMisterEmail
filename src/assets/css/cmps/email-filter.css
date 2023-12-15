@@ -1,13 +1,18 @@
 .email-filter {
     display: flex;
-    margin:10px;
+    margin:5px;
+    background: #fff;
+    padding:10px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+
 }
 
 
 .email-filter select {
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 7px;
+    border-radius: 10px;
     background-color: #fff;
     cursor: pointer;
     margin-right: 15px;

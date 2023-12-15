@@ -1,6 +1,6 @@
 .main-app{
     display:grid;
-    grid-template-columns:1fr 9fr;
+    grid-template-columns:1fr 10fr;
     grid-template-rows:1fr 30fr;
     height: 100vh;
 
@@ -16,7 +16,8 @@
 .app-side {
     grid-area: side;
 }
-.app-main{
+.app-main-area{
     grid-area: main;
+    background: #eef2f5;
 }
 
