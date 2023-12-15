@@ -5,7 +5,6 @@ import Select from 'react-select'
 export function EmailFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
 
-
     useEffect(() => {
         onSetFilter(filterByToEdit)
     }, [filterByToEdit])
@@ -21,8 +20,8 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         setSelectedOption(ev.target.value);
     }
 
-    let { isRead, txt } = filterByToEdit
- 
+  //  let { isRead, txt } = filterByToEdit
+    let { isRead } = filterByToEdit
     return (
 
         <section className="email-filter">
@@ -33,10 +32,10 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                 <option value="Unread">Unread</option>
             </select>
 
-            <form>
+            {/* <form>
                 <label htmlFor="txt">Search</label>
                 <input className="txt" list="options" onChange={handleChange} id="txt" value={txt || ''} name="txt" type="text" />
-            </form>
+            </form> */}
 
         </section>
     )

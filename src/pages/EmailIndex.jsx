@@ -6,13 +6,16 @@ import { EmailFilter } from "../cmps/EmailFilter"
 
 
 
-export function EmailIndex() {
+export function EmailIndex({ searchTxt }) {
+
     const [emails, setEmails] = useState(null)
     const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
 
+    filterBy.txt = searchTxt;
+
     useEffect(() => {
         loadEmails()
-    }, [filterBy])
+    }, [filterBy, filterBy.txt])
 
     useEffect(() => {
         loadEmails()
