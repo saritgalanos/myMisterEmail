@@ -10,7 +10,8 @@ export function EmailFolderList() {
     return (
 
         <section className="email-folder-list">
-            <button className="compose-button">Compose</button>
+            <button className="compose-button centered" > <img src={utilService.getIconUrl('compose', false)} className="icon"/>Compose</button>
+            <div></div>
             <img className="email-folder-icon centered" onClick={() => OnStarFilter()} src={utilService.getIconUrl('inbox', false)} />
             <div> inbox </div>
             <div className="centered">5</div>
