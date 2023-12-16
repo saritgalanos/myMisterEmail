@@ -11,21 +11,21 @@ export function EmailFolderList() {
 
         <section className="email-folder-list">
             <button className="compose-button">Compose</button>
-            <img className="inbox-folder-icon email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('inbox', false)} />
+            <img className="email-folder-icon centered" onClick={() => OnStarFilter()} src={utilService.getIconUrl('inbox', false)} />
             <div> inbox </div>
-            <div> 5 </div>
-            <img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('star', false)} />
+            <div className="centered">5</div>
+            <img className="email-folder-icon centered" onClick={() => OnStarFilter()} src={utilService.getIconUrl('star', false)} />
             <div> Starred </div>
-            <div> 9 </div>
-            <img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('sent', false)} />
+            <div className="centered"> 9 </div>
+            <img className="email-folder-icon centered" onClick={() => OnStarFilter()} src={utilService.getIconUrl('sent', false)} />
             <div>Sent </div>
-            <div> 7 </div>
-            <img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('draft', false)} />
+            <div className="centered"> 7 </div>
+            <img className="email-folder-icon centered" onClick={() => OnStarFilter()} src={utilService.getIconUrl('draft', false)} />
             <div> Draft </div>
-            <div> 6</div>
-            <img className="email-folder-icon" onClick={() => OnStarFilter()} src={utilService.getIconUrl('trash', false)} />
+            <div className="centered"> 6</div>
+            <img className="email-folder-icon centered" onClick={() => OnStarFilter()} src={utilService.getIconUrl('trash', false)} />
             <div> Trash </div>
-            <div> 8 </div>
+            <div className="centered"> 8 </div>
 
 
 

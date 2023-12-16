@@ -16,9 +16,9 @@ export function EmailPreview({ email, onStar, onRemoveEmail }) {
       return (
 
         <div className="email-preview">
-            <label>
+            {/* <label>
                 <input className="preview-checkbox" type="checkbox" value="selected" checked={false} onChange={() => { }} />
-            </label>
+            </label> */}
             <img className="icon preview-star" onClick={() => OnstarPreview()} src={utilService.getIconUrl('star',isStar)} />
             <Link className="email-line" to={`${email.id}`}>
                 <div className={`email-preview-from ${emailReadClass}`}>{email.from}</div>
