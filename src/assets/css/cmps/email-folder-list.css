@@ -1,31 +1,101 @@
 .email-folder-list {
-    display: flex;
-    flex-direction: column;
-    align-items:start;
-    background: #eef2f5;
-    height: 100%;
-    /* min-width: 100px; */
-    /* align-items: center; */
-}
+  padding: 10px;
+  display: grid;
+  gap:10px;
+  background: #eef2f5;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 60px 50px 50px 50px 50px;
+  
+} 
+
 
 .image-with-text {
-    display: flex;
-    /* justify-content: center; Align items vertically in the center */
-    margin:10px;
-  }
+  display: flex;
+  margin: 10px;
+}
 
-  .compose-button {
-    background-color: rgb(164, 218, 250);
-    border-radius: 15px;
-    padding:17px;
-    border: 0px ;
-    /* font-size: 18px; */
-    margin:10px;
-  }
+.compose-button {
+  grid-column:1/4;
+  background-color: rgb(164, 218, 250);
+  border-radius: 15px;
+  border: 0px;
+  margin: 5px;
+}
 
-  .email-folder-icon{
-      height: 20px;
-      width: 20px;
-      margin: 10px;
-  }
+.email-folder-icon {
+  height: 20px;
+  width: 20px;
+  margin-bottom: 5px;
+}
+/*
+.inbox-folder-icon {
   
+  grid-column:1;
+grid-row:2;
+}
+
+.inbox-folder-text {
+
+  grid-column:1/2;
+  grid-row:2/3;
+}
+
+.inbox-folder-counter {
+  
+  grid-column:1/2;
+  grid-row:3/4;
+}
+
+
+.star-folder-icon {
+  grid-area: star-icon;
+}
+
+.star-folder-text {
+  grid-area: star-txt;
+}
+
+.star-folder-counter {
+  grid-area: star-counter;
+}
+
+.sent-folder-icon {
+  grid-area: sent-icon;
+}
+
+
+.sent-folder-text {
+  grid-area: sent-txt;
+}
+
+.sent-folder-counter {
+  grid-area: sent-counter;
+}
+
+.trash-folder-icon {
+  grid-area: trash-icon;
+}
+
+.trash-folder-text {
+  grid-area: trash-txt;
+}
+
+.trash-folder-counter {
+  grid-area: trash-counter;
+}
+
+
+.draft-folder-icon {
+  grid-area: draft-icon;
+}
+
+.draft-folder-text {
+  grid-area: draft-txt;
+
+}
+
+.draft-folder-counter {
+  grid-area: draft-counter;
+}
+
+*/

@@ -1,7 +1,7 @@
 /* Font Sizes */
 
 /* List */
-.clean-list {
+/* .clean-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -10,17 +10,17 @@
 .clean-list>li {
     margin: 0;
     padding: 0;
-}
+} */
 
 /* Positioning */
-.flex {
+/* .flex {
     display: flex;
 }
 
 .flex>*.full-grow {
     flex: 1;
-}
-
+} */
+/* 
 
 .flex.column {
     flex-direction: column;
@@ -28,8 +28,8 @@
 
 .flex.justify-center {
     justify-content: center;
-}
-
+} */
+/* 
 .flex.align-center {
     align-items: center;
 }
@@ -66,10 +66,10 @@
 .center-block {
     display: block;
     margin: 0 auto;
-}
+} */
 
 /* Buttons */
-.simple-button {
+/* .simple-button {
     background: transparent;
     color: black;
     font-size: inherit;
@@ -97,10 +97,10 @@
 
 .medium-button {
     font-size: 1.5rem;
-}
+} */
 
 /* Transitions */
-.fast-trans {
+/* .fast-trans {
     transition: 0.25s all;
 }
 
@@ -110,10 +110,10 @@
 
 .slow-trans {
     transition: 0.7s all;
-}
+} */
 
 /* Spacing */
-.p5 {
+/* .p5 {
     padding: 5px;
 }
 
@@ -135,24 +135,24 @@
 
 .m20 {
     margin: 20px;
-}
+} */
 
 /* Normalize Background */
-.normBackground {
+/* .normBackground {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-}
+} */
 
 /* Dividing */
-.bottom-divider {
+/* .bottom-divider {
     padding-bottom: 15px;
     margin-bottom: 15px;
     border-bottom: 1px solid lightgray;
-}
+} */
 
 /* Others */
-.blurred {
+/* .blurred {
     filter: blur(4px);
 }
 
@@ -179,4 +179,4 @@
     margin-top: 24px;
     color: red;
     font-size: 15px;
-}
+} */

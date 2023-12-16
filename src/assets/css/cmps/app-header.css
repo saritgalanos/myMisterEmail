@@ -9,11 +9,12 @@
     padding-left:10px;
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 45px;
     border-radius: 25px;
     background:#daeaf8;
-    /* padding:15px; */
+    margin-top: 7px;
 }
+
 .search-box {
     border:none;
     background:#daeaf8;
