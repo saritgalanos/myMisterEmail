@@ -1,5 +1,6 @@
  .email-preview {
-     display: flex;
+     display: grid;
+     grid-template-columns: 30px 1fr 30px;
      font-size: 1em;
      background: #fff;
      color: rgb(68, 67, 67);
@@ -10,9 +11,9 @@
  }
 
  .email-line {
-     display: flex;
-     flex-wrap: wrap;
-     flex: 1;
+     display: grid;
+     grid-template-columns:150px 1fr 70px;
+     flex-wrap: wrap; 
  }
 
  .email-preview-subject,
@@ -30,11 +31,9 @@
      min-width: 150px;
  }
 
- .email-preview-body {
+ .main-data {
      flex: 1;
-     /* flex-shrink: 1;  */
      margin-left: 15px;
-     max-width: 600px;
      padding-right: 20px;
      white-space: nowrap;
      overflow: hidden;
@@ -42,7 +41,7 @@
  }
 
  .email-preview-sent-at {
-     margin-left: auto;
+     text-align: right;
  }
 
  .email-preview:hover {
