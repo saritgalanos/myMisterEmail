@@ -22,7 +22,8 @@
  }
 
  .email-not-read {
-     font-weight: bold;
+     font-weight: 600;
+     color: black;
  }
 
  .email-preview-from {
