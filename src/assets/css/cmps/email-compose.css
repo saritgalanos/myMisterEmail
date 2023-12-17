@@ -2,7 +2,7 @@
  .modal-content {
 display: grid;
 grid-template-columns: 1fr 30px;
-grid-template-rows: 35px 30px 30px 30px 1fr 30px;
+grid-template-rows: 35px 30px 30px 30px 1fr 55px;
 
  
  
@@ -36,3 +36,28 @@ grid-template-rows: 35px 30px 30px 30px 1fr 30px;
     font-size: 0.95em;
     border-bottom: 1px solid #ccc;
   }
+
+  .input-body {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 0.95em;
+  }
+
+
+    
+.send-button {
+    background-color: rgb(20, 58, 231);
+    border-radius: 15px;
+    border: 0px;
+    height: 35px;
+    width: 80px;
+    padding-right: 20px;
+    margin: 5px;
+    color:white;
+    font-size: 1em;
+    margin-left:20px;
+    margin-bottom: 20px;
+  }
+  
+ 

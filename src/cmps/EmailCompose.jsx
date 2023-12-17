@@ -12,6 +12,10 @@ export function EmailCompose({ onClose }) {
                     <div className='input-field'>from</div> <div></div>
                     <div className='input-field'>To</div> <div></div>
                <div className='input-field'>Subject</div><div></div>
+               <div className=' input-body'>Compose your email</div><div></div>
+               <div>
+                <button className='send-button'>Send</button>
+               </div>
                </div>
               
 
