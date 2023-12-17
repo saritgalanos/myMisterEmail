@@ -65,6 +65,7 @@ export function EmailIndex({ searchTxt }) {
             <div className='main-content'>
                 <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />
             </div>
+           
         </section>
     )
 

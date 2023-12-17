@@ -1,0 +1,38 @@
+
+ .modal-content {
+display: grid;
+grid-template-columns: 1fr 30px;
+grid-template-rows: 35px 30px 30px 30px 1fr 30px;
+
+ 
+ 
+  position: fixed;
+  bottom: 20px; /* Adjust the distance from the bottom as needed */
+  right: 20px; /* Adjust the distance from the right as needed */
+  background-color: #fff;
+  width: 40vw;
+  height: 60vh;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  min-width:400px;
+  min-height:200px;
+  }
+  
+  .close-btn {
+    cursor: pointer;
+  }
+
+  .compose-header {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #daeaf8;
+    font-weight:500;
+  }
+  .input-field {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 0.95em;
+    border-bottom: 1px solid #ccc;
+  }
