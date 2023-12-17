@@ -13,6 +13,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     function handleChange(ev) {
         let { name: field, value, type } = ev.target
         if (type === 'number') value = +value
+
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
@@ -20,17 +21,40 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         setSelectedOption(ev.target.value);
     }
 
-  //  let { isRead, txt } = filterByToEdit
-    let { isRead } = filterByToEdit
+    function getSortBy(ev) {
+        console.log(ev.target.id)
+        return 'DateDes'
+    }
+
+
+    function getArrowIconUrl(sortTopic) {
+
+        if (sortTopic === 'date' && filterByToEdit.sortBy === 'dateAsc' ||
+            sortTopic === 'subject' && filterByToEdit.sortBy === 'subjectAsc') {
+            return utilService.getIconUrl('upper-arrow', false)
+        }
+        else {
+            return utilService.getIconUrl('down-arrow', false)
+        }
+    }
+
+
+    let { isRead, sortBy } = filterByToEdit
+    const sortDate = (sortBy != 'dateAsc') ? 'dateAsc' : 'dateDes'
+    const sortSubject = (sortBy != 'subjectAsc') ? 'subjectAsc' : 'subjectDes'
+
     return (
 
         <section className="email-filter">
-            <label htmlFor="dropdown"></label>
-            <select id="dropdown" value={isRead} onChange={handleChange} name='isRead'>
-                <option value="All">All</option>
-                <option value="Read">Read</option>
-                <option value="Unread">Unread</option>
-            </select>
+            <button className="sort-button" value={sortDate} name="sortBy" onClick={handleChange}>
+                <img src={getArrowIconUrl('date')} className="icon" />
+                Date
+            </button>
+            <button className="sort-button" id='subject' value={sortSubject} name="sortBy" onClick={handleChange}>
+                <img src={getArrowIconUrl('subject')} className="icon" />
+                Subject
+            </button>
+
 
             <label htmlFor="dropdown"></label>
             <select id="dropdown" value={isRead} onChange={handleChange} name='isRead'>
@@ -38,19 +62,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
                 <option value="Read">Read</option>
                 <option value="Unread">Unread</option>
             </select>
-
-            <label htmlFor="dropdown"></label>
-            <select id="dropdown" value={isRead} onChange={handleChange} name='isRead'>
-                <option value="All">All</option>
-                <option value="Read">Read</option>
-                <option value="Unread">Unread</option>
-            </select>
-
-           {/* <form>   
-                <label htmlFor="txt">Search</label>
-                <input className="txt" list="options" onChange={handleChange} id="txt" value={txt || ''} name="txt" type="text" />
-            </form> */}
- 
         </section>
     )
 }

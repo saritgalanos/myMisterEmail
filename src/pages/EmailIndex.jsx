@@ -54,13 +54,13 @@ export function EmailIndex({ searchTxt }) {
             console.log('error:', error)
         }
     }
-    const { txt, emailStatus, isRead } = filterBy
+    const { txt, emailStatus, isRead , sortBy} = filterBy
     if (!emails) return <div>Loading...</div>
 
     return (
         <section className="email-index">
             <div className='main-filter'>
-                <EmailFilter filterBy={{ txt, emailStatus, isRead }} onSetFilter={onSetFilter} />
+                <EmailFilter filterBy={{ txt, emailStatus, isRead, sortBy }} onSetFilter={onSetFilter} />
             </div>
             <div className='main-content'>
                 <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />

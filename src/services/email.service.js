@@ -35,7 +35,7 @@ _createEmails()
 async function query(filterBy) {
     let emails = await storageService.query(STORAGE_KEY)
     if (filterBy) {
-        var { txt, emailStatus, isRead } = filterBy
+        var { txt, emailStatus, isRead, sortBy } = filterBy
         emails = emails.filter(email => email.body.toLowerCase().includes(txt.toLowerCase())
             || email.subject.toLowerCase().includes(txt.toLowerCase()))
 
@@ -43,6 +43,26 @@ async function query(filterBy) {
             const isReadFilter = (isRead === 'Read') ? true : false
             emails = emails.filter(email => (email.isRead === isReadFilter))
         }
+        if (sortBy != '') {
+            var sortedEmails
+            switch (sortBy) {
+
+                case 'dateAsc':
+                    sortedEmails = [...emails].sort((a, b) => a.sentAt - b.sentAt)
+                    break
+                case 'dateDes':
+                    sortedEmails = [...emails].sort((a, b) => b.sentAt - a.sentAt);
+                    break
+                case 'subjectAsc':
+                    sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? 1 : -1);
+                    break
+                case 'subjectDes':
+                    sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? -1 : 1);
+                    break
+            }
+            return sortedEmails;
+        }
+
         return emails
     }
 }
@@ -59,7 +79,6 @@ function save(emailToSave) {
     if (emailToSave.id) {
         return storageService.put(STORAGE_KEY, emailToSave)
     } else {
-        //emailToSave.isOn = false
         return storageService.post(STORAGE_KEY, emailToSave)
     }
 }
@@ -81,7 +100,8 @@ function getDefaultFilter() {
     return {
         emaiStatus: '',
         txt: '',
-        isRead: ''
+        isRead: '',
+        sortBy: ''
     }
 }
 
@@ -102,12 +122,17 @@ function _createEmails() {
                 isRead: false, isStarred: false, sentAt: 1651133930594, removedAt: null,
                 from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
             },
-
             {
-                id: 'e102', subject: 'My next vacation', body: 'I would like to take a vacation for Christmas ',
-                isRead: false, isStarred: false, sentAt: 1701133930594, removedAt: null,
-                from: 'shiri@momo.com', to: 'saritgalanos@misteremail.com'
+                id: 'e107', subject: 'Your yearly bonus', body: 'It is time for your yearly bonus, please come to my office',
+                isRead: false, isStarred: false, sentAt: 1702233930594, removedAt: null,
+                from: 'daniel@momo.com', to: 'saritgalanos@misteremail.com'
             },
+            {
+                id: 'e105', subject: 'Plans for tomorrow', body: 'emailBodylong',
+                isRead: false, isStarred: false, sentAt: 1701933930594, removedAt: null,
+                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+            },
+
             {
                 id: 'e103', subject: 'Your yearly bonus', body: 'It is time for your yearly bonus, please come to my office',
                 isRead: false, isStarred: false, sentAt: 1701283930594, removedAt: null,
@@ -119,21 +144,18 @@ function _createEmails() {
                 from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
             },
             {
-                id: 'e105', subject: 'Plans for tomorrow', body: 'emailBodylong',
-                isRead: false, isStarred: false, sentAt: 1701933930594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                id: 'e102', subject: 'My next vacation', body: 'I would like to take a vacation for Christmas ',
+                isRead: false, isStarred: false, sentAt: 1701133930594, removedAt: null,
+                from: 'shiri@momo.com', to: 'saritgalanos@misteremail.com'
             },
+
 
             {
                 id: 'e106', subject: 'My next vacation', body: 'I would like to take a vacation for Christmas ',
                 isRead: false, isStarred: false, sentAt: 1702133930594, removedAt: null,
                 from: 'shiri@momo.com', to: 'saritgalanos@misteremail.com'
             },
-            {
-                id: 'e107', subject: 'Your yearly bonus', body: 'It is time for your yearly bonus, please come to my office',
-                isRead: false, isStarred: false, sentAt: 1702233930594, removedAt: null,
-                from: 'daniel@momo.com', to: 'saritgalanos@misteremail.com'
-            },
+
             {
                 id: 'e108', subject: 'Plans for tomorrow', body: 'emailBodylong',
                 isRead: false, isStarred: false, sentAt: 1702234930594, removedAt: null,
