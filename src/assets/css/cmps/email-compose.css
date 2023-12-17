@@ -35,6 +35,14 @@ grid-template-rows: 35px 30px 30px 30px 1fr 55px;
     padding-right: 10px;
     font-size: 0.95em;
     border-bottom: 1px solid #ccc;
+    font-weight: 500;
+  }
+
+  
+  .input-field .internal-text {
+    font-size: 1em;
+    color: rgb(68, 67, 67);
+    font-weight: 400;
   }
 
   .input-body {
