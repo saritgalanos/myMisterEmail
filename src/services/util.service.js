@@ -66,7 +66,6 @@ function getDateToDisplay(date, isFullDate=false) {
     const dayOfMonth = date.getDate()
     const AmPM = hours<12? 'PM':'AM'
     if(isFullDate) {
-        console.log("print date")
         return `${getMonthName(date)} ${dayOfMonth}, ${year}, ${hours}:${minutes.toString().padStart(2, '0')} ${AmPM}`
     }
 

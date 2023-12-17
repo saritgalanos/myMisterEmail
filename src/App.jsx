@@ -15,16 +15,12 @@ export function App() {
     const [isComposeModalOpen, setComposeModalOpen] = useState(false);
 
     function openComposeModal() {
-        console.log('openComposeModal')
         setComposeModalOpen(true)
     }
 
     function closeComposeModal() {
-        console.log('closeComposeModal')
         setComposeModalOpen(false)
     }
-
-    console.log(closeComposeModal)
 
     function handleSearchSubmit(value) {
         setSearchTxt(value)

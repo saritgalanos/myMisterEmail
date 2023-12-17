@@ -134,12 +134,24 @@ function _createEmails() {
             },
 
             {
-                id: 'e104', subject: 'Your yearly bonus', body: 'It is time for your yearly bonus, please come to my office',
+                id: 'e104', subject: 'Highly customizable design assets', body: 'Welcome to the largest Design Asset Ecosystem:assets, Integrations, and Motion',
                 isRead: false, isStarred: false, sentAt: 1701283930594, removedAt: null,
                 from: 'dan@momo.com', to: 'saritgalanos@misteremail.com'
             },
             {
-                id: 'e105', subject: 'Plans for tomorrow', body: 'emailBodylong',
+                id: 'e105', subject: `[Update] Changes to the Google Cloud Third-Party Subprocessors list`,
+                body: `Dear Sarit,
+               We are writing to let you know about the following updates to the Third-Party Subprocessors we engage for Google Cloud:
+               We are adding the following entities to perform Technical Support for Transfer Appliance:
+               HCL Japan Ltd.
+               HCL Technologies Philippines, Inc.
+               HCL Technologies Limited
+               We are removing the following entities from the Google Distributed Cloud Edge Appliance Service:
+               HCL America, Inc.
+               HCL TECHNOLOGIES MÉXICO S. DE R.L. DE C.V.
+               HCL Poland SP. Z.o.o.
+               We are removing PVP Inc from performing Technical Support to All Google Cloud Platform Services.
+               No action is required on your part.`,
                 isRead: false, isStarred: false, sentAt: 1701833930594, removedAt: null,
                 from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
             },
