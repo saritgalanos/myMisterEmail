@@ -1,8 +1,8 @@
 .email-details {
     display:flex;
     font-size: 1em;
-    background-color: #fff;
-    padding:20px
+    background-color:  #eef2f5;
+    
   
 
 }
@@ -13,9 +13,58 @@
 
 .main-content {
     flex-grow: 1;
-  
+    background-color: #fff;
+    border-radius: 8px;
+    margin:5px;  
+}
+
+.icons-list{
+    display: grid;
+    grid-template-columns: 35px 35px 1fr;
+    height:35px;
+    place-items: center;
 }
 
 .email-date {
     font-style:italic;
+}
+
+.email-subject {
+    padding:15px;
+    padding-left:60px;
+    padding-bottom: 20px;
+}
+.email-specifics {
+    display: grid;
+    grid-template-columns: 1fr 200px 20px;
+    padding-left:60px;
+    padding-right: 20px;
+
+}
+
+.email-to {
+    padding-left: 60px;
+}
+
+
+.body-area {
+    display: flex;
+    margin-left: 100px;
+}
+
+.email-body {
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    max-width: 800px;
+    margin-top:10px;
+    border-radius: 4px;
+    padding: 10px;
+   
+}
+
+
+.circle-icon:hover {
+    background-color: #dde3f4;
+    border-radius: 50%;
 }

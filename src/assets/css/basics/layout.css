@@ -1,7 +1,7 @@
 .main-app{
     display:grid;
     grid-template-columns:200px 1fr;
-    grid-template-rows:60px 1fr;
+    grid-template-rows:70px 1fr;
     height: 100vh;
 
     grid-template-areas:

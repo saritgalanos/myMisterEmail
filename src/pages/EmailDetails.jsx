@@ -20,7 +20,7 @@ export function EmailDetails() {
     async function onRemoveEmail(emailId) {
         try {
             await emailService.remove(emailId)
-            navigate('/')
+            navigate('/mail')
         } catch (error) {
             console.log('error:', error)
         }
@@ -48,26 +48,29 @@ export function EmailDetails() {
     }
 
     if (!email) return <div>Loading Email Deatils...</div>
+    
 
     return (
         <div className="email-details">
-            {/* <div className="side-content">
-                <EmailFolderList />
-            </div> */}
             <div className="main-content">
-                <div className="email-date">{utilService.getDateToDisplay(new Date(email.sentAt), true)}</div>
-                <div className='image-with-text'>
-                    <img className="icon" onClick={() => { onRemoveEmail(email.id) }} src={utilService.getIconUrl('trash', false)} />
-                    <img className="icon" onClick={() => { }} src={utilService.getIconUrl('star', email.isStarred)} />
-                    <div className="email-subject"> {email.subject}</div>
-                </div>
+                <div className="icons-list">
+                   <div className="circle-icon"> <img className="icon " onClick={() => navigate('/mail')} src={utilService.getIconUrl('back', false)} /></div>
+                   <div className="circle-icon"> <img className="icon " onClick={() => { onRemoveEmail(email.id) }} src={utilService.getIconUrl('trash', false)} /></div>
 
-                <div><strong>from: {email.from}</strong></div>
-                <div>to: {email.to}</div>
+                </div>
+                <div className="email-subject"> {email.subject}</div>
+                <div className="email-specifics">
+
+                    <div><strong>from: {email.from}</strong></div>
+                    <div className="email-date">{utilService.getDateToDisplay(new Date(email.sentAt), true)}</div>
+                    <img className="icon" onClick={() => { }} src={utilService.getIconUrl('star', email.isStarred)} />
+                </div>
+                <div className="email-to">to: {email.to}</div>
 
                 <br></br>
-
-                <div>{email.body}</div>
+                <div className="body-area">
+                    <div className="email-body">{email.body}</div>
+                </div>
             </div>
         </div>
     )
