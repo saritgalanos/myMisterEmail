@@ -15,10 +15,10 @@
 
 .app-side {
     grid-area: side;
-    background: #eef2f5;
+    background: #f0f4f9;;
 }
 .app-main-area{
     grid-area: main;
-    background: #eef2f5;
+    background: #f0f4f9;;
 }
 

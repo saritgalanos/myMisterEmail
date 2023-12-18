@@ -11,11 +11,11 @@ export function EmailPreview({ email, onStar, onRemoveEmail }) {
         setIsStar(!isStar)
         onStar(email.id)
     }
-    const emailReadClass = email.isRead ? '' : 'email-not-read'
+    const emailReadClass = email.isRead ? 'email-read' : 'email-not-read'
 
     return (
 
-        <div className="email-preview">
+        <div className={`email-preview ${emailReadClass}`}>
             {/* <label>
                 <input className="preview-checkbox" type="checkbox" value="selected" checked={false} onChange={() => { }} />
             </label> */}
