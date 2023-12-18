@@ -13,7 +13,7 @@
  .email-line {
      display: grid;
      grid-template-columns:150px 1fr 70px;
-     flex-wrap: wrap; 
+     /* flex-wrap: wrap;  */
  }
 
  .email-preview-subject,

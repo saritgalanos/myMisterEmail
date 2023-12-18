@@ -3,23 +3,29 @@ import { emailService } from "../services/email.service"
 import { EmailList } from "../cmps/EmailList"
 import { EmailFolderList } from "../cmps/EmailFolderList"
 import { EmailFilter } from "../cmps/EmailFilter"
+import { Outlet, useNavigate, useParams } from "react-router-dom"
+import { AppHeader } from "../cmps/AppHeader"
 
 
 
-export function EmailIndex({ searchTxt }) {
+export function EmailIndex() {
 
     const [emails, setEmails] = useState(null)
     const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
-
-    filterBy.txt = searchTxt;
+    const navigate = useNavigate()
+    // const [searchTxt, setSearchTxt] = useState("");
+    const [isComposeModalOpen, setComposeModalOpen] = useState(false);
+    const params = useParams()
+    // filterBy.txt = searchTxt;
 
     useEffect(() => {
-        loadEmails()
-    }, [filterBy, filterBy.txt])
+            loadEmails()
+    }, [filterBy])
 
-    useEffect(() => {
-        loadEmails()
-    }, [])
+
+    // useEffect(() => {
+    //     loadEmails()
+    // }, [])
 
     async function loadEmails() {
 
@@ -54,18 +60,38 @@ export function EmailIndex({ searchTxt }) {
             console.log('error:', error)
         }
     }
-    const { txt, emailStatus, isRead , sortBy} = filterBy
+
+    function openComposeModal() {
+        // setComposeModalOpen(true)
+        navigate('/mail/compose')
+    }
+
+    function closeComposeModal() {
+        // setComposeModalOpen(false)
+        navigate('/mail')
+    }
+
+    function handleSearchSubmit(value) {
+        // setSearchTxt(value)
+        setFilterBy(prevFilter => ({ ...prevFilter,txt: value }))
+    }
+
+    const { txt, emailStatus, isRead, sortBy } = filterBy
     if (!emails) return <div>Loading...</div>
 
     return (
-        <section className="email-index">
-            <div className='main-filter'>
-                <EmailFilter filterBy={{ txt, emailStatus, isRead, sortBy }} onSetFilter={onSetFilter} />
-            </div>
-            <div className='main-content'>
-                <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />
-            </div>
-           
+        <section className="main-app">
+            <header className="app-header"><AppHeader handleSearchSubmit={handleSearchSubmit} /></header>
+            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} /></aside>
+           {!params.emailId && <section className="email-index">
+                <div className='main-filter'>
+                    <EmailFilter filterBy={{ txt, emailStatus, isRead, sortBy }} onSetFilter={onSetFilter} />
+                </div>
+                <div className='main-content'>
+                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />
+                </div>
+            </section>}
+            <Outlet />
         </section>
     )
 

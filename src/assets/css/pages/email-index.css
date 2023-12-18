@@ -3,6 +3,7 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    background: #eef2f5;
 }
 .main-filter {
     /* margin-top:10px; */

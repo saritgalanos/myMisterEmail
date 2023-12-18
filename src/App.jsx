@@ -7,39 +7,41 @@ import { EmailIndex } from './pages/EmailIndex'
 import { EmailDetails } from './pages/EmailDetails'
 import { EmailFolderList } from './cmps/EmailFolderList';
 import { useEffect, useState } from "react"
-import { EmailCompose} from "./cmps/EmailCompose"
+import { EmailCompose } from "./cmps/EmailCompose"
 
 export function App() {
 
-    const [searchTxt, setSearchTxt] = useState("");
-    const [isComposeModalOpen, setComposeModalOpen] = useState(false);
 
-    function openComposeModal() {
-        setComposeModalOpen(true)
-    }
-
-    function closeComposeModal() {
-        setComposeModalOpen(false)
-    }
-
-    function handleSearchSubmit(value) {
-        setSearchTxt(value)
-    }
+    
 
     return (
 
         <Router>
+            <section>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/mail" element={<EmailIndex />}>
+                        <Route path="/mail/:emailId" element={<EmailDetails />} />
+                        <Route path="/mail/compose" element={<EmailCompose />} />
+                    </Route>
+                </Routes>
+            </section>
+
+        </Router>)
+
+    {/* <Router>
             <section className='main-app'>
                 <header className="app-header"><AppHeader handleSearchSubmit={handleSearchSubmit} /></header>
                 <aside className="app-side"><EmailFolderList onCompose={openComposeModal}/></aside>
                 <main className="app-main-area">
-                    <Routes>
-                        {/* <Route path="/" element={<HomePage />} /> */}
-                        {/* <Route path="/about" element={<AboutUs />} /> */}
-                        <Route path="/" element={<EmailIndex searchTxt={searchTxt} />} />
+                    <Routes> */}
+    {/* <Route path="/" element={<HomePage />} /> */ }
+    {/* <Route path="/about" element={<AboutUs />} /> */ }
+    {/* <Route path="/" element={<EmailIndex searchTxt={searchTxt} />} />
                         <Route path="/:emailId" element={<EmailDetails />} />
 
-                    </Routes>
+                        <Routes>
 
                     {isComposeModalOpen && (<EmailCompose onClose={closeComposeModal} />)}
 
@@ -48,6 +50,7 @@ export function App() {
                 </main>
             </section>
         </Router>
-    )
+    ) */}
+
 }
 
