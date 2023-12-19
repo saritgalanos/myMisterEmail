@@ -35,6 +35,7 @@ export function EmailDetails() {
             console.log('error:', error)
         }
     }
+    
     async function setIsRead() {
         if (!email) {
             return;
@@ -47,7 +48,7 @@ export function EmailDetails() {
         }
     }
 
-    if (!email) return <div>Loading Email Deatils...</div>
+    if (!email) return <div>Loading Email Details...</div>
     
 
     return (

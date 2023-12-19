@@ -61,18 +61,28 @@ export function EmailIndex() {
         }
     }
 
+    // async function onRead(emailId, isRead) {
+    //     try {
+    //         const email = await emailService.getById(emailId)
+    //         email.isRead = isRead
+    //         emailService.save(email)
+
+    //     } catch (error) {
+    //         console.log('error:', error)
+    //     }
+    // }
+
+    
+
     function openComposeModal() {
-        // setComposeModalOpen(true)
         navigate('/mail/compose')
     }
 
     function closeComposeModal() {
-        // setComposeModalOpen(false)
         navigate('/mail')
     }
 
     function handleSearchSubmit(value) {
-        // setSearchTxt(value)
         setFilterBy(prevFilter => ({ ...prevFilter,txt: value }))
     }
 
@@ -88,7 +98,7 @@ export function EmailIndex() {
                     <EmailFilter filterBy={{ txt, emailStatus, isRead, sortBy }} onSetFilter={onSetFilter} />
                 </div>
                 <div className='main-content'>
-                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />
+                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar}  />
                 </div>
             </section>}
             <Outlet />
