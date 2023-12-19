@@ -98,7 +98,7 @@ function createEmail(subject = '', body = '', sentAt = 0, removedAt = null, from
 
 function getDefaultFilter() {
     return {
-        emaiStatus: '',
+        emailStatus: '',
         txt: '',
         isRead: '',
         sortBy: ''

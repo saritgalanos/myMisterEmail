@@ -5,6 +5,14 @@ import Select from 'react-select'
 export function EmailFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
 
+    function logFilter() {
+        console.log("filter.txt:"+filterByToEdit.txt)
+        console.log("filter.sortBy:"+filterByToEdit.sortBy)
+        console.log("filter.isRead:"+filterByToEdit.isRead)
+    }
+    logFilter()
+
+
     useEffect(() => {
         onSetFilter(filterByToEdit)
     }, [filterByToEdit])
@@ -21,12 +29,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         setSelectedOption(ev.target.value);
     }
 
-    function getSortBy(ev) {
-        console.log(ev.target.id)
-        return 'DateDes'
-    }
-
-
+   
     function getArrowIconUrl(sortTopic) {
 
         if (sortTopic === 'date' && filterByToEdit.sortBy === 'dateAsc' ||
@@ -39,7 +42,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     }
 
 
-    let { isRead, sortBy } = filterByToEdit
+    let {emailStatus, txt, isRead, sortBy } = filterByToEdit
     const sortDate = (sortBy != 'dateAsc') ? 'dateAsc' : 'dateDes'
     const sortSubject = (sortBy != 'subjectAsc') ? 'subjectAsc' : 'subjectDes'
 

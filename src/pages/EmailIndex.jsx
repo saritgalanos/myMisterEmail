@@ -13,21 +13,14 @@ export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
     const navigate = useNavigate()
-    // const [searchTxt, setSearchTxt] = useState("");
-    const [isComposeModalOpen, setComposeModalOpen] = useState(false);
     const params = useParams()
-    // filterBy.txt = searchTxt;
-
+   
     useEffect(() => {
             loadEmails()
     }, [filterBy])
 
 
-    // useEffect(() => {
-    //     loadEmails()
-    // }, [])
-
-    async function loadEmails() {
+     async function loadEmails() {
 
         const emails = await emailService.query(filterBy)
         setEmails(emails)
@@ -47,7 +40,7 @@ export function EmailIndex() {
     }
 
     function onSetFilter(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+         setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
     }
 
     async function onStar(emailId) {
@@ -61,19 +54,6 @@ export function EmailIndex() {
         }
     }
 
-    // async function onRead(emailId, isRead) {
-    //     try {
-    //         const email = await emailService.getById(emailId)
-    //         email.isRead = isRead
-    //         emailService.save(email)
-
-    //     } catch (error) {
-    //         console.log('error:', error)
-    //     }
-    // }
-
-    
-
     function openComposeModal() {
         navigate('/mail/compose')
     }
@@ -83,10 +63,11 @@ export function EmailIndex() {
     }
 
     function handleSearchSubmit(value) {
+        console.log("search by:"+value)
         setFilterBy(prevFilter => ({ ...prevFilter,txt: value }))
     }
 
-    const { txt, emailStatus, isRead, sortBy } = filterBy
+    const {isRead, sortBy } = filterBy
     if (!emails) return <div>Loading...</div>
 
     return (
@@ -95,7 +76,7 @@ export function EmailIndex() {
             <aside className="app-side"><EmailFolderList onCompose={openComposeModal} /></aside>
            {!params.emailId && <section className="email-index">
                 <div className='main-filter'>
-                    <EmailFilter filterBy={{ txt, emailStatus, isRead, sortBy }} onSetFilter={onSetFilter} />
+                    <EmailFilter filterBy={{isRead, sortBy }} onSetFilter={onSetFilter} />
                 </div>
                 <div className='main-content'>
                     <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar}  />
