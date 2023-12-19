@@ -52,7 +52,7 @@ export function EmailDetails() {
 
     return (
         <div className="email-details">
-            <div className="main-content">
+            <div className="email-content">
                 <div className="icons-list">
                    <div className="circle-icon"> <img className="icon " onClick={() => navigate('/mail')} src={utilService.getIconUrl('back', false)} /></div>
                    <div className="circle-icon"> <img className="icon " onClick={() => { onRemoveEmail(email.id) }} src={utilService.getIconUrl('trash', false)} /></div>
