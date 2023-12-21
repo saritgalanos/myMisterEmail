@@ -53,7 +53,7 @@ export function AppHeader({ filterBy, handleSearchSubmit }) {
     return (
         <header className="app-header title">
             <section className="search-area">
-                <form onSubmit={handleSubmit} >
+                <form onSubmit={handleSubmit} className="search-form">
                     <button type="submit" className="search-submit">
                         <img src={utilService.getIconUrl('search', false)} className="icon" />
                     </button>
