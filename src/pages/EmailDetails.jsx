@@ -36,6 +36,15 @@ export function EmailDetails() {
         }
     }
 
+    async function onMarkUnread(emailId) {
+        try {
+            await setIsRead(emailId, false)
+            navigate('/mail')
+        } catch (err) {
+            console.log('onMarkUnread error:', err);
+        }
+    }
+
     async function onStarInDetails(emailId) {
         try {
             const isStarred = !email.isStarred
@@ -55,6 +64,7 @@ export function EmailDetails() {
                 <div className="icons-list">
                     <div className="circle-icon"> <img className="icon " onClick={() => navigate('/mail')} src={utilService.getIconUrl('back', false)} /></div>
                     <div className="circle-icon"> <img className="icon " onClick={() => { onTrash(email.id) }} src={utilService.getIconUrl('trash', false)} /></div>
+                    <div className="circle-icon"> <img className="icon " onClick={() => { onMarkUnread(email.id) }} src={utilService.getIconUrl('mail', true)} /></div>
 
                 </div>
                 <div className="email-subject"> {email.subject}</div>

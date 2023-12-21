@@ -20,7 +20,7 @@
 
 .icons-list{
     display: grid;
-    grid-template-columns: 35px 35px 1fr;
+    grid-template-columns: 35px 35px 35px 1fr;
     height:35px;
     place-items: center;
 }
