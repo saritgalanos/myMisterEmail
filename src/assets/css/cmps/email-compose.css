@@ -1,71 +1,92 @@
-
- .modal-content {
-display: grid;
-grid-template-columns: 1fr 30px;
-grid-template-rows: 35px 30px 30px 30px 1fr 55px;
-
- 
- 
+.modal-content {
+  display: grid;
+  grid-template-columns: 1fr 30px;
+  grid-template-rows: 35px;
   position: fixed;
-  bottom: 20px; /* Adjust the distance from the bottom as needed */
-  right: 20px; /* Adjust the distance from the right as needed */
+  bottom: 20px;
+  /* Adjust the distance from the bottom as needed */
+  right: 20px;
+  /* Adjust the distance from the right as needed */
   background-color: #fff;
   width: 40vw;
   height: 60vh;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  min-width:400px;
-  min-height:200px;
-  }
-  
-  .close-btn {
-    cursor: pointer;
-  }
+  min-width: 400px;
+  min-height: 200px;
+}
 
-  .compose-header {
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    background-color: #daeaf8;
-    font-weight:500;
-  }
-  .input-field {
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 0.95em;
-    border-bottom: 1px solid #ccc;
-    font-weight: 500;
-  }
-
-  
-  .input-field .internal-text {
-    font-size: 1em;
-    color: rgb(68, 67, 67);
-    font-weight: 400;
-  }
-
-  .input-body {
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 0.95em;
-  }
+.close-btn {
+  cursor: pointer;
+}
 
 
-    
+.email-compose-form {
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 30px 30px 1fr  50px;
+
+}
+
+
+.compose-header {
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #daeaf8;
+  font-weight: 500;
+}
+
+
+.input-field {
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 0.95em;
+  border-bottom: 1px solid #ccc;
+  font-weight: 500;
+}
+
+
+.input-field .internal-text {
+  font-size: 1em;
+  color: rgb(68, 67, 67);
+  font-weight: 400;
+
+}
+.input-field input {
+  border: none;
+  width: 100%;
+}
+
+.input-body {
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 0.95em;
+ }
+.input-body textarea {
+  width: 100%;
+  height:100%;
+  border: none;
+}
+.input-body textarea:focus {
+  outline: none;
+  border: none;
+}
+
 .send-button {
-    background-color: rgb(20, 58, 231);
-    border-radius: 15px;
-    border: 0px;
-    height: 35px;
-    width: 80px;
-    padding-right: 20px;
-    margin: 5px;
-    color:white;
-    font-size: 1em;
-    margin-left:20px;
-    margin-bottom: 20px;
-  }
-  
- 
+  background-color: rgb(20, 58, 231);
+  border-radius: 15px;
+  border: 0px;
+  height: 35px;
+  width: 80px;
+  padding-right: 10px;
+  padding-left:10px;
+  margin: 5px;
+  color: white;
+  font-size: 1em;
+  margin-left: 20px;
+  margin-right:20px;
+}

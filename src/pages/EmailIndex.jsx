@@ -14,14 +14,14 @@ export function EmailIndex() {
     const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
     const navigate = useNavigate()
     const params = useParams()
-   
+
     useEffect(() => {
-            setSearchParams(filterBy)
-            loadEmails()
+        setSearchParams(filterBy)
+        loadEmails()
     }, [filterBy])
 
 
-     async function loadEmails() {
+    async function loadEmails() {
 
         const emails = await emailService.query(filterBy)
         setEmails(emails)
@@ -41,15 +41,25 @@ export function EmailIndex() {
     }
 
     function onSetFilter(filterBy) {
-         setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
+        setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
     }
 
     async function onStar(emailId) {
         try {
             const email = await emailService.getById(emailId)
             email.isStarred = !email.isStarred
-            emailService.save(email)
+            const savedEmail = await emailService.save(email)
+            setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB) ))
+        } catch (error) {
+            console.log('error:', error)
+        }
+    }
 
+    async function onReadToggle(emailId) {
+        try {
+            const email = await emailService.getById(emailId)
+            email.isRead = !email.isRead
+            emailService.save(email)
         } catch (error) {
             console.log('error:', error)
         }
@@ -64,26 +74,26 @@ export function EmailIndex() {
     // }
 
     function handleSearchSubmit(filterBy) {
-        console.log("search by:"+filterBy.txt)
-        setFilterBy(prevFilter => ({ ...prevFilter, txt:filterBy.txt }))
+        console.log("search by:" + filterBy.txt)
+        setFilterBy(prevFilter => ({ ...prevFilter, txt: filterBy.txt }))
     }
 
-    const {isRead, sortBy ,txt} = filterBy
+    const { isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
 
     return (
         <section className="main-app">
-            <header className="app-header"><AppHeader filterBy={{txt}} handleSearchSubmit={handleSearchSubmit} /></header>
+            <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
             <aside className="app-side"><EmailFolderList onCompose={openComposeModal} /></aside>
-           {!params.emailId && <section className="email-index">
+            {!params.emailId && <section className="email-index">
                 <div className='main-filter'>
-                    <EmailFilter filterBy={{isRead, sortBy }} onSetFilter={onSetFilter} />
+                    <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
                 </div>
                 <div className='main-content'>
-                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar}  />
+                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />
                 </div>
             </section>}
-            <Outlet />
+            <Outlet context={{ onStar, onRemoveEmail, onReadToggle }} />
         </section>
     )
 

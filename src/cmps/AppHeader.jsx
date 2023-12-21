@@ -1,13 +1,9 @@
-import { utilService } from "../services/util.service";
+import { utilService } from "../services/util.service"
 import { useEffect, useState } from "react"
 
 export function AppHeader({ filterBy, handleSearchSubmit }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-
-
-    //const [searchTxt, setSearchTxt] = useState(filterBy.txt);
-    // const [isSearchClicked, setSearchClicked] = useState(false)
-
+    const [isSearchAreaClicked, setIsSearchAreaClicked] = useState(false);
 
     useEffect(() => {
         /*immediate search capability*/
@@ -15,7 +11,6 @@ export function AppHeader({ filterBy, handleSearchSubmit }) {
     }, [filterByToEdit])
 
     function handleChange(ev) {
-       
         let { value, name: field, type } = ev.target
         // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
         value = type === 'number' ? +value : value
@@ -28,43 +23,22 @@ export function AppHeader({ filterBy, handleSearchSubmit }) {
         handleSearchSubmit(filterByToEdit)
     }
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //         if (isSearchClicked && !event.target.closest('.search-area')) {
-    //             setSearchClicked(false)
-    //         }
-    //     }
+    const handleSearchAreaClick = () => {
+        setIsSearchAreaClicked(!isSearchAreaClicked);
+    }
 
-    //     window.addEventListener('click', handleClickOutside);
-    //     return () => {
-    //         window.removeEventListener('click', handleClickOutside)
-    //     }
-    // }, [isSearchClicked])
-
-
-
-
-
-
-
-    const SearchAreaClicked = ''//isSearchClicked ? "search-area-clicked" : ""
-
-
+    //search-area-clicked
     return (
-        <header className="app-header title">
-            <section className="search-area">
+        <header className="app-header">
+            <section className={`search-area ${isSearchAreaClicked ? "" : ""}`} onClick={handleSearchAreaClick}>
                 <form onSubmit={handleSubmit} className="search-form">
-                    <button type="submit" className="search-submit">
+                    <button type="submit">
                         <img src={utilService.getIconUrl('search', false)} className="icon" />
                     </button>
                     <label htmlFor="search"></label>
-                    <input className="search-input"
-                        id="search"
-                        name="txt"
-                        type="text"
+                    <input id="search" name="txt" type="text" placeholder="Search"
                         value={filterByToEdit.txt}
-                        placeholder="Search"
-                        onChange={ handleChange } />
+                        onChange={handleChange} />
                 </form>
             </section>
         </header>

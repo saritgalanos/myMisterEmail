@@ -17,6 +17,14 @@
    
 }
 
+
+.search-area-clicked,
+.search-area-clicked * {
+  background-color: white;
+  /* Add any other styles you want to apply when the search-area is clicked */
+}
+
+
 .search-form {
     display: flex;
     justify-content: center;
@@ -24,41 +32,32 @@
     flex-wrap:nowrap;
 }
 
-
-.search-area.search-area-clicked {
-    background:#fff;
-}
-
-.search-input {
+.search-form input {
     border:none;
-    background:#daeaf8;
+    background:inherit;
     width:400px;
 }
 
-.search-input.search-area-clicked {
-    background:#fff;
-}
-
-input:focus {
+.search-form input:focus {
     outline: none;
-    background-color: #fff;
-  } 
+} 
 
-.search-submit {
+.search-form button {
     border:none;
-    background:#daeaf8;
+    background:inherit;
     transition: background-color 0.3s, box-shadow 0.1s;
     cursor: pointer;
 }
 
-
-.search-submit.search-area-clicked {
-    background:#fff;
-}
-
-.search-submit:hover {
+.search-form button:hover {
     background-color: #b8c2cf;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 50%;
 }
+/*
+.search-form button img:hover {
+    background-color:inherit;
+}
+
+*/
 

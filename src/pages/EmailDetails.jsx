@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate, useOutletContext, useParams } from "react-router"
 import { emailService } from "../services/email.service"
 import { utilService } from "../services/util.service"
 import { EmailFolderList } from "../cmps/EmailFolderList"
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
+    const { onStar, onRemoveEmail, onReadToggle } = useOutletContext()
     const params = useParams()
     const navigate = useNavigate()
 
@@ -17,14 +18,6 @@ export function EmailDetails() {
         setIsRead()
     }, [email])
 
-    async function onRemoveEmail(emailId) {
-        try {
-            await emailService.remove(emailId)
-            navigate('/mail')
-        } catch (error) {
-            console.log('error:', error)
-        }
-    }
 
 
     async function loadEmail() {
@@ -35,7 +28,26 @@ export function EmailDetails() {
             console.log('error:', error)
         }
     }
-    
+
+    async function onTrash(emailId) {
+        try {
+            await onRemoveEmail(emailId)
+            navigate('/mail')
+        } catch (err) {
+            console.log('onTrash error:', err);
+        }
+    }
+
+    async function onStarInDetails(emailId) {
+        try {
+            const isStarred = !email.isStarred
+            setEmail((prevEmail) => ({ ...prevEmail, isStarred: isStarred }))
+            await onStar(emailId)
+        } catch (err) {
+            console.log('onStarInDetails error:', err);
+        }
+    }
+
     async function setIsRead() {
         if (!email) {
             return;
@@ -49,14 +61,14 @@ export function EmailDetails() {
     }
 
     if (!email) return <div>Loading Email Details...</div>
-    
+
 
     return (
         <div className="email-details">
             <div className="email-content">
                 <div className="icons-list">
-                   <div className="circle-icon"> <img className="icon " onClick={() => navigate('/mail')} src={utilService.getIconUrl('back', false)} /></div>
-                   <div className="circle-icon"> <img className="icon " onClick={() => { onRemoveEmail(email.id) }} src={utilService.getIconUrl('trash', false)} /></div>
+                    <div className="circle-icon"> <img className="icon " onClick={() => navigate('/mail')} src={utilService.getIconUrl('back', false)} /></div>
+                    <div className="circle-icon"> <img className="icon " onClick={() => { onTrash(email.id) }} src={utilService.getIconUrl('trash', false)} /></div>
 
                 </div>
                 <div className="email-subject"> {email.subject}</div>
@@ -64,7 +76,7 @@ export function EmailDetails() {
 
                     <div><strong>from: {email.from}</strong></div>
                     <div className="email-date">{utilService.getDateToDisplay(new Date(email.sentAt), true)}</div>
-                    <img className="icon" onClick={() => { }} src={utilService.getIconUrl('star', email.isStarred)} />
+                    <img className="icon" onClick={() => onStarInDetails(email.id)} src={utilService.getIconUrl('star', email.isStarred)} />
                 </div>
                 <div className="email-to">to: {email.to}</div>
 
