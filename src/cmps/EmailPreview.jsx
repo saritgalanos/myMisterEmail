@@ -62,7 +62,7 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead }) {
                         <img className="icon" onClick={() => { onRemoveEmail(emailToPreview.id) }} src={utilService.getIconUrl('trash', false)} />
                     </div>
                     <div>
-                        <img className="icon" src={utilService.getIconUrl('unread', false)} onClick={() => { onIsRead() }} />
+                        <img className="icon" src={utilService.getIconUrl('mail', emailToPreview.isRead)} onClick={() => { onIsRead() }} />
                     </div>
                 </div>
 
