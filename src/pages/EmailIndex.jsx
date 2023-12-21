@@ -91,7 +91,7 @@ export function EmailIndex() {
                     <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
                 </div>
                 <div className='main-content'>
-                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />
+                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} />
                 </div>
             </section>}
             <Outlet context={{ onStar, onRemoveEmail, setIsRead }} />

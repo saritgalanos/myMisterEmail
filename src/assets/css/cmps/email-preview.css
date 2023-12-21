@@ -20,9 +20,9 @@
    
  }
 
- .email-preview-subject,
- .email-preview-from,
- .email-preview-sent-at {
+ .email-line.subject,
+ .email-line.from,
+ .email-line.sent-at {
      margin-right: 10px;
  }
 
