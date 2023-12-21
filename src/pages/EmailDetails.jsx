@@ -6,23 +6,21 @@ import { EmailFolderList } from "../cmps/EmailFolderList"
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
-    const { onStar, onRemoveEmail, onReadToggle } = useOutletContext()
+    const { onStar, onRemoveEmail, setIsRead } = useOutletContext()
     const params = useParams()
+    
+
     const navigate = useNavigate()
 
     useEffect(() => {
         loadEmail()
     }, [params.emailId])
 
-    useEffect(() => {
-        setIsRead()
-    }, [email])
-
-
-
+   
     async function loadEmail() {
         try {
             const email = await emailService.getById(params.emailId)
+            setIsRead(email.id, true)
             setEmail(email)
         } catch (error) {
             console.log('error:', error)
@@ -45,18 +43,6 @@ export function EmailDetails() {
             await onStar(emailId)
         } catch (err) {
             console.log('onStarInDetails error:', err);
-        }
-    }
-
-    async function setIsRead() {
-        if (!email) {
-            return;
-        }
-        try {
-            email.isRead = true;
-            await emailService.save(email)
-        } catch (error) {
-            console.log('error:', error)
         }
     }
 

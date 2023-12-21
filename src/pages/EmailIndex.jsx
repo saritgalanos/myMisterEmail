@@ -55,11 +55,12 @@ export function EmailIndex() {
         }
     }
 
-    async function onReadToggle(emailId) {
+    async function setIsRead(emailId, isRead) {
         try {
             const email = await emailService.getById(emailId)
-            email.isRead = !email.isRead
-            emailService.save(email)
+            email.isRead = isRead
+            const savedEmail = await emailService.save(email)
+            setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB) ))
         } catch (error) {
             console.log('error:', error)
         }
@@ -93,7 +94,7 @@ export function EmailIndex() {
                     <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} />
                 </div>
             </section>}
-            <Outlet context={{ onStar, onRemoveEmail, onReadToggle }} />
+            <Outlet context={{ onStar, onRemoveEmail, setIsRead }} />
         </section>
     )
 
