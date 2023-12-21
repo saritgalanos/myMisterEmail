@@ -1,69 +1,71 @@
-import { Link, NavLink } from "react-router-dom";
 import { utilService } from "../services/util.service";
 import { useEffect, useState } from "react"
 
-export function AppHeader({handleSearchSubmit}) {
-    const [searchTxt, setSearchTxt] = useState("");
-    // const [isClicked, setIsClicked] = useState(false)
-   
-    function handleSubmit(event) {
-        event.preventDefault();
-        handleSearchSubmit(searchTxt)
+export function AppHeader({ filterBy, handleSearchSubmit }) {
+    const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+
+
+    //const [searchTxt, setSearchTxt] = useState(filterBy.txt);
+    // const [isSearchClicked, setSearchClicked] = useState(false)
+
+
+    useEffect(() => {
+        /*immediate search capability*/
+        //handleSearchSubmit(filterByToEdit)
+    }, [filterByToEdit])
+
+    function handleChange(ev) {
+       
+        let { value, name: field, type } = ev.target
+        // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
+        value = type === 'number' ? +value : value
+        setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
 
-    // function handleFocus() {
-    //     setIsClicked(true)
-    // }
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        handleSearchSubmit(filterByToEdit)
+    }
+
+    // useEffect(() => {
+    //     const handleClickOutside = (event) => {
+    //         if (isSearchClicked && !event.target.closest('.search-area')) {
+    //             setSearchClicked(false)
+    //         }
+    //     }
+
+    //     window.addEventListener('click', handleClickOutside);
+    //     return () => {
+    //         window.removeEventListener('click', handleClickOutside)
+    //     }
+    // }, [isSearchClicked])
 
 
-    const inputClassName=  "search-box"
 
 
-      return (
+
+
+
+    const SearchAreaClicked = ''//isSearchClicked ? "search-area-clicked" : ""
+
+
+    return (
         <header className="app-header title">
-            <section className="container">
-            
-                <form onSubmit={handleSubmit}>
-                <div className="search-area">
-                <button type="submit" className="search-submit" > 
-                    <img src={utilService.getIconUrl('search', false)} className="icon"/>
-                </button>
+            <section className="search-area">
+                <form onSubmit={handleSubmit} >
+                    <button type="submit" className="search-submit">
+                        <img src={utilService.getIconUrl('search', false)} className="icon" />
+                    </button>
                     <label htmlFor="search"></label>
-                        <input className={inputClassName}
-                        name="search"
-                            type="text"
-                            value={searchTxt}
-                            onChange={(e) => setSearchTxt(e.target.value)}
-                            // onFocus={() => handleFocus()}
-                            placeholder="Search"
-                        />
-                  
-                  </div>
+                    <input className="search-input"
+                        id="search"
+                        name="txt"
+                        type="text"
+                        value={filterByToEdit.txt}
+                        placeholder="Search"
+                        onChange={ handleChange } />
                 </form>
-              
-
-  {/* <form>
-                <label htmlFor="txt">Search</label>
-                <input className="txt" list="options" onChange={handleChange} id="txt" value={txt || ''} name="txt" type="text" />
-            </form> */}
- 
-
-                {/* <nav>
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/about">About Us</NavLink>
-                    <NavLink to="/emails">Emails</NavLink>
-                </nav> */}
-                {/* <form onSubmit={handleSubmit}> */}
-                    {/* <div className="search-area"> */}
-                    {/* <div className="search-icon" ><img className="icon" onClick={() => { }} src={utilService.getIconUrl('search', false)} /></div> */}
-                    {/* <label htmlFor="txt"> */}
-                    {/* <label>Search: */}
-                        {/* <input className="Search-box" onChange={handleChange} id="txt" value={txt || 'Search'} name="txt" type="text" /> */}
-                        {/* <input onChange={handleChange} value={'Search'} type="text" />
-                    </label>
-                    <input type="submit" /> */}
-                    {/* </div> */}
-                {/* </form> */}
             </section>
         </header>
     )

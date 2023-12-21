@@ -10,9 +10,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         console.log("filter.sortBy:"+filterByToEdit.sortBy)
         console.log("filter.isRead:"+filterByToEdit.isRead)
     }
-    logFilter()
-
-
+   
     useEffect(() => {
         onSetFilter(filterByToEdit)
     }, [filterByToEdit])

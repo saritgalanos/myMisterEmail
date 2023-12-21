@@ -3,19 +3,20 @@ import { emailService } from "../services/email.service"
 import { EmailList } from "../cmps/EmailList"
 import { EmailFolderList } from "../cmps/EmailFolderList"
 import { EmailFilter } from "../cmps/EmailFilter"
-import { Outlet, useNavigate, useParams } from "react-router-dom"
+import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { AppHeader } from "../cmps/AppHeader"
 
 
 
 export function EmailIndex() {
-
+    const [searchParams, setSearchParams] = useSearchParams()
     const [emails, setEmails] = useState(null)
-    const [filterBy, setFilterBy] = useState(emailService.getDefaultFilter())
+    const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
     const navigate = useNavigate()
     const params = useParams()
    
     useEffect(() => {
+            setSearchParams(filterBy)
             loadEmails()
     }, [filterBy])
 
@@ -58,21 +59,21 @@ export function EmailIndex() {
         navigate('/mail/compose')
     }
 
-    function closeComposeModal() {
-        navigate('/mail')
+    // function closeComposeModal() {
+    //     navigate('/mail')
+    // }
+
+    function handleSearchSubmit(filterBy) {
+        console.log("search by:"+filterBy.txt)
+        setFilterBy(prevFilter => ({ ...prevFilter, txt:filterBy.txt }))
     }
 
-    function handleSearchSubmit(value) {
-        console.log("search by:"+value)
-        setFilterBy(prevFilter => ({ ...prevFilter,txt: value }))
-    }
-
-    const {isRead, sortBy } = filterBy
+    const {isRead, sortBy ,txt} = filterBy
     if (!emails) return <div>Loading...</div>
 
     return (
         <section className="main-app">
-            <header className="app-header"><AppHeader handleSearchSubmit={handleSearchSubmit} /></header>
+            <header className="app-header"><AppHeader filterBy={{txt}} handleSearchSubmit={handleSearchSubmit} /></header>
             <aside className="app-side"><EmailFolderList onCompose={openComposeModal} /></aside>
            {!params.emailId && <section className="email-index">
                 <div className='main-filter'>

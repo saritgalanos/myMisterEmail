@@ -7,7 +7,8 @@ export const emailService = {
     remove,
     getById,
     createEmail,
-    getDefaultFilter
+    getDefaultFilter,
+    getFilterFromParams
 }
 
 const email = {
@@ -106,6 +107,14 @@ function getDefaultFilter() {
 }
 
 
+function getFilterFromParams(searchParams) {
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+    for (const field in defaultFilter) {
+        filterBy[field] = searchParams.get(field) || defaultFilter[field]
+    }
+    return filterBy
+}
 
 function _createEmails() {
     let emails = utilService.loadFromStorage(STORAGE_KEY)
