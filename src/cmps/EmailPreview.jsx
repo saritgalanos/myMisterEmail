@@ -41,7 +41,7 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead }) {
             onMouseLeave={() => { setMouseOn(false) }}>
 
 
-            <img src={utilService.getIconUrl('star', emailToPreview.isStarred)} className="icon"
+            <img src={utilService.getIconUrl('starred', emailToPreview.isStarred)} className="icon"
                 onClick={() => onStarPreview()} />
 
             <Link to={`${emailToPreview.id}`} className="email-line">

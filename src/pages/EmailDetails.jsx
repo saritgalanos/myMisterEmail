@@ -72,7 +72,7 @@ export function EmailDetails() {
 
                     <div><strong>from: {email.from}</strong></div>
                     <div className="email-date">{utilService.getDateToDisplay(new Date(email.sentAt), true)}</div>
-                    <img className="icon" onClick={() => onStarInDetails(email.id)} src={utilService.getIconUrl('star', email.isStarred)} />
+                    <img className="icon" onClick={() => onStarInDetails(email.id)} src={utilService.getIconUrl('starred', email.isStarred)} />
                 </div>
                 <div className="email-to">to: {email.to}</div>
 

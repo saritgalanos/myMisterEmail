@@ -28,15 +28,16 @@ const loggedinUser = {
     fullname: 'Sarit Galanos'
 }
 
-
 const STORAGE_KEY = 'emails'
 
 _createEmails()
 
 async function query(filterBy) {
     let emails = await storageService.query(STORAGE_KEY)
+    logFilter(filterBy)
     if (filterBy) {
         var { txt, emailStatus, isRead, sortBy } = filterBy
+        
         emails = emails.filter(email => email.body.toLowerCase().includes(txt.toLowerCase())
             || email.subject.toLowerCase().includes(txt.toLowerCase()))
 
@@ -44,28 +45,49 @@ async function query(filterBy) {
             const isReadFilter = (isRead === 'Read') ? true : false
             emails = emails.filter(email => (email.isRead === isReadFilter))
         }
-        if (sortBy != '') {
-            var sortedEmails
-            switch (sortBy) {
-
-                case 'dateAsc':
-                    sortedEmails = [...emails].sort((a, b) => a.sentAt - b.sentAt)
+        if (emailStatus) {
+            switch (emailStatus) {
+                case 'inbox':
+                    emails = emails.filter(email => (email.to === loggedinUser.email))
                     break
-                case 'dateDes':
-                    sortedEmails = [...emails].sort((a, b) => b.sentAt - a.sentAt);
+                case 'sent':
+                    emails = emails.filter(email => (email.from === loggedinUser.email))
+                    break  
+                case 'trash':
+                    emails = emails.filter(email => (email.removedAt))
                     break
-                case 'subjectAsc':
-                    sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? 1 : -1);
+                case 'starred':
+                    emails = emails.filter(email => (email.isStarred))    
                     break
-                case 'subjectDes':
-                    sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? -1 : 1);
-                    break
+                case 'draft':
+                    emails = emails.filter(email => (!email.sentAt)  ) 
+                    break;
             }
-            return sortedEmails;
         }
 
-        return emails
+ 
+    if (sortBy != '') {
+        var sortedEmails
+        switch (sortBy) {
+
+            case 'dateAsc':
+                sortedEmails = [...emails].sort((a, b) => a.sentAt - b.sentAt)
+                break
+            case 'dateDes':
+                sortedEmails = [...emails].sort((a, b) => b.sentAt - a.sentAt);
+                break
+            case 'subjectAsc':
+                sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? 1 : -1);
+                break
+            case 'subjectDes':
+                sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? -1 : 1);
+                break
+        }
+        return sortedEmails;
     }
+
+    return emails
+}
 }
 
 function getById(id) {
@@ -84,22 +106,23 @@ function save(emailToSave) {
     }
 }
 
+
 function createEmail(subject = '', body = '', sentAt = 0, removedAt = null, from = "", to = "") {
     return {
         subject,
         body,
         isRead: false,
-        isStarred: false,
-        sentAt,
-        removedAt,
-        from,
-        to
+        isStarred: false, /*if available than in star*/
+        sentAt, /*if available than in sent (can be used for both inbox and sent)*/
+        removedAt, /*if available than in trash*/
+        from, /*if current user than sent*/
+        to /*if current user than inbox*/
     }
 }
 
 function getDefaultFilter() {
     return {
-        emailStatus: '',
+        emailStatus: 'inbox',
         txt: '',
         isRead: '',
         sortBy: ''
@@ -113,7 +136,32 @@ function getFilterFromParams(searchParams) {
     for (const field in defaultFilter) {
         filterBy[field] = searchParams.get(field) || defaultFilter[field]
     }
+    logFilter(filterBy)
     return filterBy
+}
+
+function logFilter(filterBy) {
+    console.log(`logFilter - filterBy: filterBy:emailStatus: ${filterBy.emailStatus}`)
+}
+
+function F(email) {
+    // logEmail(email)
+    console.log(loggedinUser.email)
+    if (email.to === loggedinUser.email) {
+        return 'inbox'
+    } else if (email.sentAt) {
+        return 'sent'
+    } else if (email.removedAt) {
+        return 'trash'
+    } else {
+        return 'draft'
+    }
+}
+
+function logEmail() {
+    console.log(`email.to:${email.to} 
+                email.from:${email.from} 
+                email.isRead:${email.isRead}`)
 }
 
 function _createEmails() {
@@ -129,23 +177,23 @@ function _createEmails() {
             {
                 id: 'e101', subject: 'Plans for tomorrow', body: emailBodylong,
                 isRead: false, isStarred: false, sentAt: 1651133930594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                from: 'roni@gmail.com', to: 'saritgalanos@mistermail.com'
             },
             {
                 id: 'e102', subject: 'Your yearly bonus', body: 'It is time for your yearly bonus, please come to my office',
                 isRead: false, isStarred: false, sentAt: 1702233930594, removedAt: null,
-                from: 'daniel@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'daniel@momo.com', to: 'saritgalanos@mistermail.com'
             },
             {
                 id: 'e103', subject: 'Plans for tomorrow', body: 'emailBodylong',
                 isRead: false, isStarred: false, sentAt: 1701933930594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                from: 'roni@gmail.com', to: 'saritgalanos@mistermail.com'
             },
 
             {
                 id: 'e104', subject: 'Highly customizable design assets', body: 'Welcome to the largest Design Asset Ecosystem:assets, Integrations, and Motion',
                 isRead: false, isStarred: false, sentAt: 1701283930594, removedAt: null,
-                from: 'dan@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'dan@momo.com', to: 'saritgalanos@mistermail.com'
             },
             {
                 id: 'e105', subject: `[Update] Changes to the Google Cloud Third-Party Subprocessors list`,
@@ -162,64 +210,64 @@ function _createEmails() {
                We are removing PVP Inc from performing Technical Support to All Google Cloud Platform Services.
                No action is required on your part.`,
                 isRead: false, isStarred: false, sentAt: 1701833930594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                from: 'roni@gmail.com', to: 'saritgalanos@mistermail.com'
             },
             {
                 id: 'e106', subject: 'My next vacation', body: 'I would like to take a vacation for Christmas ',
                 isRead: false, isStarred: false, sentAt: 1701133930594, removedAt: null,
-                from: 'shiri@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'shiri@momo.com', to: 'saritgalanos@mistermail.com'
             },
 
 
             {
                 id: 'e107', subject: 'My next vacation', body: 'I would like to take a vacation for Christmas ',
                 isRead: false, isStarred: false, sentAt: 1702133930594, removedAt: null,
-                from: 'shiri@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'shiri@momo.com', to: 'saritgalanos@mistermail.com'
             },
             {
                 id: 'e108', subject: 'Plans for tomorrow', body: emailBodylong,
                 isRead: false, isStarred: false, sentAt: 1651133930594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                from: 'roni@gmail.com', to: 'saritgalanos@mistermail.com'
             },
             {
                 id: 'e109', subject: 'Your yearly bonus', body: 'It is time for your yearly bonus, please come to my office',
                 isRead: false, isStarred: false, sentAt: 1702233930594, removedAt: null,
-                from: 'daniel@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'daniel@momo.com', to: 'saritgalanos@mistermail.com'
             },
             {
                 id: 'e110', subject: 'Plans for tomorrow', body: 'emailBodylong',
                 isRead: false, isStarred: false, sentAt: 1701933930594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                from: 'roni@gmail.com', to: 'saritgalanos@mistermail.com'
             },
 
             {
                 id: 'e111', subject: 'Your yearly bonus', body: 'It is time for your yearly bonus, please come to my office',
                 isRead: false, isStarred: false, sentAt: 1701283930594, removedAt: null,
-                from: 'dan@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'dan@momo.com', to: 'saritgalanos@mistermail.com'
             },
             {
-                id: 'e112', subject: 'Plans for tomorrow', body: 'emailBodylong',
+                id: 'e112', subject: 'This email should be in the sent directory', body: 'emailBodylong',
                 isRead: false, isStarred: false, sentAt: 1701833955594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                from: 'saritgalanos@mistermail.com', to: 'sarit@gmail.com'
             },
             {
-                id: 'e113', subject: 'My next vacation', body: 'I would like to take a vacation for Christmas ',
+                id: 'e113', subject: 'This email should be in the sent directory, This email should be in the sent directory', body: 'I would like to take a vacation for Christmas ',
                 isRead: false, isStarred: false, sentAt: 1701663930594, removedAt: null,
-                from: 'shiri@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'saritgalanos@mistermail.com', to: 'roni@gmail.com'
             },
 
 
             {
                 id: 'e114', subject: 'My next vacation', body: 'I would like to take a vacation for Christmas ',
                 isRead: false, isStarred: false, sentAt: 1707733930594, removedAt: null,
-                from: 'shiri@momo.com', to: 'saritgalanos@misteremail.com'
+                from: 'shiri@momo.com', to: 'saritgalanos@mistermail.com'
             },
 
 
             {
                 id: 'e115', subject: 'Plans for tomorrow', body: 'emailBodylong',
                 isRead: false, isStarred: false, sentAt: 1702233330594, removedAt: null,
-                from: 'roni@gmail.com', to: 'saritgalanos@misteremail.com'
+                from: 'roni@gmail.com', to: 'saritgalanos@mistermail.com'
             }
 
         ]

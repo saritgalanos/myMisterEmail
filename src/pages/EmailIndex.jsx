@@ -12,6 +12,8 @@ export function EmailIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [emails, setEmails] = useState(null)
     const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
+    const [unreadCount, setUnreadCount] =useState(0)
+    
     const navigate = useNavigate()
     const params = useParams()
 
@@ -41,7 +43,12 @@ export function EmailIndex() {
     }
 
     function onSetFilter(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
+        setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead}));
+    }
+
+    function onSetEmailStatus(filterBy) {
+        setFilterBy(prevFilter => ({ ...prevFilter, emailStatus:filterBy.emailStatus}));
+
     }
 
     async function onStar(emailId) {
@@ -79,13 +86,13 @@ export function EmailIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, txt: filterBy.txt }))
     }
 
-    const { isRead, sortBy, txt } = filterBy
+    const { emailStatus, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
 
     return (
         <section className="main-app">
             <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
-            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} /></aside>
+            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} filterBy={{ emailStatus }} onSetEmailStatus={onSetEmailStatus}/></aside>
             {!params.emailId && <section className="email-index">
                 <div className='main-filter'>
                     <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
