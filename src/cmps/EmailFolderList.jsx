@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { utilService } from "../services/util.service"
-import { EmailFilter } from "./EmailFilter"
+
 
 export function EmailFolderList({ onCompose, filterBy, onSetEmailStatus }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
@@ -29,27 +29,27 @@ export function EmailFolderList({ onCompose, filterBy, onSetEmailStatus }) {
 
 
     return (
+        
+            <section className="email-folder-list">
+                <div className="compose-area">
+                    <button className="compose-button centered" onClick={onCompose}> <img src={utilService.getIconUrl('compose', false)} className="icon" />Compose</button>
+                </div>
+                <section className="folder-area">
+                    {folders.map((folder) => (
+                        <div
+                            key={folder.name}
+                            className={`folder ${isSelectedFolder(folder.name)}`}
+                            onClick={() => onFolder(folder.name)}
+                        >
+                            <img src={utilService.getIconUrl(folder.name, false)} alt={`${folder.label} Icon`} />
+                            <div>{folder.label}</div>
+                            <p>{folder.count}</p>
+                        </div>
+                    ))}
+                </section>
 
-        <section className="email-folder-list">
-            <div className="compose-area">
-                <button className="compose-button centered" onClick={onCompose}> <img src={utilService.getIconUrl('compose', false)} className="icon" />Compose</button>
-            </div>
-            <section className="folder-area">
-                {folders.map((folder) => (
-                    <div
-                        key={folder.name}
-                        className={`folder ${isSelectedFolder(folder.name)}`}
-                        onClick={() => onFolder(folder.name)}
-                    >
-                        <img src={utilService.getIconUrl(folder.name, false)} alt={`${folder.label} Icon`} />
-                        <div>{folder.label}</div>
-                        <p>{folder.count}</p>
-                    </div>
-                ))}
-            </section>
-
-        </section >
-
+            </section >
+        
     )
 }
 

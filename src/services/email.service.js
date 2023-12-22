@@ -34,10 +34,9 @@ _createEmails()
 
 async function query(filterBy) {
     let emails = await storageService.query(STORAGE_KEY)
-    logFilter(filterBy)
     if (filterBy) {
         var { txt, emailStatus, isRead, sortBy } = filterBy
-        
+
         emails = emails.filter(email => email.body.toLowerCase().includes(txt.toLowerCase())
             || email.subject.toLowerCase().includes(txt.toLowerCase()))
 
@@ -48,46 +47,47 @@ async function query(filterBy) {
         if (emailStatus) {
             switch (emailStatus) {
                 case 'inbox':
-                    emails = emails.filter(email => (email.to === loggedinUser.email))
+                    emails = emails.filter(email => ((email.to === loggedinUser.email) && (!email.removedAt)))
                     break
                 case 'sent':
-                    emails = emails.filter(email => (email.from === loggedinUser.email))
-                    break  
+                    emails = emails.filter(email => ((email.from === loggedinUser.email) && (!email.removedAt)))
+                    break
                 case 'trash':
-                    emails = emails.filter(email => (email.removedAt))
+                    console.log('in trash')
+                    emails = emails.filter(email => (email.removedAt != null))
                     break
                 case 'starred':
-                    emails = emails.filter(email => (email.isStarred))    
+                    emails = emails.filter(email => (email.isStarred && (!email.removedAt)))
                     break
                 case 'draft':
-                    emails = emails.filter(email => (!email.sentAt)  ) 
+                    emails = emails.filter(email => (!email.sentAt && (!email.removedAt)))
                     break;
             }
         }
 
- 
-    if (sortBy != '') {
-        var sortedEmails
-        switch (sortBy) {
 
-            case 'dateAsc':
-                sortedEmails = [...emails].sort((a, b) => a.sentAt - b.sentAt)
-                break
-            case 'dateDes':
-                sortedEmails = [...emails].sort((a, b) => b.sentAt - a.sentAt);
-                break
-            case 'subjectAsc':
-                sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? 1 : -1);
-                break
-            case 'subjectDes':
-                sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? -1 : 1);
-                break
+        if (sortBy != '') {
+            var sortedEmails
+            switch (sortBy) {
+
+                case 'dateAsc':
+                    sortedEmails = [...emails].sort((a, b) => a.sentAt - b.sentAt)
+                    break
+                case 'dateDes':
+                    sortedEmails = [...emails].sort((a, b) => b.sentAt - a.sentAt);
+                    break
+                case 'subjectAsc':
+                    sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? 1 : -1);
+                    break
+                case 'subjectDes':
+                    sortedEmails = [...emails].sort((a, b) => a.subject > b.subject ? -1 : 1);
+                    break
+            }
+            return sortedEmails;
         }
-        return sortedEmails;
-    }
 
-    return emails
-}
+        return emails
+    }
 }
 
 function getById(id) {
@@ -136,26 +136,11 @@ function getFilterFromParams(searchParams) {
     for (const field in defaultFilter) {
         filterBy[field] = searchParams.get(field) || defaultFilter[field]
     }
-    logFilter(filterBy)
     return filterBy
 }
 
 function logFilter(filterBy) {
     console.log(`logFilter - filterBy: filterBy:emailStatus: ${filterBy.emailStatus}`)
-}
-
-function F(email) {
-    // logEmail(email)
-    console.log(loggedinUser.email)
-    if (email.to === loggedinUser.email) {
-        return 'inbox'
-    } else if (email.sentAt) {
-        return 'sent'
-    } else if (email.removedAt) {
-        return 'trash'
-    } else {
-        return 'draft'
-    }
 }
 
 function logEmail() {

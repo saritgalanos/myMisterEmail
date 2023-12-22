@@ -12,8 +12,8 @@ export function EmailIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [emails, setEmails] = useState(null)
     const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
-    const [unreadCount, setUnreadCount] =useState(0)
-    
+    const [unreadCount, setUnreadCount] = useState(0)
+
     const navigate = useNavigate()
     const params = useParams()
 
@@ -32,22 +32,36 @@ export function EmailIndex() {
 
 
     async function onRemoveEmail(emailId) {
+        /*if email does not have a removeAt add one and finish. if it does, remove completely*/
         try {
-            await emailService.remove(emailId)
-            setEmails(prevEmails => {
-                return prevEmails.filter(email => email.id !== emailId)
-            })
+            const email = await emailService.getById(emailId)
+            if (!email.removedAt) {
+                console.log('on removedAt')
+                email.removedAt = Date.now()
+                console.log('email.removedAt '+email.removedAt )
+                const savedEmail = await emailService.save(email)
+                setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
+                setEmails(prevEmails => {
+                    return prevEmails.filter(email => email.id !== emailId)
+                })
+            }
+            else {  /*remove completely*/
+                await emailService.remove(emailId)
+                setEmails(prevEmails => {
+                    return prevEmails.filter(email => email.id !== emailId)
+                })
+            }
         } catch (error) {
             console.log('error:', error)
         }
     }
 
     function onSetFilter(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead}));
+        setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
     }
 
     function onSetEmailStatus(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, emailStatus:filterBy.emailStatus}));
+        setFilterBy(prevFilter => ({ ...prevFilter, emailStatus: filterBy.emailStatus }));
 
     }
 
@@ -56,7 +70,7 @@ export function EmailIndex() {
             const email = await emailService.getById(emailId)
             email.isStarred = !email.isStarred
             const savedEmail = await emailService.save(email)
-            setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB) ))
+            setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
         } catch (error) {
             console.log('error:', error)
         }
@@ -67,7 +81,7 @@ export function EmailIndex() {
             const email = await emailService.getById(emailId)
             email.isRead = isRead
             const savedEmail = await emailService.save(email)
-            setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB) ))
+            setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
         } catch (error) {
             console.log('error:', error)
         }
@@ -92,7 +106,7 @@ export function EmailIndex() {
     return (
         <section className="main-app">
             <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
-            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} filterBy={{ emailStatus }} onSetEmailStatus={onSetEmailStatus}/></aside>
+            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} filterBy={{ emailStatus }} onSetEmailStatus={onSetEmailStatus} /></aside>
             {!params.emailId && <section className="email-index">
                 <div className='main-filter'>
                     <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />

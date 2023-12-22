@@ -20,7 +20,7 @@ export function App() {
             <section>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/about" element={<AboutUs />} />                    
                     <Route path="/mail" element={<EmailIndex />}>
                         <Route path="/mail/:emailId" element={<EmailDetails />} />
                         <Route path="/mail/compose" element={<EmailCompose />} />
