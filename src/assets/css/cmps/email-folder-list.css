@@ -41,6 +41,7 @@
   background-color: #a8c7fa;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  font-weight:600;
 }
 
 .selected-folder:hover {

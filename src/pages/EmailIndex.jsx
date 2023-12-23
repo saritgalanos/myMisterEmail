@@ -30,7 +30,14 @@ export function EmailIndex() {
 
     }
 
+    function updateUnreadCount(email, changeBy) {
+        if (email.to === emailService.getLoggedinUserEmail()) {
+            emailService.updateUnreadCount(changeBy)
+            console.log('updating unread count')
+            setUnreadCount(emailService.getUnreadCount())
 
+        }
+    }
     async function onRemoveEmail(emailId) {
         /*if email does not have a removeAt add one and finish. if it does, remove completely*/
         try {
@@ -39,6 +46,9 @@ export function EmailIndex() {
                 console.log('on removedAt')
                 email.removedAt = Date.now()
                 console.log('email.removedAt ' + email.removedAt)
+                if (!email.isRead) {
+                    updateUnreadCount(email, -1)
+                }
                 const savedEmail = await emailService.save(email)
                 setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
                 setEmails(prevEmails => {
@@ -80,6 +90,7 @@ export function EmailIndex() {
         try {
             const email = await emailService.getById(emailId)
             email.isRead = isRead
+            isRead ? updateUnreadCount(email, -1) : updateUnreadCount(email, 1)
             const savedEmail = await emailService.save(email)
             setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
         } catch (error) {
@@ -107,7 +118,7 @@ export function EmailIndex() {
             console.log("EmailCompose error on onSendEmail:" + err)
         }
         loadEmails()
-       
+
     }
 
     const { emailStatus, isRead, sortBy, txt } = filterBy

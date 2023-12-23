@@ -4,7 +4,7 @@ import { utilService } from "../services/util.service"
 export function EmailFolder({ folder, filterBy ,onSetEmailStatus}) {
     
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-    
+        
     useEffect(() => {
         onSetEmailStatus(filterByToEdit)
     }, [filterByToEdit])
@@ -28,7 +28,7 @@ export function EmailFolder({ folder, filterBy ,onSetEmailStatus}) {
         >
             <img src={utilService.getIconUrl(folder.name, isSelected(folder.name))} alt={`${folder.label} Icon`} />
             <div>{folder.label}</div>
-            <p>{folder.count}</p>
+            <p>{(folder.count !== 0) ? folder.count : ""}</p>
         </div>
 
     )

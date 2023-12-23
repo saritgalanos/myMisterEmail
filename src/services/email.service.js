@@ -10,7 +10,9 @@ export const emailService = {
     getDefaultFilter,
     getFilterFromParams,
     getFolders,
-    getLoggedinUserEmail
+    getLoggedinUserEmail,
+    updateUnreadCount,
+    getUnreadCount
 }
 
 const folders = [
@@ -24,7 +26,9 @@ const folders = [
 function getFolders() {
     return folders
 }
-
+function getUnreadCount() {
+    return folders[0].count  //returns the unread count in Inbox
+}
 
 const email = {
     id: 'e101',
@@ -53,8 +57,7 @@ _createEmails()
 
 async function query(filterBy) {
     let emails = await storageService.query(STORAGE_KEY)
-    resetEmailCount()
-    emails.map(email => updateEmailCount(email, true))
+    setUnreadCount(emails)
     if (filterBy) {
         var { txt, emailStatus, isRead, sortBy } = filterBy
 
@@ -170,30 +173,20 @@ function logEmail() {
                 email.isRead:${email.isRead}`)
 }
 
-function updateEmailCount(email, isAdd) {
-
-    /*inbox unread*/
-    if ((email.to === loggedinUser.email) && (!email.removedAt) && !email.isRead) {
-        isAdd ? folders[0].count++ : folders[0].count--
-    }
-    /*starred*/
-    if (email.isStarred && (!email.removedAt)) {
-        isAdd ? folders[1].count++ : folders[1].count--
-    }
-    /*sent*/
-    if ((email.from === loggedinUser.email) && (!email.removedAt)) {
-        isAdd ? folders[2].count++ : folders[2].count--
-    }
-    /*draft*/
-    if (!email.sentAt && (!email.removedAt)) {
-        isAdd ? folders[3].count++ : folders[3].count--
-    }
-
-    /*trash*/
-    if (email.removedAt != null) {
-        isAdd ? folders[4].count++ : folders[4].count--
-    }
+function setUnreadCount(emails) {
+    folders[0].count = 0
+    emails.map((email) => {
+        /*inbox unread*/
+        if ((email.to === loggedinUser.email) && (!email.removedAt) && !email.isRead) {
+            folders[0].count++
+        }
+    })
 }
+
+function updateUnreadCount(changeBy) {
+    folders[0].count = folders[0].count + changeBy
+}
+
 
 function resetEmailCount() {
     folders.map(folder => folder.count = 0)
@@ -309,7 +302,7 @@ function _createEmails() {
         ]
 
         /*setting initial count regardless of filter*/
-        emails.map(email => updateEmailCount(email, true))
+        setUnreadCount(emails)
         utilService.saveToStorage(STORAGE_KEY, emails)
     }
 }
