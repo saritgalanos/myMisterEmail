@@ -8,8 +8,23 @@ export const emailService = {
     getById,
     createEmail,
     getDefaultFilter,
-    getFilterFromParams
+    getFilterFromParams,
+    getFolders,
+    getLoggedinUserEmail
 }
+
+const folders = [
+    { name: 'inbox', label: 'Inbox', count: 0 },
+    { name: 'starred', label: 'Starred', count: 0 },
+    { name: 'sent', label: 'Sent', count: 0 },
+    { name: 'draft', label: 'Draft', count: 0 },
+    { name: 'trash', label: 'Trash', count: 0 },
+]
+
+function getFolders() {
+    return folders
+}
+
 
 const email = {
     id: 'e101',
@@ -28,12 +43,18 @@ const loggedinUser = {
     fullname: 'Sarit Galanos'
 }
 
+function getLoggedinUserEmail() {
+    return loggedinUser.email
+}
+
 const STORAGE_KEY = 'emails'
 
 _createEmails()
 
 async function query(filterBy) {
     let emails = await storageService.query(STORAGE_KEY)
+    resetEmailCount()
+    emails.map(email => updateEmailCount(email, true))
     if (filterBy) {
         var { txt, emailStatus, isRead, sortBy } = filterBy
 
@@ -149,6 +170,36 @@ function logEmail() {
                 email.isRead:${email.isRead}`)
 }
 
+function updateEmailCount(email, isAdd) {
+
+    /*inbox unread*/
+    if ((email.to === loggedinUser.email) && (!email.removedAt) && !email.isRead) {
+        isAdd ? folders[0].count++ : folders[0].count--
+    }
+    /*starred*/
+    if (email.isStarred && (!email.removedAt)) {
+        isAdd ? folders[1].count++ : folders[1].count--
+    }
+    /*sent*/
+    if ((email.from === loggedinUser.email) && (!email.removedAt)) {
+        isAdd ? folders[2].count++ : folders[2].count--
+    }
+    /*draft*/
+    if (!email.sentAt && (!email.removedAt)) {
+        isAdd ? folders[3].count++ : folders[3].count--
+    }
+
+    /*trash*/
+    if (email.removedAt != null) {
+        isAdd ? folders[4].count++ : folders[4].count--
+    }
+}
+
+function resetEmailCount() {
+    folders.map(folder => folder.count = 0)
+}
+
+
 function _createEmails() {
     let emails = utilService.loadFromStorage(STORAGE_KEY)
 
@@ -256,7 +307,9 @@ function _createEmails() {
             }
 
         ]
+
+        /*setting initial count regardless of filter*/
+        emails.map(email => updateEmailCount(email, true))
         utilService.saveToStorage(STORAGE_KEY, emails)
     }
 }
-

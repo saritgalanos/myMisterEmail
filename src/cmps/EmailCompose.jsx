@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useOutletContext, useParams } from "react-router"
 import { emailService } from "../services/email.service"
 
 export function EmailCompose() {
     const navigate = useNavigate()
     const [email, setEmail] = useState(emailService.createEmail())
+    const { onSendEmail } = useOutletContext()
+    
 
-
-    function onSendEmail(event) {
+    function onSendComposedEmail(event) {
         event.preventDefault();
-        console.log("send clicked")
-        /*add to send library*/
+        if(!email.to) {
+            alert('ERROR - Please specify at least one recipient.');
+            return;
+        }
+        email.sentAt = Date.now()
+        email.from = emailService.getLoggedinUserEmail()
+        
+        onSendEmail(email)
         navigate('/mail')
     }
 
@@ -31,7 +38,7 @@ export function EmailCompose() {
                 <div className="compose-header">New Message</div>
                 <span className="close-btn compose-header" onClick={() => navigate('/mail')}>X</span>
 
-                <form onSubmit={onSendEmail} className="email-compose-form">
+                <form onSubmit={onSendComposedEmail} className="email-compose-form">
 
                     <div className='input-field'>
                         <label htmlFor="to"></label>

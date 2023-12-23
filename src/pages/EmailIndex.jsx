@@ -38,7 +38,7 @@ export function EmailIndex() {
             if (!email.removedAt) {
                 console.log('on removedAt')
                 email.removedAt = Date.now()
-                console.log('email.removedAt '+email.removedAt )
+                console.log('email.removedAt ' + email.removedAt)
                 const savedEmail = await emailService.save(email)
                 setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
                 setEmails(prevEmails => {
@@ -100,6 +100,16 @@ export function EmailIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, txt: filterBy.txt }))
     }
 
+    async function onSendEmail(email) {
+        try {
+            await emailService.save(email)
+        } catch (err) {
+            console.log("EmailCompose error on onSendEmail:" + err)
+        }
+        loadEmails()
+       
+    }
+
     const { emailStatus, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
 
@@ -115,7 +125,7 @@ export function EmailIndex() {
                     <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} />
                 </div>
             </section>}
-            <Outlet context={{ onStar, onRemoveEmail, setIsRead }} />
+            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail }} />
         </section>
     )
 
