@@ -14,7 +14,7 @@ export function EmailFolderList({ onCompose, filterBy, onSetEmailStatus }) {
                 <button className="compose-button centered" onClick={onCompose}> <img src={utilService.getIconUrl('compose', false)} className="icon" />Compose</button>
             </div>
             <section className="folder-area">
-                {folders.map((folder) => <EmailFolder folder={folder} filterBy={filterBy} onSetEmailStatus={onSetEmailStatus} />)}
+                {folders.map((folder) => <EmailFolder key={folder.name} folder={folder} filterBy={filterBy} onSetEmailStatus={onSetEmailStatus} />)}
 
             </section>
 
