@@ -4,19 +4,47 @@ import { emailService } from "../services/email.service"
 
 export function EmailCompose() {
     const navigate = useNavigate()
-    const [email, setEmail] = useState(emailService.createEmail())
-    const { onSendEmail } = useOutletContext()
-    
+    const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(),undefined))
+    const { onSendEmail, onSaveToDraft } = useOutletContext()
+    const [isSaveToDraft, setIsSaveTodDaft] = useState(false)
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            console.log(`interval expired ${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
+            setIsSaveTodDaft(true)
+        }, 5000);
+        return () => {
+            clearInterval(intervalId);
+            console.log('intervale cleared')
+        }
+    }, []); // Empty dependency array means this effect runs once on mount
+
+    useEffect(() => {
+        console.log(`in use effect isSaveDraft dependency  to:${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
+        if (isSaveToDraft) {
+            console.log("saving email to draft:"+email.id)
+            setIsSaveTodDaft(false)
+            const newEmail = onSaveToDraft(email)
+            setEmail((prevEmail) => ({ ...prevEmail, id: newEmail.id }))
+        }
+    }, [isSaveToDraft]);
+
+
+    useEffect(() => {
+
+        console.log(`in use effect email dependency :${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
+       
+    }, [email]);
 
     function onSendComposedEmail(event) {
         event.preventDefault();
-        if(!email.to) {
+        if (!email.to) {
             alert('ERROR - Please specify at least one recipient.');
             return;
         }
         email.sentAt = Date.now()
         email.from = emailService.getLoggedinUserEmail()
-        
+
         onSendEmail(email)
         navigate('/mail')
     }

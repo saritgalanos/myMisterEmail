@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react"
 import { utilService } from "../services/util.service"
+import { useNavigate } from 'react-router-dom'
 
 export function EmailFolder({ folder, filterBy ,onSetEmailStatus}) {
     
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-        
+    const navigate = useNavigate()    
     useEffect(() => {
         onSetEmailStatus(filterByToEdit)
     }, [filterByToEdit])
 
     function onFolder(value) {
         console.log('onFolder:' + value)
+        
         setFilterByToEdit(prevFilter => ({ ...prevFilter, emailStatus: value }))
+        navigate(`${folder.name}`);
     }
 
     function selectedFolderClass(folderName) {
@@ -21,7 +24,7 @@ export function EmailFolder({ folder, filterBy ,onSetEmailStatus}) {
         return (folderName === filterBy.emailStatus)
     } 
     return (
-        <div
+         <div
             key={folder.name}
             className={`folder ${selectedFolderClass(folder.name)}`}
             onClick={() => onFolder(folder.name)}

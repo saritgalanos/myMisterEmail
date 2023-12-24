@@ -39,13 +39,23 @@
     margin: 10px;
 }
 
+.center-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
 .login-button {
-    margin-top: 30px;
-    align-content: left;
+    margin-top: 15px;
     background-color:  rgb(59, 59, 196);
     color: white;
     height: 35px;
     width: 70px;
     border: none;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+

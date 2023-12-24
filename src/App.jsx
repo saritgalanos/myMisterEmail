@@ -12,7 +12,7 @@ import { EmailCompose } from "./cmps/EmailCompose"
 export function App() {
 
 
-    
+
 
     return (
 
@@ -20,8 +20,9 @@ export function App() {
             <section>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
-                    <Route path="/about" element={<AboutUs />} />                    
+                    <Route path="/about" element={<AboutUs />} />
                     <Route path="/mail" element={<EmailIndex />}>
+                        <Route path="/mail/:folder" element={<EmailDetails />} /> 
                         <Route path="/mail/:emailId" element={<EmailDetails />} />
                         <Route path="/mail/compose" element={<EmailCompose />} />
                     </Route>
@@ -29,28 +30,5 @@ export function App() {
             </section>
 
         </Router>)
-
-    {/* <Router>
-            <section className='main-app'>
-                <header className="app-header"><AppHeader handleSearchSubmit={handleSearchSubmit} /></header>
-                <aside className="app-side"><EmailFolderList onCompose={openComposeModal}/></aside>
-                <main className="app-main-area">
-                    <Routes> */}
-    {/* <Route path="/" element={<HomePage />} /> */ }
-    {/* <Route path="/about" element={<AboutUs />} /> */ }
-    {/* <Route path="/" element={<EmailIndex searchTxt={searchTxt} />} />
-                        <Route path="/:emailId" element={<EmailDetails />} />
-
-                        <Routes>
-
-                    {isComposeModalOpen && (<EmailCompose onClose={closeComposeModal} />)}
-
-
-
-                </main>
-            </section>
-        </Router>
-    ) */}
-
 }
 

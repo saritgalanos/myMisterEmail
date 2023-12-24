@@ -121,6 +121,25 @@ export function EmailIndex() {
 
     }
 
+    async function onSaveToDraft(email) {
+        //if to,body  and subject are not set, return original email
+        if (!email.to && !email.body && !email.subject) {
+
+            return email
+        }
+        console.log("saving draft...")
+        try {
+            console.log("adding draft to db:")
+            const newEmail = await emailService.save(email)
+            loadEmails()
+            return newEmail
+        } catch (err) {
+            console.log("EmailCompose error on onSendEmail:" + err)
+        }
+
+    }
+
+
     const { emailStatus, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
 
@@ -128,15 +147,19 @@ export function EmailIndex() {
         <section className="main-app">
             <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
             <aside className="app-side"><EmailFolderList onCompose={openComposeModal} filterBy={{ emailStatus }} onSetEmailStatus={onSetEmailStatus} /></aside>
-            {!params.emailId && <section className="email-index">
+            <section className="email-index">
                 <div className='main-filter'>
                     <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
                 </div>
-                <div className='main-content'>
-                    <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} />
-                </div>
-            </section>}
-            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail }} />
+                {(params.folder || !params) &&
+                    <div className='main-content'>
+                        <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} />
+                    </div>}
+
+
+            </section>
+            {params.emailId &&
+                <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft }} />}
         </section>
     )
 

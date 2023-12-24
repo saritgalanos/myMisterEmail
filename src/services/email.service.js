@@ -61,8 +61,12 @@ async function query(filterBy) {
     if (filterBy) {
         var { txt, emailStatus, isRead, sortBy } = filterBy
 
-        emails = emails.filter(email => email.body.toLowerCase().includes(txt.toLowerCase())
-            || email.subject.toLowerCase().includes(txt.toLowerCase()))
+        emails = emails.filter(email => {
+            return (email.body &&
+                ((email.body.toLowerCase().includes(txt.toLowerCase()))
+                    || (email.subject.toLowerCase().includes(txt.toLowerCase()))))
+
+        })
 
         if (isRead === 'Read' || isRead === 'Unread') {
             const isReadFilter = (isRead === 'Read') ? true : false
@@ -139,7 +143,7 @@ function createEmail(subject = '', body = '', sentAt = 0, removedAt = null, from
         isStarred: false, /*if available than in star*/
         sentAt, /*if available than in sent (can be used for both inbox and sent)*/
         removedAt, /*if available than in trash*/
-        from, /*if current user than sent*/
+        from: from, /*if current user than sent*/
         to /*if current user than inbox*/
     }
 }
