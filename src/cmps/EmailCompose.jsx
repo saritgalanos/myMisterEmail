@@ -5,7 +5,7 @@ import { emailService } from "../services/email.service"
 export function EmailCompose() {
     const navigate = useNavigate()
     const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined))
-    const { onSendEmail, onSaveToDraft } = useOutletContext()
+    const { onSendEmail, onSaveToDraft ,folder} = useOutletContext()
     const [timerId, setTimerID] = useState(0)
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export function EmailCompose() {
         email.from = emailService.getLoggedinUserEmail()
 
         onSendEmail(email)
-        navigate('/mail/inbox')
+        navigate(`/mail/${folder}`)
     }
 
     function handleDraftMechanism() {
@@ -63,7 +63,7 @@ export function EmailCompose() {
 
             <div className="modal-content">
                 <div className="compose-header">New Message</div>
-                <span className="close-btn compose-header" onClick={() => navigate('/mail')}>X</span>
+                <span className="close-btn compose-header" onClick={() => navigate(`/mail/${folder}`)}>X</span>
 
                 <form onSubmit={onSendComposedEmail} className="email-compose-form">
 

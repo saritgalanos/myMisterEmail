@@ -17,7 +17,7 @@ export function EmailIndex() {
     const navigate = useNavigate()
     const params = useParams()
     console.log("folder=" + params.folder)
-    console.log("id:"+params.emailId)
+    console.log("id:" + params.emailId)
 
     useEffect(() => {
         setSearchParams(filterBy)
@@ -125,7 +125,7 @@ export function EmailIndex() {
     }
 
     async function onSaveToDraft(email) {
-       
+
         console.log("saving draft...")
         try {
             console.log("adding draft to db:")
@@ -158,9 +158,8 @@ export function EmailIndex() {
 
 
                 </section>}
-
-            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft }} />
-
+          
+            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft, folder }} />
         </section>
     )
 

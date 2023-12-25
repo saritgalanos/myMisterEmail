@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useOutletContext, useParams } from "react-router"
 import { emailService } from "../services/email.service"
 import { utilService } from "../services/util.service"
-import { EmailFolderList } from "../cmps/EmailFolderList"
+
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
@@ -13,7 +13,9 @@ export function EmailDetails() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        loadEmail()
+        if(params.emailId) {
+            loadEmail()
+        }
     }, [params.emailId])
 
    
@@ -30,7 +32,7 @@ export function EmailDetails() {
     async function onTrash(emailId) {
         try {
             await onRemoveEmail(emailId)
-            navigate('/mail')
+            navigate(`/mail/${folder}`)
         } catch (err) {
             console.log('onTrash error:', err);
         }
@@ -39,7 +41,7 @@ export function EmailDetails() {
     async function onMarkUnread(emailId) {
         try {
             await setIsRead(emailId, false)
-            navigate('/mail')
+            navigate(`/mail/${folder}`)
         } catch (err) {
             console.log('onMarkUnread error:', err);
         }
@@ -54,7 +56,7 @@ export function EmailDetails() {
             console.log('onStarInDetails error:', err);
         }
     }
-
+if(!params.emailId) return<></>
     if (!email) return <div>Loading Email Details...</div>
 
 
