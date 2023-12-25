@@ -5,10 +5,13 @@ import { emailService } from "../services/email.service"
 export function EmailCompose() {
     const navigate = useNavigate()
     const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined))
-    const { onSendEmail, onSaveToDraft ,folder} = useOutletContext()
+    const [draftSaved, setDraftSaved] = useState(false)
+    const { onSendEmail, onSaveToDraft} = useOutletContext()
     const [timerId, setTimerID] = useState(0)
+    const params = useParams()
 
     useEffect(() => {
+
 
         return () => {
             if (timerId) {
@@ -16,7 +19,52 @@ export function EmailCompose() {
                 console.log('timer cleared')
             }
         }
-    }, []); // Empty dependency array means this effect runs once on mount
+    }, []);
+
+    useEffect(() => {
+        console.log(`in useEffect: to:${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
+        if (!email.body && !email.subject && !email.to) {
+            console.log("nothing to save")
+            return
+        }
+
+        if (!draftSaved) { /*email was never saved*/
+            setDraftSaved(true)
+            saveFirstDraft()
+        }
+    }, [email]);
+
+
+    async function saveFirstDraft()
+    {
+        console.log('saving draft first time')
+        setEmail((prevEmail) => ({ ...prevEmail, ...(onSaveToDraft(prevEmail)) }))
+        // const newEmail = await onSaveToDraft(email)
+        // console.log(`new draft id :${newEmail.id}`)
+        // setEmail((prevEmail) => ({ ...prevEmail, id: newEmail.id }))
+        return
+    }
+
+    async function handleDraftMechanism() {
+        if (!draftSaved) { /*draft is not in db yet*/
+              return
+        }
+
+        if (!timerId) {
+            console.log('setting timer')
+            // const newTimerId = setTimeout(() => {handleDraftMechanismTimeout}, 5000); // 5000 milliseconds (5 seconds)
+            setTimerID(setTimeout(() => { handleDraftMechanismTimeout() }, 5000))
+            return
+        }
+    }
+
+    function handleDraftMechanismTimeout() {
+        setTimerID(0)
+        console.log('Timer expired! saving draft');
+        onSaveToDraft(email)
+        
+    }
+
 
     function onSendComposedEmail(event) {
         event.preventDefault();
@@ -26,35 +74,19 @@ export function EmailCompose() {
         }
         email.sentAt = Date.now()
         email.from = emailService.getLoggedinUserEmail()
-
         onSendEmail(email)
-        navigate(`/mail/${folder}`)
+        navigate(`/mail/${params.folder}`)
     }
 
-    async function handleDraftMechanism() {
-        if (!email.id) { /*email was never saved*/
-            console.log('saving draft first time')
-            const newEmail = await onSaveToDraft(email)
-            setEmail((prevEmail) => ({ ...prevEmail, id: newEmail.id }))
-        }
-        if (!timerId) {
-            console.log('setting timer')
-            const newTimerId = setTimeout(() => {
-                setTimerID(0)
-                console.log('Timer expired! saving draft');
-                console.log(`in handleDraftMechanism :${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
-                const newEmail = onSaveToDraft(email)
-            }, 5000); // 5000 milliseconds (5 seconds)
-            setTimerID(timerId)
-        }
-    }
+
 
     function handleChange(ev) {
-        handleDraftMechanism()
         let { value, name: field, type } = ev.target
         // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
         value = type === 'number' ? +value : value
         setEmail((prevEmail) => ({ ...prevEmail, [field]: value }))
+        handleDraftMechanism()
+
     }
 
 
@@ -63,7 +95,7 @@ export function EmailCompose() {
 
             <div className="modal-content">
                 <div className="compose-header">New Message</div>
-                <span className="close-btn compose-header" onClick={() => navigate(`/mail/${folder}`)}>X</span>
+                <span className="close-btn compose-header" onClick={() => navigate(`/mail/${params.folder}`)}>X</span>
 
                 <form onSubmit={onSendComposedEmail} className="email-compose-form">
 

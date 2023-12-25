@@ -21,7 +21,6 @@ export function HomePage() {
                         </label>
                     </div>
                 </form>
-                {/* <button className='login-button' onClick={() => navigate('/mail')}>Sign-in</button> */}
                <div className="center-container"><div className='login-button'> <NavLink to="/mail/inbox" >Sign-in</NavLink> </div></div> 
             </div>
         </section>

@@ -88,7 +88,8 @@ async function query(filterBy) {
                     emails = emails.filter(email => (email.isStarred && (!email.removedAt)))
                     break
                 case 'draft':
-                    emails = emails.filter(email => (!email.sentAt && (!email.removedAt)))
+                // debugger    
+                emails = emails.filter(email => (!email.sentAt && !email.removedAt))
                     break;
             }
         }
@@ -135,7 +136,7 @@ function save(emailToSave) {
 }
 
 
-function createEmail(subject = '', body = '', sentAt = 0, removedAt = null, from = "", to = "") {
+function createEmail(subject = '', body = '', sentAt = null, removedAt = null, from = "", to = "") {
     return {
         subject,
         body,

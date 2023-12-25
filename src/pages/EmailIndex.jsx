@@ -16,8 +16,8 @@ export function EmailIndex() {
 
     const navigate = useNavigate()
     const params = useParams()
-    console.log("folder=" + params.folder)
-    console.log("id:" + params.emailId)
+    // console.log("folder=" + params.folder)
+    // console.log("id=" + params.emailId)
 
     useEffect(() => {
         setSearchParams(filterBy)
@@ -125,15 +125,28 @@ export function EmailIndex() {
     }
 
     async function onSaveToDraft(email) {
+        // debugger
+        if(!email) {
+            console.log("onSaveToDraft: nothing to save...")
+        }
 
-        console.log("saving draft...")
+        /*if there is id, only update the list*/
+        
+        if(email.id) {
+            console.log("onSaveToDraft: updating draft...")
+            const newEmail = await emailService.save(email)
+            loadEmails()
+            // setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === newEmail.id) ? newEmail : emailInDB)))
+            return newEmail
+        }
+    
         try {
-            console.log("adding draft to db:")
+            console.log("onSaveToDraft: saving draft...")
             const newEmail = await emailService.save(email)
             loadEmails()
             return newEmail
         } catch (err) {
-            console.log("EmailCompose error on onSendEmail:" + err)
+            console.log("onSaveToDraft: error " + err)
         }
 
     }
@@ -153,13 +166,13 @@ export function EmailIndex() {
                         <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
                     </div>
                     <div className='main-content'>
-                        <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} folder={folder} />
+                        <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} />
                     </div>
 
 
                 </section>}
           
-            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft, folder }} />
+            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft}} />
         </section>
     )
 

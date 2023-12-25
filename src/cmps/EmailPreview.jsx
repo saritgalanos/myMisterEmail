@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router"
 import { Component, useEffect, useState } from "react"
 import { emailService } from "../services/email.service";
 import { utilService } from "../services/util.service";
 
-export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, folder }) {
+export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead}) {
 
     const [emailToPreview, setEmail] = useState(email)
-
-
     const [isMouseOn, setMouseOn] = useState(false)
-
+    const params = useParams()
+   
     async function onStarPreview() {
         const isStarredVal = !emailToPreview.isStarred;
         setEmail((prevEmail) => ({ ...prevEmail, isStarred: isStarredVal }))
@@ -46,7 +46,7 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, folder }
             <img src={utilService.getIconUrl('starred', emailToPreview.isStarred)} className="icon"
                 onClick={() => onStarPreview()} />
 
-            <Link to={`${folder}/${emailToPreview.id}`} className="email-line">
+            <Link to={`/mail/${params.folder}/${emailToPreview.id}`} className="email-line">
                 <div className={`from ${emailReadClass}`}>{emailToPreview.from}</div>
                 <div className="main-data">
                     <span className={`subject ${emailReadClass}`}> {emailToPreview.subject} </span>
