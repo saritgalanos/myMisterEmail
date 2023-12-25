@@ -59,7 +59,7 @@ async function query(filterBy) {
     let emails = await storageService.query(STORAGE_KEY)
     setUnreadCount(emails)
     if (filterBy) {
-        var { txt, emailStatus, isRead, sortBy } = filterBy
+        var { txt, selectedFolder, isRead, sortBy } = filterBy
 
         emails = emails.filter(email => {
             return (email.body &&
@@ -72,13 +72,13 @@ async function query(filterBy) {
             const isReadFilter = (isRead === 'Read') ? true : false
             emails = emails.filter(email => (email.isRead === isReadFilter))
         }
-        if (emailStatus) {
-            switch (emailStatus) {
+        if (selectedFolder) {
+            switch (selectedFolder) {
                 case 'inbox':
                     emails = emails.filter(email => ((email.to === loggedinUser.email) && (!email.removedAt)))
                     break
                 case 'sent':
-                    emails = emails.filter(email => ((email.from === loggedinUser.email) && (!email.removedAt)))
+                    emails = emails.filter(email => ((email.from === loggedinUser.email) && (!email.removedAt) && email.sentAt))
                     break
                 case 'trash':
                     console.log('in trash')
@@ -150,7 +150,7 @@ function createEmail(subject = '', body = '', sentAt = 0, removedAt = null, from
 
 function getDefaultFilter() {
     return {
-        emailStatus: 'inbox',
+        selectedFolder: 'inbox',
         txt: '',
         isRead: '',
         sortBy: ''
@@ -168,7 +168,7 @@ function getFilterFromParams(searchParams) {
 }
 
 function logFilter(filterBy) {
-    console.log(`logFilter - filterBy: filterBy:emailStatus: ${filterBy.emailStatus}`)
+    console.log(`logFilter - filterBy: filterBy:selectedFolder: ${filterBy.selectedFolder}`)
 }
 
 function logEmail() {

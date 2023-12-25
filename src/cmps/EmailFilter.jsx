@@ -40,7 +40,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
     }
 
 
-    let {emailStatus, txt, isRead, sortBy } = filterByToEdit
+    let {selectedFolder, txt, isRead, sortBy } = filterByToEdit
     const sortDate = (sortBy != 'dateAsc') ? 'dateAsc' : 'dateDes'
     const sortSubject = (sortBy != 'subjectAsc') ? 'subjectAsc' : 'subjectDes'
 

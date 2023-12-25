@@ -3,7 +3,7 @@ import { Component, useEffect, useState } from "react"
 import { emailService } from "../services/email.service";
 import { utilService } from "../services/util.service";
 
-export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead }) {
+export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, folder }) {
 
     const [emailToPreview, setEmail] = useState(email)
 
@@ -34,6 +34,7 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead }) {
 
     const emailReadClass = emailToPreview.isRead ? 'email-read' : 'email-not-read'
     const markLineAsReadClass = emailToPreview.isRead ? 'mark-line-as-read' : ''
+    const dateToDisplay = (emailToPreview.dateToDisplay) ? utilService.getDateToDisplay(new Date(emailToPreview.sentAt)):''
     return (
 
         <div className={`email-preview ${markLineAsReadClass}`}
@@ -44,7 +45,7 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead }) {
             <img src={utilService.getIconUrl('starred', emailToPreview.isStarred)} className="icon"
                 onClick={() => onStarPreview()} />
 
-            <Link to={`${emailToPreview.id}`} className="email-line">
+            <Link to={`${folder}/${emailToPreview.id}`} className="email-line">
                 <div className={`from ${emailReadClass}`}>{emailToPreview.from}</div>
                 <div className="main-data">
                     <span className={`subject ${emailReadClass}`}> {emailToPreview.subject} </span>
@@ -53,8 +54,8 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead }) {
 
             </Link>
             {!isMouseOn &&
-                <div className={`email-preview-sent-at ${emailReadClass}`}>
-                    {utilService.getDateToDisplay(new Date(emailToPreview.sentAt))}
+                <div className={`email-preview-sent-at ${emailReadClass}`}> 
+                    {dateToDisplay}
                 </div>}
             {isMouseOn &&
                 <div className='control-icons'>

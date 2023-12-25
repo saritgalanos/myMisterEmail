@@ -4,37 +4,19 @@ import { emailService } from "../services/email.service"
 
 export function EmailCompose() {
     const navigate = useNavigate()
-    const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(),undefined))
+    const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined))
     const { onSendEmail, onSaveToDraft } = useOutletContext()
-    const [isSaveToDraft, setIsSaveTodDaft] = useState(false)
+    const [timerId, setTimerID] = useState(0)
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            console.log(`interval expired ${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
-            setIsSaveTodDaft(true)
-        }, 5000);
+
         return () => {
-            clearInterval(intervalId);
-            console.log('intervale cleared')
+            if (timerId) {
+                clearTimeout(timerId);
+                console.log('timer cleared')
+            }
         }
     }, []); // Empty dependency array means this effect runs once on mount
-
-    useEffect(() => {
-        console.log(`in use effect isSaveDraft dependency  to:${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
-        if (isSaveToDraft) {
-            console.log("saving email to draft:"+email.id)
-            setIsSaveTodDaft(false)
-            const newEmail = onSaveToDraft(email)
-            setEmail((prevEmail) => ({ ...prevEmail, id: newEmail.id }))
-        }
-    }, [isSaveToDraft]);
-
-
-    useEffect(() => {
-
-        console.log(`in use effect email dependency :${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
-       
-    }, [email]);
 
     function onSendComposedEmail(event) {
         event.preventDefault();
@@ -46,16 +28,33 @@ export function EmailCompose() {
         email.from = emailService.getLoggedinUserEmail()
 
         onSendEmail(email)
-        navigate('/mail')
+        navigate('/mail/inbox')
     }
 
+    function handleDraftMechanism() {
+        if (!email.id) { /*email was never saved*/
+            console.log('saving draft first time')
+            const newEmail = onSaveToDraft(email)
+            setEmail((prevEmail) => ({ ...prevEmail, id: newEmail.id }))
+        }
+        if (!timerId) {
+            console.log('setting timer')
+            const newTimerId = setTimeout(() => {
+                setTimerID(0)
+                console.log('Timer expired! saving draft');
+                console.log(`in handleDraftMechanism :${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
+                const newEmail = onSaveToDraft(email)
+            }, 5000); // 5000 milliseconds (5 seconds)
+            setTimerID(timerId)
+        }
+    }
 
     function handleChange(ev) {
+       // handleDraftMechanism()
         let { value, name: field, type } = ev.target
         // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
         value = type === 'number' ? +value : value
         setEmail((prevEmail) => ({ ...prevEmail, [field]: value }))
-
     }
 
 

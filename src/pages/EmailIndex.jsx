@@ -16,6 +16,8 @@ export function EmailIndex() {
 
     const navigate = useNavigate()
     const params = useParams()
+    console.log("folder=" + params.folder)
+    console.log("id:"+params.emailId)
 
     useEffect(() => {
         setSearchParams(filterBy)
@@ -70,8 +72,8 @@ export function EmailIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
     }
 
-    function onSetEmailStatus(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, emailStatus: filterBy.emailStatus }));
+    function onSetselectedFolder(filterBy) {
+        setFilterBy(prevFilter => ({ ...prevFilter, selectedFolder: filterBy.selectedFolder }));
 
     }
 
@@ -99,7 +101,8 @@ export function EmailIndex() {
     }
 
     function openComposeModal() {
-        navigate('/mail/compose')
+        console.log('opening compose modal:' + params)
+        navigate(`/mail/${!params.folder ? 'inbox' : params.folder}/compose`)
     }
 
     // function closeComposeModal() {
@@ -122,11 +125,7 @@ export function EmailIndex() {
     }
 
     async function onSaveToDraft(email) {
-        //if to,body  and subject are not set, return original email
-        if (!email.to && !email.body && !email.subject) {
-
-            return email
-        }
+       
         console.log("saving draft...")
         try {
             console.log("adding draft to db:")
@@ -139,27 +138,29 @@ export function EmailIndex() {
 
     }
 
-
-    const { emailStatus, isRead, sortBy, txt } = filterBy
+    const folder = !params.folder ? 'inbox' : params.folder
+    const { selectedFolder, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
 
     return (
         <section className="main-app">
             <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
-            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} filterBy={{ emailStatus }} onSetEmailStatus={onSetEmailStatus} /></aside>
-            <section className="email-index">
-                <div className='main-filter'>
-                    <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
-                </div>
-                {(params.folder || !params) &&
+            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} filterBy={{ selectedFolder }} onSetselectedFolder={onSetselectedFolder} /></aside>
+            {!params.emailId &&
+                <section className="email-index">
+
+                    <div className='main-filter'>
+                        <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
+                    </div>
                     <div className='main-content'>
-                        <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} />
-                    </div>}
+                        <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} folder={folder} />
+                    </div>
 
 
-            </section>
-            {params.emailId &&
-                <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft }} />}
+                </section>}
+
+            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft }} />
+
         </section>
     )
 
