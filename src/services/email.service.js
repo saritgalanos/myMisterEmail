@@ -81,7 +81,6 @@ async function query(filterBy) {
                     emails = emails.filter(email => ((email.from === loggedinUser.email) && (!email.removedAt) && email.sentAt))
                     break
                 case 'trash':
-                    console.log('in trash')
                     emails = emails.filter(email => (email.removedAt != null))
                     break
                 case 'starred':

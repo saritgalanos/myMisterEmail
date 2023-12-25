@@ -119,27 +119,20 @@ export function EmailIndex() {
             await emailService.save(email)
         } catch (err) {
             console.log("EmailCompose error on onSendEmail:" + err)
+        } finally {
+            loadEmails()
         }
-        loadEmails()
 
     }
 
     async function onSaveToDraft(email) {
-        // debugger
-        if(!email) {
+        if (!email || (email && !email.to && !email.subject && !email.body)) {
             console.log("onSaveToDraft: nothing to save...")
+            return email
         }
 
-        /*if there is id, only update the list*/
-        
-        if(email.id) {
-            console.log("onSaveToDraft: updating draft...")
-            const newEmail = await emailService.save(email)
-            loadEmails()
-            // setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === newEmail.id) ? newEmail : emailInDB)))
-            return newEmail
-        }
-    
+        console.log("onSaveToDraft email:id " + email.id)
+
         try {
             console.log("onSaveToDraft: saving draft...")
             const newEmail = await emailService.save(email)
@@ -171,8 +164,8 @@ export function EmailIndex() {
 
 
                 </section>}
-          
-            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft}} />
+
+            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft }} />
         </section>
     )
 

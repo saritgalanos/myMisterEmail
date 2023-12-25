@@ -1,70 +1,35 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, useOutletContext, useParams } from "react-router"
 import { emailService } from "../services/email.service"
 
 export function EmailCompose() {
     const navigate = useNavigate()
     const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined))
-    const [draftSaved, setDraftSaved] = useState(false)
-    const { onSendEmail, onSaveToDraft} = useOutletContext()
-    const [timerId, setTimerID] = useState(0)
+    const { onSendEmail, onSaveToDraft } = useOutletContext()
+    const timeoutRef = useRef()
     const params = useParams()
 
     useEffect(() => {
-
-
-        return () => {
-            if (timerId) {
-                clearTimeout(timerId);
-                console.log('timer cleared')
-            }
+        if (timeoutRef.current) {
+            // console.log("clearing timeout")
+            clearTimeout(timeoutRef.current);
         }
-    }, []);
+        // console.log("setting timeout")
+        timeoutRef.current = setTimeout(() => onSaveDraft(email),5000)
 
-    useEffect(() => {
-        console.log(`in useEffect: to:${email.to} subject:${email.subject} body:${email.body} id:${email.id}`)
-        if (!email.body && !email.subject && !email.to) {
-            console.log("nothing to save")
-            return
-        }
-
-        if (!draftSaved) { /*email was never saved*/
-            setDraftSaved(true)
-            saveFirstDraft()
-        }
     }, [email]);
 
-
-    async function saveFirstDraft()
-    {
-        console.log('saving draft first time')
-        setEmail((prevEmail) => ({ ...prevEmail, ...(onSaveToDraft(prevEmail)) }))
-        // const newEmail = await onSaveToDraft(email)
-        // console.log(`new draft id :${newEmail.id}`)
-        // setEmail((prevEmail) => ({ ...prevEmail, id: newEmail.id }))
-        return
-    }
-
-    async function handleDraftMechanism() {
-        if (!draftSaved) { /*draft is not in db yet*/
-              return
-        }
-
-        if (!timerId) {
-            console.log('setting timer')
-            // const newTimerId = setTimeout(() => {handleDraftMechanismTimeout}, 5000); // 5000 milliseconds (5 seconds)
-            setTimerID(setTimeout(() => { handleDraftMechanismTimeout() }, 5000))
-            return
-        }
-    }
-
-    function handleDraftMechanismTimeout() {
-        setTimerID(0)
+    async function onSaveDraft(email) {
         console.log('Timer expired! saving draft');
-        onSaveToDraft(email)
         
-    }
+        const newEmail = await onSaveToDraft(email)
+        // console.log(`in onSaveDraft: to:${newEmail.to} subject:${newEmail.subject} body:${newEmail.body} id:${newEmail.id}`)
+        
+        if(!email.id) {
+            setEmail(newEmail)
+        }
 
+    }
 
     function onSendComposedEmail(event) {
         event.preventDefault();
@@ -73,7 +38,6 @@ export function EmailCompose() {
             return;
         }
         email.sentAt = Date.now()
-        email.from = emailService.getLoggedinUserEmail()
         onSendEmail(email)
         navigate(`/mail/${params.folder}`)
     }
@@ -85,8 +49,6 @@ export function EmailCompose() {
         // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
         value = type === 'number' ? +value : value
         setEmail((prevEmail) => ({ ...prevEmail, [field]: value }))
-        handleDraftMechanism()
-
     }
 
 
