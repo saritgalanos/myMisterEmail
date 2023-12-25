@@ -31,10 +31,10 @@ export function EmailCompose() {
         navigate(`/mail/${folder}`)
     }
 
-    function handleDraftMechanism() {
+    async function handleDraftMechanism() {
         if (!email.id) { /*email was never saved*/
             console.log('saving draft first time')
-            const newEmail = onSaveToDraft(email)
+            const newEmail = await onSaveToDraft(email)
             setEmail((prevEmail) => ({ ...prevEmail, id: newEmail.id }))
         }
         if (!timerId) {
@@ -50,7 +50,7 @@ export function EmailCompose() {
     }
 
     function handleChange(ev) {
-       // handleDraftMechanism()
+        handleDraftMechanism()
         let { value, name: field, type } = ev.target
         // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
         value = type === 'number' ? +value : value

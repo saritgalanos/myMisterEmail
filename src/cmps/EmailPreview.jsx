@@ -34,7 +34,8 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, folder }
 
     const emailReadClass = emailToPreview.isRead ? 'email-read' : 'email-not-read'
     const markLineAsReadClass = emailToPreview.isRead ? 'mark-line-as-read' : ''
-    const dateToDisplay = (emailToPreview.dateToDisplay) ? utilService.getDateToDisplay(new Date(emailToPreview.sentAt)):''
+    const dateToDisplay = (emailToPreview.sentAt) ? utilService.getDateToDisplay(new Date(emailToPreview.sentAt)):''
+    
     return (
 
         <div className={`email-preview ${markLineAsReadClass}`}
