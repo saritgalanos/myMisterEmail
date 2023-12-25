@@ -105,10 +105,7 @@ export function EmailIndex() {
         navigate(`/mail/${!params.folder ? 'inbox' : params.folder}/compose`)
     }
 
-    // function closeComposeModal() {
-    //     navigate('/mail')
-    // }
-
+    
     function handleSearchSubmit(filterBy) {
         console.log("search by:" + filterBy.txt)
         setFilterBy(prevFilter => ({ ...prevFilter, txt: filterBy.txt }))
