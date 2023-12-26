@@ -1,31 +1,41 @@
 import { useEffect, useRef, useState } from "react"
-import { useNavigate, useOutletContext, useParams } from "react-router"
+import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { emailService } from "../services/email.service"
 
-export function EmailCompose() {
+export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSaveToDraft }) {
     const navigate = useNavigate()
-    const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined))
-    const { onSendEmail, onSaveToDraft } = useOutletContext()
+    const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined, true))
     const timeoutRef = useRef()
     const params = useParams()
 
     useEffect(() => {
+        loadEmailToEdit()
+    }, [])
+
+    async function loadEmailToEdit() {
+        console.log('emailIdToEdit'+emailIdToEdit)
+        if (emailIdToEdit !== 'new') {
+            const emailToEdit = await emailService.getById(emailIdToEdit)
+            setEmail(emailToEdit)
+        }
+    }
+
+
+    useEffect(() => {
         if (timeoutRef.current) {
-            // console.log("clearing timeout")
+            console.log("clearing timeout")
             clearTimeout(timeoutRef.current);
         }
-        // console.log("setting timeout")
-        timeoutRef.current = setTimeout(() => onSaveDraft(email),5000)
+        console.log("setting timeout")
+        timeoutRef.current = setTimeout(() => onSaveDraft(email), 5000)
 
     }, [email]);
 
     async function onSaveDraft(email) {
         console.log('Timer expired! saving draft');
-        
         const newEmail = await onSaveToDraft(email)
         // console.log(`in onSaveDraft: to:${newEmail.to} subject:${newEmail.subject} body:${newEmail.body} id:${newEmail.id}`)
-        
-        if(!email.id) {
+        if (!email.id) {
             setEmail(newEmail)
         }
 
@@ -37,9 +47,25 @@ export function EmailCompose() {
             alert('ERROR - Please specify at least one recipient.');
             return;
         }
+        //clear timer
+        if (timeoutRef.current) {
+            console.log("onSendComposedEmail: clearing timeout")
+            clearTimeout(timeoutRef.current);
+        }
         email.sentAt = Date.now()
+        email.isDraft = false
         onSendEmail(email)
-        navigate(`/mail/${params.folder}`)
+        onCloseCompose()
+    }
+
+    async function onCloseComposeModal() {
+        /*clear timer, save draft and close */
+        if (timeoutRef.current) {
+            console.log("clearing timeout")
+            clearTimeout(timeoutRef.current);
+        }
+        await onSaveToDraft(email)
+        onCloseCompose()
     }
 
 
@@ -57,7 +83,7 @@ export function EmailCompose() {
 
             <div className="modal-content">
                 <div className="compose-header">New Message</div>
-                <span className="close-btn compose-header" onClick={() => navigate(`/mail/${params.folder}`)}>X</span>
+                <span className="close-btn compose-header" onClick={() => { onCloseCompose() }}>X</span>
 
                 <form onSubmit={onSendComposedEmail} className="email-compose-form">
 

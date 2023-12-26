@@ -5,6 +5,7 @@ import { EmailFolderList } from "../cmps/EmailFolderList"
 import { EmailFilter } from "../cmps/EmailFilter"
 import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { AppHeader } from "../cmps/AppHeader"
+import { EmailCompose } from "../cmps/EmailCompose"
 
 
 
@@ -24,12 +25,9 @@ export function EmailIndex() {
         loadEmails()
     }, [filterBy])
 
-
     async function loadEmails() {
-
         const emails = await emailService.query(filterBy)
         setEmails(emails)
-
     }
 
     function updateUnreadCount(email, changeBy) {
@@ -72,7 +70,7 @@ export function EmailIndex() {
         setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
     }
 
-    function onSetselectedFolder(filterBy) {
+    function onSetSelectedFolder(filterBy) {
         setFilterBy(prevFilter => ({ ...prevFilter, selectedFolder: filterBy.selectedFolder }));
 
     }
@@ -100,12 +98,21 @@ export function EmailIndex() {
         }
     }
 
-    function openComposeModal() {
-        console.log('opening compose modal:' + params)
-        navigate(`/mail/${!params.folder ? 'inbox' : params.folder}/compose`)
+    function onCompose(emailId='') {
+        console.log('onCompose:' + emailId)
+        if (!emailId) {
+            setFilterBy(prevFilter => ({ ...prevFilter, compose: 'new' }))
+        }
+        else {
+            setFilterBy(prevFilter => ({ ...prevFilter, compose: emailId }))
+        }
+    }
+    function onCloseCompose() {
+        console.log('closing compose modal:' + params)
+        setFilterBy(prevFilter => ({ ...prevFilter, compose: '' }))
     }
 
-    
+
     function handleSearchSubmit(filterBy) {
         console.log("search by:" + filterBy.txt)
         setFilterBy(prevFilter => ({ ...prevFilter, txt: filterBy.txt }))
@@ -144,11 +151,12 @@ export function EmailIndex() {
     const folder = !params.folder ? 'inbox' : params.folder
     const { selectedFolder, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
-
+    const emailIdToEdit = filterBy.compose
+       
     return (
         <section className="main-app">
             <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
-            <aside className="app-side"><EmailFolderList onCompose={openComposeModal} filterBy={{ selectedFolder }} onSetselectedFolder={onSetselectedFolder} /></aside>
+            <aside className="app-side"><EmailFolderList onCompose={onCompose} filterBy={{ selectedFolder }} onSetSelectedFolder={onSetSelectedFolder} /></aside>
             {!params.emailId &&
                 <section className="email-index">
 
@@ -156,14 +164,11 @@ export function EmailIndex() {
                         <EmailFilter filterBy={{ isRead, sortBy }} onSetFilter={onSetFilter} />
                     </div>
                     <div className='main-content'>
-                        <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} />
+                        <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} onCompose={onCompose} />
                     </div>
-
-
                 </section>}
-
             <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft }} />
+            {filterBy.compose && <EmailCompose emailIdToEdit={emailIdToEdit} onCloseCompose={onCloseCompose} onSendEmail={onSendEmail} onSaveToDraft={onSaveToDraft} />}
         </section>
     )
-
 }

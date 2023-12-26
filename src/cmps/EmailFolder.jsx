@@ -2,12 +2,12 @@ import { useEffect, useState } from "react"
 import { utilService } from "../services/util.service"
 import { NavLink, useNavigate } from 'react-router-dom'
 
-export function EmailFolder({ folder, filterBy, onSetselectedFolder }) {
+export function EmailFolder({ folder, filterBy, onSetSelectedFolder }) {
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const navigate = useNavigate()
     useEffect(() => {
-        onSetselectedFolder(filterByToEdit)
+        onSetSelectedFolder(filterByToEdit)
     }, [filterByToEdit])
 
     function onFolder(value) {
