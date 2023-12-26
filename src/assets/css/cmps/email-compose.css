@@ -1,4 +1,4 @@
-.email-Compose {
+.email-compose {
   display: grid;
   grid-template-columns: 1fr ;
   grid-template-rows: 30px 1fr;
@@ -8,12 +8,41 @@
   background-color: #fff;
   width: 40vw;
   height: 60vh;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   min-width: 400px;
   min-height: 200px;
+  z-index: 1;
+  box-sizing: content-box;
 }
 
+.email-compose.minimized {
+  height: 1.5vh;
+  width: 300px;
+  min-width: 0px;
+  min-height: 20px;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+   width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+  z-index: 0; /* Set a lower z-index than the modal */
+}
+
+
+.email-compose.fullscreen {
+  position: absolute;
+  top: 7%;
+  left: 7%;
+  height: 90vh;
+  width: 80vw;
+  
+}
 
 .compose-header {
   display: grid;
@@ -27,6 +56,7 @@
   padding-right: 3px;
   background-color: #daeaf8;
   font-weight: 500;
+  cursor: pointer;
 }
 
 .close-btn {

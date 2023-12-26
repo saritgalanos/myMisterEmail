@@ -6,6 +6,7 @@ import { utilService } from "../services/util.service"
 export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSaveToDraft }) {
     const navigate = useNavigate()
     const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined, true))
+    const [modalState, setModalState] = useState('normal')
     const timeoutRef = useRef()
     const params = useParams()
 
@@ -79,50 +80,65 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
     }
 
 
+    function minimizeModal() {
+        (modalState == 'minimized') ? normalizeModal() : setModalState('minimized')
+    }
+
+    function normalizeModal() {
+        (modalState == 'normal') ? minimizeModal():setModalState('normal')
+    }
+
+    function fullscreenModal() {
+        (modalState === 'fullscreen') ? normalizeModal() : setModalState('fullscreen')
+    }
+
+    const overlay = (modalState == 'fullscreen') ? 'overlay' : ''
+
     return (
-        <div className="email-Compose">
+        <div className={`${overlay}`}>
+            <div className={`email-compose ${modalState} ${overlay}`}>
 
 
-            <div className="compose-header">
-                <div>New Message</div>
-                <div><img className="icon " onClick={() => { }} src={utilService.getIconUrl('minimize', false)} /> </div>
-                <div><img className="icon " onClick={() => { }} src={utilService.getIconUrl('fullscreen', false)} /> </div>
-                <div><img className="icon " onClick={() => { onCloseCompose() }} src={utilService.getIconUrl('close', false)} /></div>
-            </div>
-            <form onSubmit={onSendComposedEmail} className="email-compose-form">
-
-
-                <div className='input-field'>
-                    <label htmlFor="to"></label>
-                    <input value={email.to} type="text" id="to" name="to"
-                        onChange={handleChange}
-                        placeholder="To"
-                    />
+                <div className="compose-header">
+                    <div onClick={normalizeModal}>New Message</div>
+                    <div><img className="icon" onClick={minimizeModal} src={utilService.getIconUrl('minimize', false)} /> </div>
+                    <div><img className="icon" onClick={fullscreenModal} src={utilService.getIconUrl('fullscreen', false)} /> </div>
+                    <div><img className="icon" onClick={() => { onCloseCompose() }} src={utilService.getIconUrl('close', false)} /></div>
                 </div>
+                {(modalState !== 'minimized') && <form onSubmit={onSendComposedEmail} className="email-compose-form">
 
-                <div className='input-field'>
-                    <label htmlFor="subject"></label>
-                    <input value={email.subject}
-                        type="text" id="subject" name="subject" placeholder="Subject"
-                        onChange={handleChange}
 
-                    /></div>
-                <div className='input-body'>
-                    <label htmlFor="body" >    </label>
-                    <textarea
-                        id="body"
-                        name="body"
-                        value={email.body}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <button className='send-button'>Send</button>
-                </div>
+                    <div className='input-field'>
+                        <label htmlFor="to"></label>
+                        <input value={email.to} type="text" id="to" name="to"
+                            onChange={handleChange}
+                            placeholder="To"
+                        />
+                    </div>
 
-            </form>
+                    <div className='input-field'>
+                        <label htmlFor="subject"></label>
+                        <input value={email.subject}
+                            type="text" id="subject" name="subject" placeholder="Subject"
+                            onChange={handleChange}
 
-        </div >
+                        /></div>
+                    <div className='input-body'>
+                        <label htmlFor="body" >    </label>
+                        <textarea
+                            id="body"
+                            name="body"
+                            value={email.body}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <button className='send-button'>Send</button>
+                    </div>
 
+                </form>}
+
+            </div >
+        </div>
     )
 }

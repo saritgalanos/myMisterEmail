@@ -110,6 +110,7 @@ export function EmailIndex() {
     function onCloseCompose() {
         console.log('closing compose modal:' + params)
         setFilterBy(prevFilter => ({ ...prevFilter, compose: '' }))
+        loadEmails()
     }
 
 
