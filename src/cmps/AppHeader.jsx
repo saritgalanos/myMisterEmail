@@ -27,7 +27,6 @@ export function AppHeader({ filterBy, handleSearchSubmit }) {
         setIsSearchAreaClicked(!isSearchAreaClicked);
     }
 
-    //search-area-clicked
     return (
         <header className="app-header">
             <section className={`search-area ${isSearchAreaClicked ? "" : ""}`} onClick={handleSearchAreaClick}>
