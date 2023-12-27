@@ -88,7 +88,7 @@ async function query(filterBy) {
                     emails = emails.filter(email => ((email.to === loggedinUser.email) && (!email.removedAt)))
                     break
                 case 'sent':
-                    emails = emails.filter(email => ((email.from === loggedinUser.email) && (!email.removedAt) && email.sentAt))
+                    emails = emails.filter(email => ((email.from === loggedinUser.email) && (!email.removedAt) && !email.isDraft))
                     break
                 case 'trash':
                     emails = emails.filter(email => (email.removedAt != null))

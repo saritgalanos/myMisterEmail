@@ -35,6 +35,10 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
 
     async function onSaveDraft(email) {
         console.log('Timer expired! saving draft');
+        /*add sentAt */
+        if(!email.sentAt) {
+            email.sentAt = Date.now()
+        }
         const newEmail = await onSaveToDraft(email)
         // console.log(`in onSaveDraft: to:${newEmail.to} subject:${newEmail.subject} body:${newEmail.body} id:${newEmail.id}`)
         if (!email.id) {
@@ -46,7 +50,7 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
     function onSendComposedEmail(event) {
         event.preventDefault();
         if (!email.to) {
-            alert('ERROR - Please specify at least one recipient.');
+            alert('ERROR - Please specify at least one recipient.')
             return;
         }
         //clear timer
