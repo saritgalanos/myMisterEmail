@@ -140,8 +140,7 @@ export function EmailIndex() {
 
         try {
             console.log("onSaveToDraft: saving draft...")
-            const newEmail = await emailService.save(email)
-            loadEmails()
+                const newEmail = await emailService.save(email)
             return newEmail
         } catch (err) {
             console.log("onSaveToDraft: error " + err)

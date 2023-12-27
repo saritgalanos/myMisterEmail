@@ -22,6 +22,7 @@
 
  .email-line.subject,
  .email-line.from,
+ .email-line.to,
  .email-line.sent-at {
      margin-right: 10px;
  }

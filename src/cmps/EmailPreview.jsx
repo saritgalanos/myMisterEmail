@@ -4,7 +4,7 @@ import { Component, useEffect, useState } from "react"
 import { emailService } from "../services/email.service";
 import { utilService } from "../services/util.service";
 
-export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead ,onCompose}) {
+export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, onCompose }) {
 
     const [emailToPreview, setEmail] = useState(email)
     const [isMouseOn, setMouseOn] = useState(false)
@@ -32,7 +32,7 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead ,onCompos
     }
 
     function onEmailPreview() {
-        if(emailToPreview.isDraft) {
+        if (emailToPreview.isDraft) {
             onCompose(emailToPreview.id)
         }
         else {
@@ -57,9 +57,11 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead ,onCompos
             <img src={utilService.getIconUrl('starred', emailToPreview.isStarred)} className="icon"
                 onClick={() => onStarPreview()} />
 
- 
-            <div className="email-line" onClick={() => {onEmailPreview()}} >
-                <div className={`from ${emailReadClass}`}>{emailToPreview.from}</div>
+
+            <div className="email-line" onClick={() => { onEmailPreview() }} >
+                {params.folder === 'draft' || params.folder === 'sent' ? (
+                    <div className={`to ${emailReadClass}`}>{emailToPreview.to}</div>) : (
+                    <div className={`from ${emailReadClass}`}>{emailToPreview.from}</div>)}
                 <div className="main-data">
                     <span className={`subject ${emailReadClass}`}> {emailToPreview.subject} </span>
                     <span className="body"> {emailToPreview.body} </span>

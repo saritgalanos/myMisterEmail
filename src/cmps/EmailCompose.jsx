@@ -15,7 +15,7 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
     }, [])
 
     async function loadEmailToEdit() {
-        console.log('emailIdToEdit' + emailIdToEdit)
+        console.log('emailIdToEdit:' + emailIdToEdit)
         if (emailIdToEdit !== 'new') {
             const emailToEdit = await emailService.getById(emailIdToEdit)
             setEmail(emailToEdit)
@@ -105,7 +105,7 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
                     <div><img className="icon" onClick={fullscreenModal} src={utilService.getIconUrl('fullscreen', false)} /> </div>
                     <div><img className="icon" onClick={() => { onCloseCompose() }} src={utilService.getIconUrl('close', false)} /></div>
                 </div>
-                {(modalState !== 'minimized') && <form onSubmit={onSendComposedEmail} className="email-compose-form">
+                <form onSubmit={onSendComposedEmail} className="email-compose-form">
 
 
                     <div className='input-field'>
@@ -136,7 +136,7 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
                         <button className='send-button'>Send</button>
                     </div>
 
-                </form>}
+                </form>
 
             </div >
         </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { utilService } from "../services/util.service"
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export function EmailFolder({ folder, filterBy, onSetSelectedFolder }) {
 
@@ -22,7 +22,7 @@ export function EmailFolder({ folder, filterBy, onSetSelectedFolder }) {
         return (folderName === filterBy.selectedFolder)
     }
     return (
-        <NavLink to={`/mail/${folder.name}`} >
+        <Link to={`/mail/${folder.name}`} >
             <div className={`folder ${selectedFolderClass(folder.name)}`}
                 onClick={() => onFolder(folder.name)}
             >
@@ -30,6 +30,6 @@ export function EmailFolder({ folder, filterBy, onSetSelectedFolder }) {
                 <div>{folder.label}</div>
                 <p>{(folder.count !== 0) ? folder.count : ""}</p>
             </div>
-        </NavLink>
+        </Link>
     )
 }
