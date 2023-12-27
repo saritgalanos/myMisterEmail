@@ -98,7 +98,7 @@ export function EmailIndex() {
         }
     }
 
-    function onCompose(emailId='') {
+    function onCompose(emailId = '') {
         console.log('onCompose:' + emailId)
         if (!emailId) {
             setFilterBy(prevFilter => ({ ...prevFilter, compose: 'new' }))
@@ -110,7 +110,6 @@ export function EmailIndex() {
     function onCloseCompose() {
         console.log('closing compose modal:' + params)
         setFilterBy(prevFilter => ({ ...prevFilter, compose: '' }))
-        loadEmails()
     }
 
 
@@ -127,7 +126,6 @@ export function EmailIndex() {
         } finally {
             loadEmails()
         }
-
     }
 
     async function onSaveToDraft(email) {
@@ -135,17 +133,19 @@ export function EmailIndex() {
             console.log("onSaveToDraft: nothing to save...")
             return email
         }
-        
-        console.log("onSaveToDraft email:id " + email.id)
 
+        console.log("onSaveToDraft email:id " + email.id)
+        var newEmail
         try {
             console.log("onSaveToDraft: saving draft...")
-                const newEmail = await emailService.save(email)
-                loadEmails()
-                return newEmail
+            newEmail = await emailService.save(email)
 
         } catch (err) {
             console.log("onSaveToDraft: error " + err)
+        }
+        finally {
+            loadEmails()
+            return newEmail
         }
 
     }
@@ -154,7 +154,7 @@ export function EmailIndex() {
     const { selectedFolder, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
     const emailIdToEdit = filterBy.compose
-       
+
     return (
         <section className="main-app">
             <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
