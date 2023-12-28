@@ -80,9 +80,11 @@ export function EmailIndex() {
             const email = await emailService.getById(emailId)
             email.isStarred = !email.isStarred
             const savedEmail = await emailService.save(email)
-            setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
+            // setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
         } catch (error) {
             console.log('error:', error)
+        } finally {
+            loadEmails()
         }
     }
 
