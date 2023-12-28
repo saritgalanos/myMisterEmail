@@ -16,7 +16,7 @@ export function HomePage() {
             <div className="sign-in-area">
                 <img className="mister-email-img" src={utilService.getIconUrl("mister-email")} />
                 <h2>to continue to Mister Email</h2>
-                <div className='btn-login' onClick={onSignIn}>Sign-in </div>
+                <div className='btn-signin' onClick={onSignIn}>Sign-in </div>
                 
                 <hr />
                 <p> To create a new user:</p>

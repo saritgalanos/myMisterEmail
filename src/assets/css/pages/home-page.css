@@ -33,7 +33,7 @@
     border-radius: 0.5em;
 }
 
-.btn-login, .btn-signup {
+.btn-signin, .btn-signup {
     background-color:  rgb(89, 89, 163);
     color: white;
     height: 2em;
