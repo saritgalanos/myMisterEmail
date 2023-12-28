@@ -2,27 +2,38 @@
 
 import { useNavigate } from "react-router-dom";
 import { utilService } from "../services/util.service";
-import { NavLink } from 'react-router-dom';
+
+
+
 export function HomePage() {
     const navigate = useNavigate()
+
+    function onSignIn() {
+        navigate("/mail/inbox")
+    }
     return (
-        <section className="home">
-            <div className="login-area">
-                <img className="login-img" src={utilService.getIconUrl("mister-email")} />
-                <h1>Sing in</h1>
+        <section className="home-page">
+            <div className="sign-in-area">
+                <img className="mister-email-img" src={utilService.getIconUrl("mister-email")} />
                 <h2>to continue to Mister Email</h2>
+                <div className='btn-login' onClick={onSignIn}>Sign-in </div>
+                
+                <hr />
+                <p> To create a new user:</p>
                 <form>
-                    <div className="user-data"><label>
-                        <input className="input-box" type="text" placeholder="Email" />
-                    </label></div>
-                    <div className="user-data">
-                        <label>
-                            <input className="input-box" type="text" placeholder="Password" />
-                        </label>
+                    <div>
+                        <label htmlFor="emailInput"></label>
+                        <input type="text" id="emailInput" placeholder="Email" />
+                    </div>
+                    <div>
+                        <label htmlFor="passwordInput"></label>
+                        <input type="text" id="passwordInput" placeholder="Password" />
+                    </div>
+                    <div className='btn-signup-container'>
+                        <button className='btn-signup' onClick={onSignIn}>Sign-up </button>
                     </div>
                 </form>
-               <div className="center-container"><div className='login-button'> <NavLink to="/mail/inbox" >Sign-in</NavLink> </div></div> 
             </div>
-        </section>
+        </section >
     )
 }

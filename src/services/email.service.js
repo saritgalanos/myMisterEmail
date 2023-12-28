@@ -6,7 +6,7 @@ export const emailService = {
     save,
     remove,
     getById,
-    createEmail,
+    createEmptyEmail,
     getDefaultFilter,
     getFilterFromParams,
     getFolders,
@@ -144,7 +144,7 @@ function save(emailToSave) {
 }
 
 
-function createEmail(subject = '', body = '', sentAt = null, removedAt = null, from = "", to = "", isDraft = false) {
+function createEmptyEmail(subject = '', body = '', sentAt = null, removedAt = null, from = "", to = "", isDraft = false) {
     return {
         subject,
         body,

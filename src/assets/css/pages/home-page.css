@@ -1,0 +1,62 @@
+.home-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+   
+
+}
+
+.sign-in-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid ;
+    min-width: 30em;
+    min-height: 30em;
+    border-radius: 2em;
+    }
+
+.mister-email-img {
+   height: 15em;
+   width: 15em;
+}
+
+.home-page input {
+    padding:0.5em;
+    margin:0.3em;
+    background-color: aliceblue;
+    border-color: rgb(182, 182, 185);
+    width: 20em;
+    height: 2.5em;
+    border-radius: 0.5em;
+}
+
+.btn-login, .btn-signup {
+    background-color:  rgb(89, 89, 163);
+    color: white;
+    height: 2em;
+    width: 10em; /* Adjust the width as needed */
+    border: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px; /* If needed */
+}
+.btn-signup {
+    background-color:  rgb(36, 36, 37);
+    width: 5em;
+    font-weight: 400;
+    font-size: 1em;
+    margin-top:0.5em;
+}
+
+.btn-signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

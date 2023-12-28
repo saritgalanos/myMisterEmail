@@ -5,7 +5,7 @@ import { utilService } from "../services/util.service"
 
 export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSaveToDraft }) {
     const navigate = useNavigate()
-    const [email, setEmail] = useState(emailService.createEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined, true))
+    const [email, setEmail] = useState(emailService.createEmptyEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined, true))
     const [modalState, setModalState] = useState('normal')
     const timeoutRef = useRef()
     const params = useParams()
