@@ -8,6 +8,7 @@ import { EmailDetails } from './pages/EmailDetails'
 import { EmailFolderList } from './cmps/EmailFolderList';
 import { useEffect, useState } from "react"
 import { EmailCompose } from "./cmps/EmailCompose"
+import { Dashboard } from './pages/Dashboard'
 
 export function App() {
 
@@ -21,6 +22,7 @@ export function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/about" element={<AboutUs />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/mail/:folder" element={<EmailIndex />}>
                         <Route path="/mail/:folder/:emailId" element={<EmailDetails />} />
                     </Route>

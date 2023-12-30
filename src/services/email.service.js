@@ -1,3 +1,4 @@
+import { unstable_createMuiStrictModeTheme } from '@mui/material'
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
@@ -58,7 +59,7 @@ _createEmails()
 
 async function query(filterBy) {
     let emails = await storageService.query(STORAGE_KEY)
-    
+
     setUnreadCount(emails)
     if (filterBy) {
         var { txt, selectedFolder, isRead, sortBy } = filterBy
@@ -66,7 +67,7 @@ async function query(filterBy) {
         if (txt) {
             /*filter on email body*/
             emails = emails.filter(email => {
-                return ((email.body || email.subject)&&
+                return ((email.body || email.subject) &&
                     ((email.body.toLowerCase().includes(txt.toLowerCase()))
                         || (email.subject.toLowerCase().includes(txt.toLowerCase()))))
 
@@ -206,6 +207,24 @@ function updateUnreadCount(changeBy) {
 function resetEmailCount() {
     folders.map(folder => folder.count = 0)
 }
+
+// function getStatistics() {
+//     const statistics = {
+//         emailCount: {
+//             inbox: 20,
+//             unread: 10,
+//             sent: 40,
+//             starred: 10
+//         }
+//         monthlyEmails: {
+//             Jan:30,
+//             Feb:49,
+//         }
+
+
+//     }
+
+// }
 
 
 function _createEmails() {
