@@ -19,11 +19,9 @@ import { AppFooter } from "../cmps/AppFooter"
 
 export function HomePage() {
     const navigate = useNavigate()
-    const h1Ref = useRef()
     function onSignIn() {
         navigate("/mail/inbox")
     }
-
 
     return (
         <>

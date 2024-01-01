@@ -1,22 +1,19 @@
 import { utilService } from "../services/util.service"
 import { useEffect, useState } from "react"
+import { useForm } from "./customHooks/useForm";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import { emailService } from "../services/email.service";
+import { Tooltip } from "@mui/material";
 
 export function IndexHeader({ filterBy, handleSearchSubmit }) {
-    const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+
+    /*no cb for every change, just accumulation*/
+    const [filterByToEdit, handleChange] = useForm(filterBy, null)
+
+    //  const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [isSearchAreaClicked, setIsSearchAreaClicked] = useState(false);
-
-    useEffect(() => {
-        /*immediate search capability*/
-        //handleSearchSubmit(filterByToEdit)
-    }, [filterByToEdit])
-
-    function handleChange(ev) {
-        let { value, name: field, type } = ev.target
-        // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
-        value = type === 'number' ? +value : value
-        setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
-    }
-
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -28,7 +25,7 @@ export function IndexHeader({ filterBy, handleSearchSubmit }) {
     }
 
     return (
-        <header className="app-header">
+        <header className="index-header">
             <section className={`search-area ${isSearchAreaClicked ? "" : ""}`} onClick={handleSearchAreaClick}>
                 <form onSubmit={handleSubmit} className="search-form">
                     <button type="submit">
@@ -40,7 +37,18 @@ export function IndexHeader({ filterBy, handleSearchSubmit }) {
                         onChange={handleChange} />
                 </form>
             </section>
-        </header>
+            <div className="avatar">
+                <Tooltip title={
+                    <div>
+                        {emailService.getLoggedinUser().fullname}
+                        <br />
+                        {emailService.getLoggedinUser().email}
+                    </div>
+                }>
+                    <Avatar sx={{ bgcolor: deepOrange[500] }}>SG</Avatar>
+                </Tooltip>
+            </div>
+        </header >
     )
 }
 

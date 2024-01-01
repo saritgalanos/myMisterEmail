@@ -6,6 +6,7 @@ import { EmailFilter } from "../cmps/EmailFilter"
 import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { IndexHeader } from "../cmps/IndexHeader"
 import { EmailCompose } from "../cmps/EmailCompose"
+import { eventBusService, showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
 
 
@@ -50,6 +51,7 @@ export function EmailIndex() {
                     updateUnreadCount(email, -1)
                 }
                 const savedEmail = await emailService.save(email)
+                showSuccessMsg("Email moved to trash")
                 setEmails((prevEmails) => (prevEmails.map((emailInDB) => (emailInDB.id === savedEmail.id) ? savedEmail : emailInDB)))
                 setEmails(prevEmails => {
                     return prevEmails.filter(email => email.id !== emailId)
@@ -57,11 +59,13 @@ export function EmailIndex() {
             }
             else {  /*remove completely*/
                 await emailService.remove(emailId)
+                showSuccessMsg('Email removed successfully')
                 setEmails(prevEmails => {
                     return prevEmails.filter(email => email.id !== emailId)
                 })
             }
         } catch (error) {
+            showErrorMsg(`onRemoveEmail: ${err}`)
             console.log('error:', error)
         }
     }
@@ -124,8 +128,9 @@ export function EmailIndex() {
     async function onSendEmail(email) {
         try {
             await emailService.save(email)
+            showSuccessMsg('Email sent successfully')
         } catch (err) {
-            console.log("EmailCompose error on onSendEmail:" + err)
+            showErrorMsg(`onSendEmail: ${err}`)
         } finally {
             loadEmails()
         }

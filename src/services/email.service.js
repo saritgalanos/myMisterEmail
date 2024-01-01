@@ -12,6 +12,7 @@ export const emailService = {
     getFilterFromParams,
     getFolders,
     getLoggedinUserEmail,
+    getLoggedinUser,
     updateUnreadCount,
     getUnreadCount
 }
@@ -52,6 +53,11 @@ const loggedinUser = {
 function getLoggedinUserEmail() {
     return loggedinUser.email
 }
+
+function getLoggedinUser() {
+    return loggedinUser
+}
+
 
 const STORAGE_KEY = 'emails'
 

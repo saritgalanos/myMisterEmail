@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { EmailCompose } from "./cmps/EmailCompose"
 import { Dashboard } from './pages/Dashboard'
 import { QuickSend } from './pages/QuickSend'
+import { UserMsg } from './cmps/UserMsg';
 
 export function App() {
 
@@ -25,13 +26,12 @@ export function App() {
                     <Route path="/about" element={<AboutUs />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/quicksend" element={<QuickSend />} />
-                        <Route path="/mail/:folder" element={<EmailIndex />}>
-
-                            <Route path="/mail/:folder/:emailId" element={<EmailDetails />} />
-                        </Route>
+                    <Route path="/mail/:folder" element={<EmailIndex />}>
+                        <Route path="/mail/:folder/:emailId" element={<EmailDetails />} />
+                    </Route>
                 </Routes>
             </section>
-
+            <UserMsg />
         </Router>)
 }
 

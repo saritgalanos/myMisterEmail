@@ -5,7 +5,7 @@ export function useForm(initialState, cb) {
     const [fields, setFields] = useState(initialState)
 
     useEffectUpdate(() => {
-        cb(fields)
+        if(cb) cb(fields)
     }, [fields])
    
 
@@ -15,7 +15,6 @@ export function useForm(initialState, cb) {
         setFields(prevFilter => ({ ...prevFilter, [field]: value }))
         
     }
-
     return [fields, handleChange]
 
 

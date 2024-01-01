@@ -12,13 +12,14 @@
 @import "./pages/about-us.css";
 
 /* Components */
-@import "./cmps/app-header.css";
+@import "./cmps/index-header.css";
 @import "./cmps/email-preview.css";
 @import "./cmps/email-list.css";
 @import "./cmps/email-folder-list.css";
 @import "./cmps/email-filter.css";
 @import "./cmps/email-compose.css";
 @import "./cmps/app-footer.css";
+@import "./cmps/user-msg.css";
 
 
 

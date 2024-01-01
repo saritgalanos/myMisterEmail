@@ -1,8 +1,13 @@
-.app-header {
+.index-header {
     background:  #f0f4f9;
     padding:5px;
     display: flex;
+    flex-direction:row;
     flex-wrap:nowrap;
+    justify-content: space-between;
+    align-items: center;
+    height:70px;
+    padding-right: 2em;
 }
 
 .search-area{
@@ -15,6 +20,9 @@
     border-radius: 25px;
     background:#daeaf8;
    
+}
+.avatar {
+
 }
 
 
