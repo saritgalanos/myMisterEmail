@@ -1,32 +1,19 @@
 import { useEffect, useState } from "react"
 import { utilService } from "../services/util.service"
 import Select from 'react-select'
+import { useEffectUpdate } from "./customHooks/useEffectUpdate"
+import { useForm } from "./customHooks/useForm"
+
 
 export function EmailFilter({ filterBy, onSetFilter }) {
-    const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+ 
+    const [filterByToEdit, handleChange] = useForm(filterBy, onSetFilter)
 
     function logFilter() {
         console.log("filter.txt:"+filterByToEdit.txt)
         console.log("filter.sortBy:"+filterByToEdit.sortBy)
         console.log("filter.isRead:"+filterByToEdit.isRead)
     }
-   
-    useEffect(() => {
-        onSetFilter(filterByToEdit)
-    }, [filterByToEdit])
-
-
-    function handleChange(ev) {
-        let { name: field, value, type } = ev.target
-        if (type === 'number') value = +value
-
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
-    }
-
-    const handleSelectChange = (ev) => {
-        setSelectedOption(ev.target.value);
-    }
-
    
     function getArrowIconUrl(sortTopic) {
 

@@ -1,4 +1,5 @@
 // import { MyChart } from "../cmps/MyChart";
+import { useNavigate, NavLink } from "react-router-dom"
 import React from 'react';
 import {
     Chart as ChartJS, ArcElement, Tooltip, Legend, RadialLinearScale,
@@ -6,6 +7,7 @@ import {
 } from 'chart.js';
 import { Pie, Doughnut, PolarArea, Bar } from 'react-chartjs-2';
 import faker from 'faker';
+import { AppFooter } from "../cmps/AppFooter";
 
 
 
@@ -15,6 +17,7 @@ ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend, CategoryScale,
     Title);
 
 export function Dashboard() {
+    const navigate = useNavigate()
 
     const data = {
         labels: ['Sent', 'Received'],
@@ -146,6 +149,8 @@ export function Dashboard() {
                 <div className="chart">  <Pie options={options} data={data} /></div>
 
             </div>
+            <AppFooter />
+
         </div>
     )
 }

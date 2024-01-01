@@ -4,7 +4,7 @@ import { EmailList } from "../cmps/EmailList"
 import { EmailFolderList } from "../cmps/EmailFolderList"
 import { EmailFilter } from "../cmps/EmailFilter"
 import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
-import { AppHeader } from "../cmps/AppHeader"
+import { IndexHeader } from "../cmps/IndexHeader"
 import { EmailCompose } from "../cmps/EmailCompose"
 
 
@@ -67,6 +67,7 @@ export function EmailIndex() {
     }
 
     function onSetFilter(filterBy) {
+        console.log("setting filter")
         setFilterBy(prevFilter => ({ ...prevFilter, sortBy: filterBy.sortBy, isRead: filterBy.isRead }));
     }
 
@@ -159,7 +160,7 @@ export function EmailIndex() {
 
     return (
         <section className="main-app">
-            <header className="app-header"><AppHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
+            <header className="app-header"><IndexHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
             <aside className="app-side"><EmailFolderList onCompose={onCompose} filterBy={{ selectedFolder }} onSetSelectedFolder={onSetSelectedFolder} /></aside>
             {!params.emailId &&
                 <section className="email-index">

@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-   
+
 
 }
 
@@ -13,38 +13,40 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid ;
+    border: 1px solid;
     min-width: 30em;
     min-height: 30em;
     border-radius: 2em;
-    }
-
-.mister-email-img {
-   height: 15em;
-   width: 15em;
 }
 
+.mister-email-img {
+    height: 15em;
+    width: 15em;
+}
 
-/* 
-.home-page input {
-    padding:0.5em;
-    margin:0.3em;
-    background-color: aliceblue;
-    border-color: rgb(165, 165, 237);
-    width: 20em;
-    height: 2.5em;
-    border-radius: 0.5em;
-} */
 
 .btn-signup-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin:1em;
+    margin: 1em;
 }
 
 .additional-links {
-    display:flex;
+    display: flex;
     flex-direction: raw;
     align-items: center;
+}
+
+.Button {
+    color: black;
+}
+
+.btn-signin {
+    color: rgb(75, 65, 211);
+}
+
+.btn-signup {
+    border-color: rgb(75, 65, 211);
+
 }

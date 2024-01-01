@@ -1,7 +1,7 @@
 import { utilService } from "../services/util.service"
 import { useEffect, useState } from "react"
 
-export function AppHeader({ filterBy, handleSearchSubmit }) {
+export function IndexHeader({ filterBy, handleSearchSubmit }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [isSearchAreaClicked, setIsSearchAreaClicked] = useState(false);
 
