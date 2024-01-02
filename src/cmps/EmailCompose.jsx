@@ -2,10 +2,6 @@ import { useEffect, useRef, useState } from "react"
 import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { emailService } from "../services/email.service"
 import { utilService } from "../services/util.service"
-import { Button, Input, TextField } from "@mui/material"
-import { Form, Field, Formik, useFormik } from "formik"
-import * as Yup from 'yup';
-import { TextareaAutosize } from '@mui/base/TextareaAutosize'
 
 export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSaveToDraft }) {
     const navigate = useNavigate()
@@ -13,13 +9,10 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
     const [modalState, setModalState] = useState('normal')
     const timeoutRef = useRef()
     const params = useParams()
-    const [values, setValues] = useState({ to: '', subject: '', body: '' });
 
     useEffect(() => {
         loadEmailToEdit()
     }, [])
-
-   
 
     async function loadEmailToEdit() {
         console.log('emailIdToEdit:' + emailIdToEdit)
@@ -43,7 +36,7 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
     async function onSaveDraft(email) {
         console.log('Timer expired! saving draft');
         /*add sentAt */
-        if (!email.sentAt) {
+        if(!email.sentAt) {
             email.sentAt = Date.now()
         }
         const newEmail = await onSaveToDraft(email)
@@ -54,8 +47,8 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
 
     }
 
-    function onSendComposedEmail() {
-
+    function onSendComposedEmail(event) {
+        event.preventDefault();
         if (!email.to) {
             alert('ERROR - Please specify at least one recipient.')
             return;
@@ -83,9 +76,9 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
 
 
 
-    function handleFieldChange(ev) {
+    function handleChange(ev) {
         let { value, name: field, type } = ev.target
-        console.log(`in handleFieldChange: value=${value} name=${field} `)
+        // console.log(`in handleChange: value=${value} name=${field} type=${type}`)
         value = type === 'number' ? +value : value
         setEmail((prevEmail) => ({ ...prevEmail, [field]: value }))
     }
@@ -96,7 +89,7 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
     }
 
     function normalizeModal() {
-        (modalState == 'normal') ? minimizeModal() : setModalState('normal')
+        (modalState == 'normal') ? minimizeModal():setModalState('normal')
     }
 
     function fullscreenModal() {
@@ -105,21 +98,6 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
 
     const overlay = (modalState == 'fullscreen') ? 'overlay' : ''
 
-
-    //-----------------------------
-
-    const formSchema = Yup.object().shape({
-        to: Yup.string().email('Invalid email'),
-    })
-    function CustomInputTextField(props) {
-        return <TextField {...props} id="outlined-basic" variant="standard" />
-    }
-
-    function CustomInputTextareaAutosize(props) {
-        return <TextareaAutosize  {...props} className="textarea" />
-    }
-
-    
     return (
         <div className={`${overlay}`}>
             <div className={`email-compose ${modalState} ${overlay}`}>
@@ -131,113 +109,40 @@ export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSav
                     <div><img className="icon" onClick={fullscreenModal} src={utilService.getIconUrl('fullscreen', false)} /> </div>
                     <div><img className="icon" onClick={() => { onCloseCompose() }} src={utilService.getIconUrl('close', false)} /></div>
                 </div>
-
-                <Formik
-                    initialValues={{
-                        to: email.to,
-                        subject: email.subject,
-                        body: email.body,
-                    }}
-                    validationSchema={formSchema}
-                    validateOnChange={false}
-                    validateOnBlur={false}
-                    validateOnMount={true}
-
-                    onSubmit={values => {
-                        console.log(values)
-                        email.to = values.to
-                        email.subject = values.subject
-                        email.body = values.body
-                        onSendComposedEmail()
-                    }}
-                >
-
-                    {({ errors, touched }) => (
-                        <Form className='formik'>
-                            <Field as={CustomInputTextField} name="to" label="To"/>
-                            {errors.to && touched.to && (
-                                <div>{errors.to}</div>
-                            )}
-                            <Field as={CustomInputTextField} name="subject" label="Subject" />
-
-                            <div className='input-body'>
-                                <Field as={CustomInputTextareaAutosize} name="body" label="Multiline" />
-                            </div>
+                <form onSubmit={onSendComposedEmail} className="email-compose-form">
 
 
-                            <Button type="submit">Send</Button>
-                        </Form>
-                    )}
-                </Formik>
+                    <div className='input-field'>
+                        <label htmlFor="to"></label>
+                        <input value={email.to} type="text" id="to" name="to"
+                            onChange={handleChange}
+                            placeholder="To"
+                        />
+                    </div>
+
+                    <div className='input-field'>
+                        <label htmlFor="subject"></label>
+                        <input value={email.subject}
+                            type="text" id="subject" name="subject" placeholder="Subject"
+                            onChange={handleChange}
+
+                        /></div>
+                    <div className='input-body'>
+                        <label htmlFor="body" >    </label>
+                        <textarea
+                            id="body"
+                            name="body"
+                            value={email.body}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <button className='send-button'>Send</button>
+                    </div>
+
+                </form>
 
             </div >
-        </div >
+        </div>
     )
 }
-
-
-
-
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
-
-*/
-/* <form onSubmit={onSendComposedEmail} className="email-compose-form">
-
-
-                <div className='input-field'>
-                    <label htmlFor="to"></label>
-                    <input value={email.to} type="text" id="to" name="to"
-                        onChange={handleChange}
-                        placeholder="To"
-                    />
-                </div>
-
-                <div className='input-field'>
-                    <label htmlFor="subject"></label>
-                    <input value={email.subject}
-                        type="text" id="subject" name="subject" placeholder="Subject"
-                        onChange={handleChange}
-
-                    /></div>
-                <div className='input-body'>
-                    <label htmlFor="body" >    </label>
-                    <textarea
-                        id="body"
-                        name="body"
-                        value={email.body}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <button className='send-button'>Send</button>
-                </div>
-
-            </form> */
-
-// function handleFieldChange(ev) {
-//     let { value, name: field, type } = ev.target
-//     console.log(`in handleChange: value=${value} name=${field} type=${type}`)
-//     value = type === 'number' ? +value : value
-//     setEmail((prevEmail) => ({ ...prevEmail, [field]: value }))
-// }

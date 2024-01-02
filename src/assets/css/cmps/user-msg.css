@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 2;
 }
 
 .user-msg.success {
@@ -16,7 +17,7 @@
 }
 
 .user-msg.error {
-    background-color: pink;
+    background-color: rgb(197, 56, 80);
 }
 
 .user-msg button {
