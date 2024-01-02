@@ -170,8 +170,7 @@ function getDefaultFilter() {
         selectedFolder: 'inbox',
         txt: '',
         isRead: '',
-        sortBy: '',
-        compose: '', //can be new, edit or ''
+        sortBy: ''
     }
 }
 

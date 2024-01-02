@@ -9,7 +9,7 @@ export function AppFooter() {
                     <p>&nbsp;|&nbsp;</p>
                     <NavLink to={`/dashboard`} >Dashboard</NavLink>
                     <p>&nbsp;|&nbsp;</p>
-                    <NavLink to={`/quicksend`} >Quick Send</NavLink>
+                    <NavLink to={`/mail/inbox/edit?to=help@gmail.com&subject=Help`} >Quick Send</NavLink>
                     <p> &nbsp;|&nbsp;</p>
                     <NavLink to={`/about`} >About</NavLink>
                 </div>

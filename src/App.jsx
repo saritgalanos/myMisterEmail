@@ -25,7 +25,6 @@ export function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/about" element={<AboutUs />} />
                     <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/quicksend" element={<QuickSend />} />
                     <Route path="/mail/:folder" element={<EmailIndex />}>
                         <Route path="/mail/:folder/:emailId" element={<EmailDetails />} />
                         <Route path="/mail/:folder/edit" element={<EmailCompose />} />

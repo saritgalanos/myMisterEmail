@@ -21,7 +21,6 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, onCompos
     }
 
     async function onIsRead() {
-        console.log("onIsRead")
         const isReadVal = !emailToPreview.isRead;
         setEmail((prevEmail) => ({ ...prevEmail, isRead: isReadVal }))
         try {

@@ -9,11 +9,7 @@ export function EmailFilter({ filterBy, onSetFilter }) {
  
     const [filterByToEdit, handleChange] = useForm(filterBy, onSetFilter)
 
-    function logFilter() {
-        console.log("filter.txt:"+filterByToEdit.txt)
-        console.log("filter.sortBy:"+filterByToEdit.sortBy)
-        console.log("filter.isRead:"+filterByToEdit.isRead)
-    }
+    
    
     function getArrowIconUrl(sortTopic) {
 
@@ -53,3 +49,6 @@ export function EmailFilter({ filterBy, onSetFilter }) {
         </section>
     )
 }
+
+
+

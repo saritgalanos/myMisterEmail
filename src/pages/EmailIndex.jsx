@@ -5,8 +5,8 @@ import { EmailFolderList } from "../cmps/EmailFolderList"
 import { EmailFilter } from "../cmps/EmailFilter"
 import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { IndexHeader } from "../cmps/IndexHeader"
-import { EmailCompose } from "../cmps/EmailCompose"
 import { eventBusService, showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+import { useEffectUpdate } from "../cmps/customHooks/useEffectUpdate"
 
 
 
@@ -18,14 +18,18 @@ export function EmailIndex() {
 
     const navigate = useNavigate()
     const params = useParams()
-    console.log("folder=" + params.folder)
-    console.log("id=" + params.emailId)
-    console.log("edit=" + params.edit)
 
     useEffect(() => {
-        setSearchParams(filterBy)
+        const existingSearchParams = Object.fromEntries(searchParams.entries())
+        // Merge existing parameters with filterBy
+        const newSearchParams = { ...existingSearchParams, ...filterBy }
+        // Create a new URLSearchParams object with the merged parameters
+        const updatedSearchParams = new URLSearchParams(newSearchParams)
+        // Update the URL with the new parameters
+        setSearchParams(updatedSearchParams)
         loadEmails()
     }, [filterBy])
+
 
     async function loadEmails() {
         const emails = await emailService.query(filterBy)
@@ -35,7 +39,6 @@ export function EmailIndex() {
     function updateUnreadCount(email, changeBy) {
         if (email.to === emailService.getLoggedinUserEmail()) {
             emailService.updateUnreadCount(changeBy)
-            console.log('updating unread count')
             setUnreadCount(emailService.getUnreadCount())
 
         }
@@ -45,9 +48,7 @@ export function EmailIndex() {
         try {
             const email = await emailService.getById(emailId)
             if (!email.removedAt) {
-                console.log('on removedAt')
                 email.removedAt = Date.now()
-                console.log('email.removedAt ' + email.removedAt)
                 if (!email.isRead) {
                     updateUnreadCount(email, -1)
                 }
@@ -107,23 +108,31 @@ export function EmailIndex() {
     }
 
     function onCompose(emailId = '') {
-        if (params.emailId) {
-            navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}/edit`)
-        }
-        else {
-            navigate(`/mail/${filterBy.selectedFolder}/edit`)
-        }
+        navigate(`/mail/${filterBy.selectedFolder}/edit`)
+
+        // if (params.emailId) {
+        //     navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}/edit`)
+        // }
+        // else {
+        //     navigate(`/mail/${filterBy.selectedFolder}/edit`)
+        // }
+    }
+
+    function onBackToIndex() {
+        const urlParams = new URLSearchParams(filterBy).toString()
+        navigate(`/mail/${filterBy.selectedFolder}/?${urlParams}`)
     }
 
 
     function onCloseCompose() {
         console.log('closing compose modal:' + params)
         // setFilterBy(prevFilter => ({ ...prevFilter, compose: '' }))
+        const urlParams = new URLSearchParams(filterBy).toString()
         if (!params.emailId) {
-            navigate(`/mail/${filterBy.selectedFolder}`)
+            navigate(`/mail/${filterBy.selectedFolder}/?${urlParams}`)
         }
         else {
-            navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}`)
+            navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}/?${urlParams}`)
         }
 
     }
@@ -187,10 +196,10 @@ export function EmailIndex() {
                     </div>
                 </section>}
             {/* showing first email details */}
-            {params.emailId && <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft, onCloseCompose }} />}
+            {params.emailId && <Outlet context={{ onStar, onRemoveEmail, setIsRead, onBackToIndex }} />}
 
             {/* email compose */}
-            <Outlet context={{ onCloseCompose, onSendEmail, onSaveToDraft }} />
+            {!params.emailId && <Outlet context={{ onCloseCompose, onSendEmail, onSaveToDraft }} />}
 
         </section>
     )

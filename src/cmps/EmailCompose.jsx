@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
-import { useNavigate, useOutletContext, useParams } from "react-router"
+import { useNavigate, useParams, useSearchParams, useOutletContext } from "react-router-dom"
+// import { useNavigate, useOutletContext, useParams, useSearchParams } from "react-router"
 import { emailService } from "../services/email.service"
 import { utilService } from "../services/util.service"
 
@@ -10,13 +11,20 @@ export function EmailCompose() {
     const timeoutRef = useRef()
     const params = useParams()
     const { onCloseCompose, onSendEmail, onSaveToDraft } = useOutletContext()
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         loadEmailToEdit()
     }, [])
 
     async function loadEmailToEdit() {
-        console.log('email to edit' + params.emailIdToEdit) 
+        /*help email*/
+        const searchParamsTo = searchParams.get('to')
+        const searchParamsSubject = searchParams.get('subject')
+        if (searchParamsTo && searchParamsSubject) {
+            setEmail((prevEmail) => ({ ...prevEmail, to: searchParamsTo, subject: searchParamsSubject }))
+        }
+
         if (params.emailIdToEdit) {
             const emailToEdit = await emailService.getById(params.emailIdToEdit)
             setEmail(emailToEdit)
@@ -26,7 +34,7 @@ export function EmailCompose() {
 
     useEffect(() => {
         if (timeoutRef.current) {
-            console.log("clearing timeout")
+           // console.log("clearing timeout")
             clearTimeout(timeoutRef.current);
         }
         console.log("setting timeout")
@@ -37,7 +45,7 @@ export function EmailCompose() {
     async function onSaveDraft(email) {
         console.log('Timer expired! saving draft');
         /*add sentAt */
-        if(!email.sentAt) {
+        if (!email.sentAt) {
             email.sentAt = Date.now()
         }
         const newEmail = await onSaveToDraft(email)
@@ -90,7 +98,7 @@ export function EmailCompose() {
     }
 
     function normalizeModal() {
-        (modalState == 'normal') ? minimizeModal():setModalState('normal')
+        (modalState == 'normal') ? minimizeModal() : setModalState('normal')
     }
 
     function fullscreenModal() {

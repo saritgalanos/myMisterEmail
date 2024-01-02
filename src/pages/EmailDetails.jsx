@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useOutletContext, useParams } from "react-router"
+import { useNavigate, useOutletContext, useParams, Outlet } from "react-router"
 import { emailService } from "../services/email.service"
 import { utilService } from "../services/util.service"
 
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
-    const { onStar, onRemoveEmail, setIsRead} = useOutletContext()
+    const { onStar, onRemoveEmail, setIsRead, onBackToIndex} = useOutletContext()
     const params = useParams()
     
     const navigate = useNavigate()
@@ -21,7 +21,7 @@ export function EmailDetails() {
     async function loadEmail() {
         try {
             const email = await emailService.getById(params.emailId)
-            setIsRead(email.id, true)
+            await setIsRead(email.id, true)
             setEmail(email)
         } catch (error) {
             console.log('error:', error)
@@ -63,7 +63,7 @@ if(!params.emailId) return<></>
         <div className="email-details">
             <div className="email-content">
                 <div className="icons-list">
-                    <div className="circle-icon"> <img className="icon " onClick={() => navigate(`/mail/${params.folder}`)} src={utilService.getIconUrl('back', false)} /></div>
+                    <div className="circle-icon"> <img className="icon " onClick= {onBackToIndex} src={utilService.getIconUrl('back', false)} /></div>
                     <div className="circle-icon"> <img className="icon " onClick={() => { onTrash(email.id) }} src={utilService.getIconUrl('trash', false)} /></div>
                     <div className="circle-icon"> <img className="icon " onClick={() => { onMarkUnread(email.id) }} src={utilService.getIconUrl('mail', true)} /></div>
 
