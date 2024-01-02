@@ -33,7 +33,8 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, onCompos
 
     function onEmailPreview() {
         if (emailToPreview.isDraft) {
-            onCompose(emailToPreview.id)
+            navigate(`/mail/${params.folder}/edit/${emailToPreview.id}`)
+            // onCompose(emailToPreview.id)
         }
         else {
             navigate(`/mail/${params.folder}/${emailToPreview.id}`)

@@ -23,6 +23,7 @@ export function IndexHeader({ filterBy, handleSearchSubmit }) {
     const handleSearchAreaClick = () => {
         setIsSearchAreaClicked(!isSearchAreaClicked);
     }
+    
 
     return (
         <header className="index-header">

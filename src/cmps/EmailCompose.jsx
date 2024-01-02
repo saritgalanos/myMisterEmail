@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState } from "react"
-import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { useNavigate, useOutletContext, useParams } from "react-router"
 import { emailService } from "../services/email.service"
 import { utilService } from "../services/util.service"
 
-export function EmailCompose({ emailIdToEdit, onCloseCompose, onSendEmail, onSaveToDraft }) {
+export function EmailCompose() {
     const navigate = useNavigate()
     const [email, setEmail] = useState(emailService.createEmptyEmail(undefined, undefined, undefined, undefined, emailService.getLoggedinUserEmail(), undefined, true))
     const [modalState, setModalState] = useState('normal')
     const timeoutRef = useRef()
     const params = useParams()
+    const { onCloseCompose, onSendEmail, onSaveToDraft } = useOutletContext()
 
     useEffect(() => {
         loadEmailToEdit()
     }, [])
 
     async function loadEmailToEdit() {
-        console.log('emailIdToEdit:' + emailIdToEdit)
-        if (emailIdToEdit !== 'new') {
-            const emailToEdit = await emailService.getById(emailIdToEdit)
+        console.log('email to edit' + params.emailIdToEdit) 
+        if (params.emailIdToEdit) {
+            const emailToEdit = await emailService.getById(params.emailIdToEdit)
             setEmail(emailToEdit)
         }
     }

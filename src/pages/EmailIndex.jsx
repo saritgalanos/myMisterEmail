@@ -18,8 +18,9 @@ export function EmailIndex() {
 
     const navigate = useNavigate()
     const params = useParams()
-    // console.log("folder=" + params.folder)
-    // console.log("id=" + params.emailId)
+    console.log("folder=" + params.folder)
+    console.log("id=" + params.emailId)
+    console.log("edit=" + params.edit)
 
     useEffect(() => {
         setSearchParams(filterBy)
@@ -106,17 +107,25 @@ export function EmailIndex() {
     }
 
     function onCompose(emailId = '') {
-        console.log('onCompose:' + emailId)
-        if (!emailId) {
-            setFilterBy(prevFilter => ({ ...prevFilter, compose: 'new' }))
+        if (params.emailId) {
+            navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}/edit`)
         }
         else {
-            setFilterBy(prevFilter => ({ ...prevFilter, compose: emailId }))
+            navigate(`/mail/${filterBy.selectedFolder}/edit`)
         }
     }
+
+
     function onCloseCompose() {
         console.log('closing compose modal:' + params)
-        setFilterBy(prevFilter => ({ ...prevFilter, compose: '' }))
+        // setFilterBy(prevFilter => ({ ...prevFilter, compose: '' }))
+        if (!params.emailId) {
+            navigate(`/mail/${filterBy.selectedFolder}`)
+        }
+        else {
+            navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}`)
+        }
+
     }
 
 
@@ -161,7 +170,7 @@ export function EmailIndex() {
     const folder = !params.folder ? 'inbox' : params.folder
     const { selectedFolder, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
-    const emailIdToEdit = filterBy.compose
+    // const emailIdToEdit = filterBy.compose
 
     return (
         <section className="main-app">
@@ -177,8 +186,14 @@ export function EmailIndex() {
                         <EmailList emails={emails} onRemoveEmail={onRemoveEmail} onStar={onStar} setIsRead={setIsRead} onCompose={onCompose} />
                     </div>
                 </section>}
-            <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft }} />
-            {filterBy.compose && <EmailCompose emailIdToEdit={emailIdToEdit} onCloseCompose={onCloseCompose} onSendEmail={onSendEmail} onSaveToDraft={onSaveToDraft} />}
+            {/* showing first email details */}
+            {params.emailId && <Outlet context={{ onStar, onRemoveEmail, setIsRead, onSendEmail, onSaveToDraft, onCloseCompose }} />}
+
+            {/* email compose */}
+            <Outlet context={{ onCloseCompose, onSendEmail, onSaveToDraft }} />
+
         </section>
     )
 }
+
+// {filterBy.compose && <EmailCompose emailIdToEdit={emailIdToEdit} onCloseCompose={emailIdToEdit} onSendEmail={onSendEmail} onSaveToDraft={onSaveToDraft} />} 
