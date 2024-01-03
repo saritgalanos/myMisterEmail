@@ -7,6 +7,8 @@ import { Outlet, useNavigate, useParams, useSearchParams } from "react-router-do
 import { IndexHeader } from "../cmps/IndexHeader"
 import { eventBusService, showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { useEffectUpdate } from "../cmps/customHooks/useEffectUpdate"
+import { EmailDetails } from "./EmailDetails"
+import { EmailCompose } from "../cmps/EmailCompose"
 
 
 
@@ -15,9 +17,12 @@ export function EmailIndex() {
     const [emails, setEmails] = useState(null)
     const [filterBy, setFilterBy] = useState(emailService.getFilterFromParams(searchParams))
     const [unreadCount, setUnreadCount] = useState(0)
+    const [isComposing, setIsComposing] = useState(false)
 
     const navigate = useNavigate()
     const params = useParams()
+
+
 
     useEffect(() => {
         const existingSearchParams = Object.fromEntries(searchParams.entries())
@@ -108,8 +113,8 @@ export function EmailIndex() {
     }
 
     function onCompose(emailId = '') {
-        navigate(`/mail/${filterBy.selectedFolder}/edit`)
-
+                    navigate(`/mail/${filterBy.selectedFolder}/edit`)
+        
         // if (params.emailId) {
         //     navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}/edit`)
         // }
@@ -179,8 +184,8 @@ export function EmailIndex() {
     const folder = !params.folder ? 'inbox' : params.folder
     const { selectedFolder, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
-    // const emailIdToEdit = filterBy.compose
 
+console.log("is composing"+isComposing + " params.emailId:" + params.emailId)
     return (
         <section className="main-app">
             <header className="app-header"><IndexHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
@@ -204,5 +209,3 @@ export function EmailIndex() {
         </section>
     )
 }
-
-// {filterBy.compose && <EmailCompose emailIdToEdit={emailIdToEdit} onCloseCompose={emailIdToEdit} onSendEmail={onSendEmail} onSaveToDraft={onSaveToDraft} />} 

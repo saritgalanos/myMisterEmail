@@ -1,6 +1,6 @@
 .about-us {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -9,12 +9,25 @@
 }
 
 .about-us header {
-    display: flex;
-    justify-content: center;
     text-align: center;
-    height: 5em
+    margin:2em;
 }
 
+.partners {
+    text-align: center;
+    margin:2em;
+
+}
+
+.partners img {
+    height: 1.5em;
+    margin:1em;
+}
+
+
+.partners h1 {
+    margin: auto;
+}
 .company-information {
     display: flex;
     flex-wrap: wrap;
@@ -32,22 +45,12 @@
     border-radius: 1em;
 }
 
-.offices {
-    border: 2px solid rgb(183, 183, 209);
-
+.reviews{
+ 
+    text-align: center;
+   
 }
-
-
-.products {
-    border: 2px solid rgb(114, 114, 167);
-}
-
-.team {
-    border: 2px solid rgb(63, 63, 90);
-
-}
-
-.positions {
-    border: 2px solid rgb(83, 83, 128);
-
+.reviews img{
+    height:4em;
+   
 }

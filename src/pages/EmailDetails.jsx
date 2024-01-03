@@ -8,19 +8,20 @@ export function EmailDetails() {
     const [email, setEmail] = useState(null)
     const { onStar, onRemoveEmail, setIsRead, onBackToIndex} = useOutletContext()
     const params = useParams()
-    
-    const navigate = useNavigate()
 
+    const navigate = useNavigate()
+    
     useEffect(() => {
-        if(params.emailId) {
+        if (params.emailId) {
             loadEmail()
         }
     }, [params.emailId])
 
-   
+
     async function loadEmail() {
         try {
             const email = await emailService.getById(params.emailId)
+            
             await setIsRead(email.id, true)
             setEmail(email)
         } catch (error) {
@@ -55,7 +56,7 @@ export function EmailDetails() {
             console.log('onStarInDetails error:', err);
         }
     }
-if(!params.emailId) return<></>
+    if (!params.emailId) return <></>
     if (!email) return <div>Loading Email Details...</div>
 
 
@@ -63,7 +64,7 @@ if(!params.emailId) return<></>
         <div className="email-details">
             <div className="email-content">
                 <div className="icons-list">
-                    <div className="circle-icon"> <img className="icon " onClick= {onBackToIndex} src={utilService.getIconUrl('back', false)} /></div>
+                    <div className="circle-icon"> <img className="icon " onClick={onBackToIndex} src={utilService.getIconUrl('back', false)} /></div>
                     <div className="circle-icon"> <img className="icon " onClick={() => { onTrash(email.id) }} src={utilService.getIconUrl('trash', false)} /></div>
                     <div className="circle-icon"> <img className="icon " onClick={() => { onMarkUnread(email.id) }} src={utilService.getIconUrl('mail', true)} /></div>
 
