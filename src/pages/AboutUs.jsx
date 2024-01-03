@@ -29,7 +29,7 @@ export function AboutUs() {
 
             <div className="reviews">
                 <h1>Trusted by Our Dedicated Community</h1>
-                <strong>We strongly believe in MisterEmail and the incredible value it brings.</strong>
+                We strongly believe in MisterEmail and the incredible value it brings.
                 <br></br>
                  But don’t just take our word for it.
                     Here are some kind messages from both community members & professionals, that are passionate about our platform.

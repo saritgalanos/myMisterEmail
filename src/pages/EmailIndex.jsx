@@ -130,7 +130,6 @@ export function EmailIndex() {
 
 
     function onCloseCompose() {
-        console.log('closing compose modal:' + params)
         // setFilterBy(prevFilter => ({ ...prevFilter, compose: '' }))
         const urlParams = new URLSearchParams(filterBy).toString()
         if (!params.emailId) {
@@ -185,7 +184,7 @@ export function EmailIndex() {
     const { selectedFolder, isRead, sortBy, txt } = filterBy
     if (!emails) return <div>Loading...</div>
 
-console.log("is composing"+isComposing + " params.emailId:" + params.emailId)
+
     return (
         <section className="main-app">
             <header className="app-header"><IndexHeader filterBy={{ txt }} handleSearchSubmit={handleSearchSubmit} /></header>
