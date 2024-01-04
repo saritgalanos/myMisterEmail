@@ -1,0 +1,28 @@
+/*setup*/
+@import "./setup/_variables.scss";
+
+/*  Basics */
+@import "basics/base.scss";
+/* @import "basics/helpers.css"; */
+@import "basics/layout.scss";
+@import "basics/animations.scss";
+
+/* Pages */
+@import "./pages/home-page.scss";
+@import "./pages/email-details.scss";
+@import "./pages/email-index.scss";
+@import "./pages/dashboard.scss";
+@import "./pages/about-us.scss";
+
+/* Components */
+@import "./cmps/index-header.scss";
+@import "./cmps/email-preview.scss";
+@import "./cmps/email-list.scss";
+@import "./cmps/email-folder-list.scss";
+@import "./cmps/email-filter.scss";
+@import "./cmps/email-compose.scss";
+@import "./cmps/app-footer.scss";
+@import "./cmps/user-msg.scss";
+
+
+
