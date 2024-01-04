@@ -15,10 +15,23 @@
 
 .app-side {
     grid-area: side;
-    background: #f0f4f9;;
+    background: $clr2;
 }
 .app-main-area{
     grid-area: main;
-    background: #f0f4f9;;
+    background: $clr2;
 }
 
+/*mobile*/
+@media screen and (max-width: 768px) {
+    .main-app{
+        display:grid;
+        grid-template-columns:50px 1fr;
+        grid-template-rows:70px 1fr;
+        height: 100vh;
+    
+        grid-template-areas:
+        "side header"
+        "side main";
+    }
+}

@@ -6,7 +6,7 @@ import { utilService } from "../services/util.service"
 
 export function EmailDetails() {
     const [email, setEmail] = useState(null)
-    const { onStar, onRemoveEmail, setIsRead, onBackToIndex} = useOutletContext()
+    const { onStar, onRemoveEmail, setIsRead, onBackToIndex, onCloseCompose, onSendEmail, onSaveToDraft} = useOutletContext()
     const params = useParams()
 
     const navigate = useNavigate()
@@ -83,6 +83,7 @@ export function EmailDetails() {
                     <div className="email-body">{email.body}</div>
                 </div>
             </div>
+            <Outlet context={{ onCloseCompose, onSendEmail, onSaveToDraft }} />
         </div>
     )
 }

@@ -1,3 +1,26 @@
+* {
+  transition: 2s;
+}
+
+.email-folder-list {
+
+
+}
+
+.compose-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(164, 218, 250);
+  border-radius: 15px;
+  border: 0px;
+  height: 45px;
+  padding-right: 20px;
+  margin: 5px;
+  align-items: center;
+}
+
+
 .compose-area {
   border-bottom: 1px solid #ccc;
   margin-top: 10px;
@@ -7,9 +30,9 @@
 
 .folder-area {
   /* padding: 10px; */
-  padding-top:10px;
+  padding-top: 10px;
   display: grid;
-  background: #f0f4f9;
+  background: $clr2;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(5 30px);
   align-items: center;
@@ -19,14 +42,14 @@
   display: grid;
   grid-template-columns: 30px 1fr 30px;
   align-items: center;
-  padding:7px;
-  padding-left:15px;
-  margin:3px;
+  padding: 7px;
+  padding-left: 15px;
+  margin: 3px;
 }
 
-.folder p { 
+.folder p {
   text-align: center;
-  margin:0;
+  margin: 0;
 }
 
 .folder:hover {
@@ -41,7 +64,7 @@
   background-color: #a8c7fa;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  font-weight:600;
+  font-weight: 600;
 }
 
 .selected-folder:hover {
@@ -49,9 +72,10 @@
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+
 .folder img {
-  height:20px;
-  width:20px;
+  height: 20px;
+  width: 20px;
 }
 
 .image-with-text {
@@ -59,15 +83,46 @@
   margin: 10px;
 }
 
-.compose-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(164, 218, 250);
-  border-radius: 15px;
-  border: 0px;
-  height: 45px;
-  padding-right: 20px;
-  margin: 5px;
-  align-items: center;
+
+/*mobile*/
+@media screen and (max-width: 768px) {
+
+  .email-folder-list {
+    width: auto;
+  }
+
+  .compose-area {
+    border-bottom: 1px solid #ccc;
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 50px;
+
+    .txt {
+      display: none;
+    }
+
+  }
+
+  .compose-button {
+    padding-right: 7px;
+    margin: 5px;
+   
+  }
+  .folder {
+    display: flex;
+    // grid-template-columns: 30px;
+    align-items: center;
+    padding: 7px;
+    padding-left: 15px;
+    margin: 3px;
+
+
+    p {
+      display: none;
+    }
+
+    .txt {
+      display: none;
+    }
+  }
 }

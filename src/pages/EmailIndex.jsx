@@ -113,14 +113,14 @@ export function EmailIndex() {
     }
 
     function onCompose(emailId = '') {
-                    navigate(`/mail/${filterBy.selectedFolder}/edit`)
+                  //  navigate(`/mail/${filterBy.selectedFolder}/edit`)
         
-        // if (params.emailId) {
-        //     navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}/edit`)
-        // }
-        // else {
-        //     navigate(`/mail/${filterBy.selectedFolder}/edit`)
-        // }
+        if (params.emailId) {
+            navigate(`/mail/${filterBy.selectedFolder}/${params.emailId}/edit`)
+        }
+        else {
+            navigate(`/mail/${filterBy.selectedFolder}/edit`)
+        }
     }
 
     function onBackToIndex() {
@@ -200,7 +200,7 @@ export function EmailIndex() {
                     </div>
                 </section>}
             {/* showing first email details */}
-            {params.emailId && <Outlet context={{ onStar, onRemoveEmail, setIsRead, onBackToIndex }} />}
+            {params.emailId && <Outlet context={{ onStar, onRemoveEmail, setIsRead, onBackToIndex, onCloseCompose, onSendEmail, onSaveToDraft }} />}
 
             {/* email compose */}
             {!params.emailId && <Outlet context={{ onCloseCompose, onSendEmail, onSaveToDraft }} />}

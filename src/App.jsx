@@ -27,10 +27,10 @@ export function App() {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/mail/:folder" element={<EmailIndex />}>
                         <Route path="/mail/:folder/edit/:emailIdToEdit" element={<EmailCompose />} />
-                        <Route path="/mail/:folder/:emailId/edit/" element={<EmailCompose />} />
-                        <Route path="/mail/:folder/:emailId" element={<EmailDetails />} />
                         <Route path="/mail/:folder/edit" element={<EmailCompose />} />
-
+                        <Route path="/mail/:folder/:emailId" element={<EmailDetails />} >
+                            <Route path="/mail/:folder/:emailId/edit/" element={<EmailCompose />} />
+                        </Route>
                     </Route>
                 </Routes>
             </section>

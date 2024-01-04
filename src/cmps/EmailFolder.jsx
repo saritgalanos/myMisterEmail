@@ -27,7 +27,7 @@ export function EmailFolder({ folder, filterBy, onSetSelectedFolder }) {
                 onClick={() => onFolder(folder.name)}
             >
                 <img src={utilService.getIconUrl(folder.name, isSelected(folder.name))} alt={`${folder.label} Icon`} />
-                <div>{folder.label}</div>
+                <div className="txt">{folder.label}</div>
                 <p>{(folder.count !== 0) ? folder.count : ""}</p>
             </div>
         </Link>
