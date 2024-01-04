@@ -17,7 +17,7 @@
 
  .email-line {
      display: grid;
-     grid-template-columns:220px 1fr 70px;
+     grid-template-columns:180px 1fr;
    
  }
 
@@ -40,7 +40,7 @@
  .main-data {
      flex: 1;
      margin-left: 15px;
-     padding-right: 20px;
+     padding-right: 10px;
      white-space: nowrap;
      overflow: hidden;
      text-overflow: ellipsis;
@@ -69,3 +69,22 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
  }
+
+
+
+ /*mobile*/
+@media screen and (max-width: 768px) {
+
+    // .email-line {
+    //     display: grid;
+    //     grid-template-columns:1fr 70px;
+    //     grid-template-row:1.2em 1.2em;
+      
+    // }
+    .main-data {
+        .body {
+            display:none;
+        }
+    }
+   
+}

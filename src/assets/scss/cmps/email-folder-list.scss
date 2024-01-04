@@ -1,5 +1,5 @@
 * {
-  transition: 2s;
+  transition: 1s;
 }
 
 .email-folder-list {
@@ -36,6 +36,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: repeat(5 30px);
   align-items: center;
+  transition: 2s;
 }
 
 .folder {
@@ -95,7 +96,7 @@
     border-bottom: 1px solid #ccc;
     margin-top: 10px;
     margin-left: 10px;
-    height: 50px;
+   
 
     .txt {
       display: none;
@@ -110,7 +111,6 @@
   }
   .folder {
     display: flex;
-    // grid-template-columns: 30px;
     align-items: center;
     padding: 7px;
     padding-left: 15px;
