@@ -4,49 +4,31 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: $clr2;
 
 
-}
-
-.sign-in-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid;
-    min-width: 30em;
-    min-height: 30em;
-    border-radius: 2em;
-}
-
-.mister-email-img {
-    height: 15em;
-    width: 15em;
-}
-
-
-.btn-signup-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1em;
-}
-
-.additional-links {
-    display: flex;
-    flex-direction: raw;
-    align-items: center;
-}
-
-.Button {
-    color: black;
-}
-
-.btn-signin {
-    color: rgb(75, 65, 211);
-}
-
-.btn-signup {
-    border-color: rgb(75, 65, 211);
-
+    .sign-in-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 25em;
+        min-height: 25em;
+        border-radius: 2em;
+    }
+    
+    
+    
+    .btn-signup-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1em;
+    }
+    
+    .additional-links {
+        display: flex;
+        flex-direction: raw;
+        align-items: center;
+    }
+    
 }
