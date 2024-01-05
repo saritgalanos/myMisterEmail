@@ -213,29 +213,11 @@ function resetEmailCount() {
     folders.map(folder => folder.count = 0)
 }
 
-// function getStatistics() {
-//     const statistics = {
-//         emailCount: {
-//             inbox: 20,
-//             unread: 10,
-//             sent: 40,
-//             starred: 10
-//         }
-//         monthlyEmails: {
-//             Jan:30,
-//             Feb:49,
-//         }
-
-
-//     }
-
-// }
-
 
 function _createEmails() {
     let emails = utilService.loadFromStorage(STORAGE_KEY)
 
-   // if (!emails || !emails.length) {
+    if (!emails || !emails.length) {
 
         const emailBodylong = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -343,5 +325,5 @@ function _createEmails() {
         /*setting initial count regardless of filter*/
         setUnreadCount(emails)
         utilService.saveToStorage(STORAGE_KEY, emails)
-  //  }
+    }
 }
