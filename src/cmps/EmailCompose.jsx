@@ -114,8 +114,8 @@ export function EmailCompose() {
 
                 <div className="compose-header">
                     <div onClick={normalizeModal}>New Message</div>
-                    <div><img className="icon" onClick={minimizeModal} src={utilService.getIconUrl('minimize', false)} /> </div>
-                    <div><img className="icon" onClick={fullscreenModal} src={utilService.getIconUrl('fullscreen', false)} /> </div>
+                    <div><img className="icon minimize" onClick={minimizeModal} src={utilService.getIconUrl('minimize', false)} /> </div>
+                    <div><img className="icon full" onClick={fullscreenModal} src={utilService.getIconUrl('fullscreen', false)} /> </div>
                     <div><img className="icon" onClick={onCloseComposeModal} src={utilService.getIconUrl('close', false)} /></div>
                 </div>
                 <form onSubmit={onSendComposedEmail} className="email-compose-form">
