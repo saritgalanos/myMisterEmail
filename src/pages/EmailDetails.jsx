@@ -69,7 +69,7 @@ export function EmailDetails() {
                     <div className="circle-icon"> <img className="icon " onClick={() => { onMarkUnread(email.id) }} src={utilService.getIconUrl('mail', true)} /></div>
 
                 </div>
-                <div className="email-subject"> {email.subject}</div>
+              
                 <div className="email-specifics">
 
                     <div className="email-from"><strong>from: {email.from}</strong></div>
@@ -78,8 +78,8 @@ export function EmailDetails() {
                     <img className="icon" onClick={() => onStarInDetails(email.id)} src={utilService.getIconUrl('starred', email.isStarred)} />
                 </div>
                 <div className="email-to">to: {email.to}</div>
-
-                <br></br>
+                <hr/>
+                <div className="email-subject"> {email.subject}</div>
                 <div className="body-area">
                     <div className="email-body">{email.body}</div>
                 </div>
