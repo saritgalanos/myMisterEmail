@@ -235,7 +235,7 @@ function resetEmailCount() {
 function _createEmails() {
     let emails = utilService.loadFromStorage(STORAGE_KEY)
 
-    if (!emails || !emails.length) {
+   // if (!emails || !emails.length) {
 
         const emailBodylong = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -343,5 +343,5 @@ function _createEmails() {
         /*setting initial count regardless of filter*/
         setUnreadCount(emails)
         utilService.saveToStorage(STORAGE_KEY, emails)
-    }
+  //  }
 }
