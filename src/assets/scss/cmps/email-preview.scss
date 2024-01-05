@@ -3,8 +3,8 @@
      grid-template-columns: 30px 1fr 70px;
      font-size: 1em;
      background: #fff;
-    //  color: rgb(68, 67, 67);
-    color: $clr1;
+     //  color: rgb(68, 67, 67);
+     color: $clr1;
      border-bottom: 1px solid #ddd;
      padding: 7px;
      cursor: pointer;
@@ -12,14 +12,20 @@
  }
 
  .email-preview.mark-line-as-read {
-    background-color: #e9eef6;
+     background-color: #e9eef6;
  }
+
 
  .email-line {
      display: grid;
-     grid-template-columns:180px 1fr;
-   
+     grid-template-columns: 180px 1fr;
+     .subject {
+        display: none;
+    }
+
  }
+
+
 
  .email-line.subject,
  .email-line.from,
@@ -51,10 +57,11 @@
  }
 
  .preview-trash {
-    align-items: right;
-}
+     align-items: right;
+ }
+
  .email-preview:hover {
-     border:1px solid  #ccc;
+     border: 1px solid #ccc;
      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
  }
 
@@ -66,25 +73,28 @@
  }
 
  .control-icons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+     display: grid;
+     grid-template-columns: 1fr 1fr;
  }
 
 
 
  /*mobile*/
-@media screen and (max-width: 768px) {
+ @media screen and (max-width: 768px) {
 
-    // .email-line {
-    //     display: grid;
-    //     grid-template-columns:1fr 70px;
-    //     grid-template-row:1.2em 1.2em;
-      
-    // }
-    .main-data {
-        .body {
-            display:none;
-        }
-    }
-   
-}
+     .email-line {
+         display: flex;
+         flex-direction: column;
+        //  grid-template-columns: 1fr;
+
+         .subject {
+             display: block;
+         }
+     }
+
+     .main-data {
+         display: none;
+
+     }
+
+ }

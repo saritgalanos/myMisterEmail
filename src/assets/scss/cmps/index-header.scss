@@ -43,7 +43,7 @@
 .search-form input {
     border:none;
     background:inherit;
-    width:400px;
+    width:em(400px);
 }
 
 .search-form input:focus {

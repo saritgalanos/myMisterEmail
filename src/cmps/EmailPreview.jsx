@@ -62,8 +62,10 @@ export function EmailPreview({ email, onStar, onRemoveEmail, setIsRead, onCompos
                 {params.folder === 'draft' || params.folder === 'sent' ? (
                     <div className={`to ${emailReadClass}`}>{emailToPreview.to}</div>) : (
                     <div className={`from ${emailReadClass}`}>{emailToPreview.from}</div>)}
-                <div className="main-data">
                     <span className={`subject ${emailReadClass}`}> {emailToPreview.subject} </span>
+                
+                <div className="main-data">
+                    <span className={`subject ${emailReadClass}`}> <br></br>{emailToPreview.subject} </span>
                     <span className="body"> {emailToPreview.body} </span>
                 </div>
             </div>
