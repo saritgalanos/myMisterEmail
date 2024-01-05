@@ -13,8 +13,8 @@
     }
 
     .email-specifics {
-        display: grid;
-        grid-template-columns: 1fr 12em 2em;
+        display: flex;
+       // grid-template-columns: 1fr 12em 2em;
         padding-left: 2em;
         padding-right: 2em;
 
