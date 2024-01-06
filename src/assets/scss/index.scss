@@ -1,5 +1,7 @@
 /*setup*/
 @import "./setup/_variables.scss";
+@import "./setup/mixins";
+@import "./setup/functions";
 
 /*  Basics */
 @import "basics/base.scss";

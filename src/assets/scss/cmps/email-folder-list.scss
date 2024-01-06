@@ -8,9 +8,7 @@
 }
 
 .compose-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include centered-flex;
   background-color: rgb(164, 218, 250);
   border-radius: 15px;
   border: 0px;
