@@ -25,6 +25,16 @@
   justify-content: center;
 }
 
+@mixin filter-btn {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  cursor: pointer;
+  margin-right: 15px;
+  padding: 1px;
+  font-size: 14px;
+}
+
 
 @mixin for-wide-layout {
   @media (min-width: $break-wide) {

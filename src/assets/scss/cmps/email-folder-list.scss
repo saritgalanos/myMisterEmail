@@ -2,10 +2,6 @@
   transition: 1s;
 }
 
-.email-folder-list {
-
-
-}
 
 .compose-button {
   @include centered-flex;
@@ -15,19 +11,16 @@
   height: 45px;
   padding-right: 20px;
   margin: 5px;
-  align-items: center;
 }
 
 
 .compose-area {
   border-bottom: 1px solid #ccc;
-  margin-top: 10px;
-  margin-left: 10px;
+  margin: 10px 0px 0px 10px; 
   height: 60px;
 }
 
 .folder-area {
-  /* padding: 10px; */
   padding-top: 10px;
   display: grid;
   background: $clr2;
@@ -44,37 +37,35 @@
   padding: 7px;
   padding-left: 15px;
   margin: 3px;
+
+
+  p {
+    text-align: center;
+    margin: 0;
+  }
+
+  &:hover {
+    background-color: #e1e6eb;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+  }
+
+  img {
+    height: 20px;
+    width: 20px;
+  }
 }
 
-.folder p {
-  text-align: center;
-  margin: 0;
-}
-
-.folder:hover {
-  background-color: #e1e6eb;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  cursor: pointer;
-
-}
 
 .selected-folder {
   background-color: #a8c7fa;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-radius: 0px 20px 20px 0px;
   font-weight: 600;
-}
 
-.selected-folder:hover {
-  background-color: #a8c7fa;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.folder img {
-  height: 20px;
-  width: 20px;
+  &:hover {
+    background-color: #a8c7fa;
+    border-radius: 0px 20px 20px 0px;
+  }
 }
 
 .image-with-text {
@@ -94,7 +85,7 @@
     border-bottom: 1px solid #ccc;
     margin-top: 10px;
     margin-left: 10px;
-   
+
 
     .txt {
       display: none;
@@ -105,8 +96,9 @@
   .compose-button {
     padding-right: 7px;
     margin: 5px;
-   
+
   }
+
   .folder {
     display: flex;
     align-items: center;

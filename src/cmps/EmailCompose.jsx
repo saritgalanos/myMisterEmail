@@ -146,7 +146,7 @@ export function EmailCompose() {
                         />
                     </div>
                     <div>
-                        <button className='send-button'>Send</button>
+                        <button className='btn-send'>Send</button>
                     </div>
 
                 </form>

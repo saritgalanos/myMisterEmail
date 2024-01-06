@@ -1,32 +1,18 @@
 .email-filter {
     display: flex;
-    margin-top: 5px;
-    margin-right: 5px;
+    margin: 5px 5px 0 0;
     background: #fff;
     padding: 10px;
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+    border-radius: 15px 15px 0 0;
     border-bottom: 1px solid #e7e6e6;
 
     select {
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        background-color: #fff;
-        cursor: pointer;
-        margin-right: 15px;
-        padding: 1px;
+        @include filter-btn;
     }
 
     .sort-button {
         @include centered-flex;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        background-color: #fff;
-        cursor: pointer;
-        margin-right: 15px;
-        padding: 1px;
+        @include filter-btn;
         min-width: 80px;
         padding-right: 5px;
     }

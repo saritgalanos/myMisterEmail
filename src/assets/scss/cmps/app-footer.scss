@@ -1,6 +1,4 @@
 .app-footer {
-    display: flex;
+    @include centered-flex;
     flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
 }
